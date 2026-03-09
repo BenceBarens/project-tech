@@ -1,7 +1,7 @@
 {
   "name": "project-tech",
   "version": "1.0.0",
-  "description": "",
+  "description": "Lees mij.",
   "homepage": "https://github.com/BenceBarens/project-tech#readme",
   "bugs": {
     "url": "https://github.com/BenceBarens/project-tech/issues"
@@ -16,12 +16,15 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js"
-  },
+    "dev": "nodemon server.js",
+  "build:js": "terser src/js/main.js -o dist/js/main.min.js -c -m"
+},
   "dependencies": {
     "express": "^5.2.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.11"
-  }
+    "nodemon": "^3.1.11",
+    "terser": "^5.46.0"
+  },
+  "keywords": []
 }
