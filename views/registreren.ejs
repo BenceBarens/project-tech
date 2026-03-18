@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Registreren</title>
+</head>
+<body>
+
+<!-- Link naar login -->
+<div>
+    <a href="#">Heb je al een account? Log in</a>
+</div>
+
+<main>
+
+<!-- STAP 1 - registreren -->
+<section id="stap1">
+    <h2>Account aanmaken</h2>
+
+    <label>Profielfoto</label>
+    <input type="file" accept="image/*">
+
+    <label>Naam</label>
+    <input type="text">
+
+    <label>Geboortedatum</label>
+    <input type="number" placeholder="Dag">
+    <input type="text" placeholder="Maand">
+    <input type="number" placeholder="Jaar">
+
+    <label>Email</label>
+    <input type="email">
+
+    <label>Wachtwoord</label>
+    <input type="password">
+
+    <button>Verder</button>
+</section>
+
+<!-- STAP 2 - account aanvullen-->
+<section id="stap2" hidden>
+    <h2>Maak je profiel af</h2>
+
+    <label>Land *</label>
+    <input type="text" required>
+
+    <label>Woonplaats</label>
+    <input type="text">
+
+    <label>Geslacht</label>
+    <select>
+        <option>Maak uw keuze</option>
+        <option>Man</option>
+        <option>Vrouw</option>
+        <option>Anders</option>
+    </select>
+
+    <label>Bio</label>
+    <textarea></textarea>
+
+    <button>Terug</button>
+    <button>Verder</button>
+</section>
+
+<!-- STAP 3- voorkeuren -->
+<section id="stap3" hidden>
+    <h2>Persoonlijke eigenschappen</h2>
+
+    <label>Voorzichtig - Avontuurlijk</label>
+    <input type="range" min="0" max="100">
+
+    <label>Gepland gedrag - Spontaan</label>
+    <input type="range" min="0" max="100">
+
+    <label>Inactief - Actief</label>
+    <input type="range" min="0" max="100">
+
+    <label>Geen culturele interesses - Interesses</label>
+    <input type="range" min="0" max="100">
+
+    <label>Niet prikkelbaar - Prikkelbaar</label>
+    <input type="range" min="0" max="100">
+
+    <button>Overslaan</button>
+    <button>Afronden</button>
+</section>
+
+</main>
+</body>
+</html>
