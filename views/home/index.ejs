@@ -1,0 +1,57 @@
+<div>
+    <input type="checkbox" id="filtersUitklappen" name="Zoekfilters">
+    <label for="filtersUitklappen">Zoekfilters</label>
+</div>
+<main>
+    <form action="">
+        <fieldset>
+            <legend>Bestemmingen</legend>
+            <ul>
+                <%= data.filters.bestemmingen %>
+                <li><button>+</button></li>
+            </ul>
+        </fieldset>
+        <fieldset>
+            <legend>Budget range</legend>
+            <input type="radio" id="budget1" value="1" name="Budget"><label for="budget1">€0 tot €500</label>
+            <input type="radio" id="budget2" value="2" name="Budget"><label for="budget2">€500 tot €1K</label>
+            <input type="radio" id="budget3" value="3" name="Budget"><label for="budget3">€1K tot €1.5K</label>
+            <input type="radio" id="budget4" value="4" name="Budget"><label for="budget4">€1.5K tot €2.5K</label>
+            <input type="radio" id="budget5" value="5" name="Budget"><label for="budget5">€2.5K tot €5K</label>
+        </fieldset>
+        <fieldset>
+            <legend>Type verblijf</legend>
+            <input type="radio" id="verblijf1" value="1" name="Budget"><label for="verblijf1">Hotel</label>
+            <input type="radio" id="verblijf2" value="2" name="Budget"><label for="verblijf2">Motel</label>
+            <input type="radio" id="verblijf3" value="3" name="Budget"><label for="verblijf3">B&B</label>
+            <input type="radio" id="verblijf4" value="4" name="Budget"><label for="verblijf4">Camper/caravan</label>
+            <input type="radio" id="verblijf5" value="5" name="Budget"><label for="verblijf5">Tent</label>
+        </fieldset>
+        <fieldset>
+            <legend>Aantal reizigers</legend>
+            <label for="reizigersMin">Minimum</label>
+            <input type="number" id="reizigersMin" name="Minimum">
+            <label for="reizigersMax">Maximum</label>
+            <input type="number" id="reizigersMax" name="Maximum">
+        </fieldset>
+        <fieldset>
+            <legend>Leeftijd medereizigers</legend>
+            <label for="leeftijdMin">Minimum</label>
+            <input type="number" id="leeftijdMin" name="Minimum">
+            <label for="leeftijdMax">Maximum</label>
+            <input type="number" id="leeftijdMax" name="Maximum">
+        </fieldset>
+        <fieldset>
+            <legend>Geslacht medereizigers</legend>
+            <input type="radio" id="geslachtVrouw" value="vrouw" name="Geslacht"><label for="geslachtVrouw">Vrouwen</label>
+            <input type="radio" id="geslachtMan" value="man" name="Geslacht"><label for="geslachtMan">Mannen</label>
+            <input type="radio" id="geslachtAnders" value="anders" name="Geslacht"><label for="geslachtAnders">Anders</label>
+        </fieldset>
+        <input type="submit" value="Pas filters toe">
+    </form>
+    <button>Accepteren</button>
+    <ul>
+        <%= data.reizen %>
+    </ul>
+    <button>Afwijzen</button>
+</main>
