@@ -6,8 +6,8 @@
 <main>
     <form>
 <!-- STAP 1 - registreren -->
-<section id="stap1">
-    <h1>Account aanmaken</h1>
+<fieldset id="stap1">
+    <legend>Account aanmaken</legend>
 
     <label for="profielfoto">Profielfoto</label>
     <input type="file" accept="image/*" id="profielfoto" name="profielfoto">
@@ -27,11 +27,11 @@
     <input type="password" placeholder="wachtwoord" id="wachtwoord" name="wachtwoord">
 
     <button>Verder</button>
-</section>
+</fieldset>
 
 <!-- STAP 2 - account aanvullen-->
-<section id="stap2" hidden>
-    <h2>Maak je profiel af</h2>
+<fieldset id="stap2" hidden>
+    <legend>Maak je profiel af</legend>
 
     <label for="land">Land</label>
     <input type="text" placeholder="land" id="land" name="land" required>
@@ -51,12 +51,12 @@
 
     <button>Terug</button>
     <button>Verder</button>
-</section>
+</fieldset>
 
 <!-- STAP 3- voorkeuren -->
-<section id="stap3" hidden>
 
-<fieldset>
+
+<fieldset id="stap3" hidden>
     <legend>persoonlijke eigenschappen</legend>
 
         <label for="eigenschap1">Voorzichtig - Avontuurlijk</label>
@@ -77,8 +77,6 @@
         <button>Overslaan</button>
         <button>Afronden</button>
 </fieldset>
-
-</section>
 </form>
 </main>
 
