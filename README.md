@@ -1,3 +1,3 @@
 TwoGo is een innovatieve mobiele website die reizigers samenbrengt door hen te matchen met de ideale travel buddy voor hun volgende avontuur. Het platform stelt gebruikers in staat om zelf gedetailleerde reizen aan te maken of zich in te schrijven voor bestaande trips, waarbij een gerichte vragenlijst over budget, bestemming en reisstijl zorgt voor de perfecte klik. Om de privacy van de community te waarborgen, worden persoonlijke gegevens pas onthuld na een succesvolle match, terwijl uitgebreide filteropties voor zaken als leeftijd en interesses de ervaring voor mij volledig op maat maken. Door het combineren van interactieve kaarten, opgeslagen favorieten en een overzichtelijke feed, biedt TwoGo een veilige en inspirerende omgeving om reisgenoten te vinden en nooit meer alleen te hoeven reizen.
 
-*Dit is een tijdelijke beschrijving gegenereerd met Gemini 3.*
+Lees mij.
