@@ -1,0 +1,27 @@
+<li>
+    <article>
+        <img src="<%= data.reis.afbeelding %>" alt="<%= data.reis.afbeeldingAlt %>">
+        <div>
+            <h2><%= data.reis.titel %></h2>
+            <p><%= data.reis.korteBeschrijving %></p>
+            <ul>
+                <%= data.reis.eigenschappen %>
+            </ul>
+            <h3>Bestemming(en)</h3>
+            <ul>
+                <%= data.reis.bestemmingen %>
+            </ul>
+            <h3>Activiteiten</h3>
+            <ul>
+                <%= data.reis.activiteiten %>
+            </ul>
+            <h3>Deelnemers</h3>
+            <ul>
+                <%= data.reis.deelnemers %>
+            </ul>
+            <input type="checkbox" id="reisUitklappen" name="Meer lezen">
+            <label for="reisUitklappen">Meer lezen</label>
+            <p><%= data.reis.langeBeschrijving %></p>
+        </div>
+    </article>
+</li>
