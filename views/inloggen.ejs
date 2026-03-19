@@ -1,32 +1,18 @@
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-    <meta charset="UTF-8">
-    <title>Inloggen</title>
-</head>
-<body>
-
 <div>
     <a href="#">Nog geen account?</a>
 </div>
 
 <main>
-    <section>
-        <h2>Welkom terug!</h2>
+    <h1>Welkom terug!</h1>
 
-        <form role="myForm" id="sign-up-form" method="post" action="/sign-up">
-            <label for="exampleInputEmail1">E-mail</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" name="email">
 
-    
-            <label for="exampleInputPassword1">Wachtwoord</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
+    <form>
+        <label for="email">e-mail:</label>
+        <input type="email" id="email" name="email">
 
-            <input type="submit" value="Inloggen">
-        </form>
-  
-    </section>
+        <label for="wachtwoord">Wachtwoord:</label>
+        <input type="password" id="wachtwoord" name="wachtwoord">
 
+        <input type="submit" value="Inloggen">
+    </form>
 </main>
-</body>
-</html>
