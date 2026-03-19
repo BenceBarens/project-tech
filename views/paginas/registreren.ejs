@@ -1,0 +1,83 @@
+<% layout('layouts/boilerplate') %>
+<div>
+    <a href="#">Heb je al een account? Log in</a>
+</div>
+
+
+<main>
+    <form>
+<!-- STAP 1 - registreren -->
+<fieldset id="stap1">
+    <legend>Account aanmaken</legend>
+
+    <label for="profielfoto">Profielfoto</label>
+    <input type="file" accept="image/*" id="profielfoto" name="profielfoto">
+
+    <label for="voornaam">Voornaam</label>
+    <input type="text" placeholder="voornaam" id="voornaam" name="voornaam">
+
+    <label for="geboorteDatum">Geboortedatum</label>
+    <input type="number" placeholder="Dag" id="geboorteDatum" name="geboorteDatum">
+    <input type="text" placeholder="Maand" id="geboorteDatum" name="geboorteDatum">
+    <input type="number" placeholder="Jaar" id="geboorteDatum" name="geboorteDatum">
+
+    <label for="email">Email</label>
+    <input type="email" placeholder="E-mail" id="email" name="email">
+
+    <label for="wachtwoord">Wachtwoord</label>
+    <input type="password" placeholder="wachtwoord" id="wachtwoord" name="wachtwoord">
+
+    <button>Verder</button>
+</fieldset>
+
+<!-- STAP 2 - account aanvullen-->
+<fieldset id="stap2" hidden>
+    <legend>Maak je profiel af</legend>
+
+    <label for="land">Land</label>
+    <input type="text" placeholder="land" id="land" name="land" required>
+
+    <label for="woonplaats">Woonplaats</label>
+    <input type="text" placeholder="woonplaats" id="woonplaats" name="woonplaats">
+
+    <label for="geslacht">Geslacht</label>
+    <select id="geslacht" name="geslacht">
+        <option>Man</option>
+        <option>Vrouw</option>
+        <option>Anders</option>
+    </select>
+
+    <label for="bio">Bio</label>
+    <textarea placeholder="Vertel wat leuks over jou zelf!" id="bio" name="bio " ></textarea>
+
+    <button>Terug</button>
+    <button>Verder</button>
+</fieldset>
+
+<!-- STAP 3- voorkeuren -->
+
+
+<fieldset id="stap3" hidden>
+    <legend>persoonlijke eigenschappen</legend>
+
+        <label for="eigenschap1">Voorzichtig - Avontuurlijk</label>
+        <input type="range" min="0" max="100" id="eigenschap1" name="eigenschap1">
+
+        <label for="eigenschap2">Gepland gedrag - Spontaan</label>
+        <input type="range" min="0" max="100" id="eigenschap2" name="eigenschap2">
+
+        <label for="eigenschap3">Inactief - Actief</label>
+        <input type="range" min="0" max="100" id="eigenschap3" name="eigenschap3">
+
+        <label for="eigenshap4">Geen culturele interesses - Interesses</label>
+        <input type="range" min="0" max="100" id="eigenschap4" name="eigenschap4">
+
+        <label for="eigenschap5">Niet prikkelbaar - Prikkelbaar</label>
+        <input type="range" min="0" max="100" id="eigenschap5" name="eigenschap5">
+
+        <button>Overslaan</button>
+        <button>Afronden</button>
+</fieldset>
+</form>
+</main>
+
