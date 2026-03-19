@@ -1,0 +1,310 @@
+<div>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="17"
+    height="17"
+    viewBox="0 0 17 17"
+    fill="none"
+  >
+    <path
+      d="M8.5 10.3099L2.1654 16.6445C1.92839 16.8815 1.62674 17 1.26046 17C0.89417 17 0.592522 16.8815 0.355513 16.6445C0.118504 16.4075 0 16.1058 0 15.7395C0 15.3733 0.118504 15.0716 0.355513 14.8346L6.69011 8.5L0.355513 2.1654C0.118504 1.92839 0 1.62674 0 1.26046C0 0.89417 0.118504 0.592522 0.355513 0.355513C0.592522 0.118504 0.89417 0 1.26046 0C1.62674 0 1.92839 0.118504 2.1654 0.355513L8.5 6.69011L14.8346 0.355513C15.0716 0.118504 15.3733 0 15.7395 0C16.1058 0 16.4075 0.118504 16.6445 0.355513C16.8815 0.592522 17 0.89417 17 1.26046C17 1.62674 16.8815 1.92839 16.6445 2.1654L10.3099 8.5L16.6445 14.8346C16.8815 15.0716 17 15.3733 17 15.7395C17 16.1058 16.8815 16.4075 16.6445 16.6445C16.4075 16.8815 16.1058 17 15.7395 17C15.3733 17 15.0716 16.8815 14.8346 16.6445L8.5 10.3099Z"
+    />
+  </svg>
+</div>
+
+<main>
+  <form>
+    <!--Pagina 1-->
+
+    <fieldset>
+      <input type="file" accept="image/*'" />
+    </fieldset>
+
+    <button type="button">Laten we beginnen!</button>
+
+    <!--Pagina 2-->
+
+    <fieldset>
+      <label for="reisTitel">Titel van jouw reis</label>
+      <input type="text" id="reisTitel" name="reisTitel" />
+
+      <label for="start-datum">Wanneer ga je weg?</label>
+      <input type="date" id="start-datum" name="start-datum" />
+      <input type="date" id="eind" name="eind-datum" />
+      <!--je mag geen placeholder gebruiken als het een type="date" is-->
+
+      <label for="aantalDagen">Hoe lang wil je weg?</label>
+      <input
+        type="number"
+        id="aantalDagen"
+        name="aantalDagen"
+        placeholder="Totaal aantal dagen"
+      />
+      <button class="volgendeKnop">Volgende stap</button>
+      <button class="vorigeKnop">Vorige stap</button>
+    </fieldset>
+
+    <div class="buttons">
+      <button type="button">Volgende stap</button>
+      <button type="button">Vorige stap</button>
+    </div>
+
+    <!--Pagina 3-->
+
+    <fieldset>
+      <legend>Aantal reizigers</legend>
+      <label for="minReizigers">Minimum</label>
+      <input type="number" id="minReizigers" name="minReizigers" />
+
+      <label for="maxReizigers">Maximum</label>
+      <input type="number" id="maxReizigers" name="maxReizigers" />
+    </fieldset>
+
+    <fieldset>
+      <legend>Leeftijd medereizigers</legend>
+      <label for="minLeeftijd">Minimum</label>
+      <input type="number" id="minLeeftijd" name="minLeeftijd" />
+
+      <label for="maxLeeftijd">Maximum</label>
+      <input type="number" id="maxLeeftijd" name="maxLeeftijd" />
+    </fieldset>
+
+    <fieldset>
+      <legend>Geslacht medereizigers</legend>
+      <input type="checkbox" id="vrouwen" name="geslacht" value="vrouwen" />
+      <label for="vrouwen">Vrouwen</label>
+
+      <input type="checkbox" id="mannen" name="geslacht" value="mannen" />
+      <label for="mannen">Mannen</label>
+
+      <input type="checkbox" id="anders" name="geslacht" value="anders" />
+      <label for="anders">Anders</label>
+    </fieldset>
+
+    <div class="buttons">
+      <button type="button">Volgende stap</button>
+      <button type="button">Vorige stap</button>
+    </div>
+
+    <!--Pagina 4-->
+
+    <fieldset>
+      <p>Optioneel</p>
+      <label for="reis-beschrijving"
+        >Beschrijf jouw reis. Wat wil je doen, wat zijn de plannen?</label
+      >
+      <textarea
+        id="reis-beschrijving"
+        name="reis_beschrijving"
+        placeholder="Typ hier een beschrijving"
+      ></textarea>
+
+      <p>(max 50 tekens)</p>
+      <label for="reis-samenvatting">Geef een samenvatting van jouw reis</label>
+      <input
+        type="text"
+        id="reis-samenvatting"
+        name="reis_samenvatting"
+        placeholder="Typ hier een beschrijving"
+        maxlength="50"
+      />
+    </fieldset>
+
+    <div class="buttons">
+      <button type="button">Volgende stap</button>
+      <button type="button">Vorige stap</button>
+    </div>
+
+    <!--Pagina 5-->
+
+    <fieldset>
+      <legend>Waar gaat jouw reis naar toe?</legend>
+      <p>
+        Voeg een locatie, stad of gebied toe door op de plus knop te klikken.
+      </p>
+
+      <button type="button">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="13"
+          height="13"
+          viewBox="0 0 13 13"
+          fill="none"
+        >
+          <path
+            d="M5.24212 6.98949H0.873689C0.626144 6.98949 0.41879 6.90561 0.251625 6.73787C0.0844594 6.57012 0.00058547 6.36276 3.01271e-06 6.1158C-0.000579444 5.86884 0.0832945 5.66149 0.251625 5.49374C0.419955 5.32599 0.627309 5.24212 0.873689 5.24212H5.24212V0.873689C5.24212 0.626144 5.32599 0.41879 5.49374 0.251625C5.66149 0.0844594 5.86884 0.00058547 6.1158 3.01271e-06C6.36276 -0.000579444 6.57041 0.0832945 6.73874 0.251625C6.90707 0.419955 6.99065 0.627309 6.98949 0.873689V5.24212L11.3579 5.24212C11.6055 5.24212 11.8131 5.32599 11.9809 5.49374C12.1486 5.66149 12.2322 5.86884 12.2316 6.1158C12.231 6.36276 12.1471 6.57041 11.98 6.73874C11.8128 6.90707 11.6055 6.99065 11.3579 6.98949L6.98949 6.98949L6.98949 11.3579C6.98949 11.6055 6.90561 11.8131 6.73787 11.9809C6.57012 12.1486 6.36276 12.2322 6.1158 12.2316C5.86884 12.231 5.66149 12.1471 5.49374 11.98C5.32599 11.8128 5.24212 11.6055 5.24212 11.3579L5.24212 6.98949Z"
+          />
+        </svg>
+      </button>
+    </fieldset>
+
+    <div class="buttons">
+      <button type="button">Volgende stap</button>
+      <button type="button">Vorige stap</button>
+    </div>
+
+    <!--Zoeken-->
+    <dialog>
+      <input
+        type="text"
+        id="locatie-zoeken"
+        placeholder="Zoek een bestemming"
+      />
+      <button type="button">Opslaan</button>
+    </dialog>
+
+    <!--Pagina 6-->
+
+    <fieldset>
+      <legend>Wat wordt het bedrag van de reis?</legend>
+      <p>
+        Geef een range aan met wat de reis ongeveer gaat bedragen (voer hoger in
+        bij twijfel).
+      </p>
+
+      <input type="radio" id="bedrag1" name="bedragen" value="bedrag1" />
+      <label for="bedrag1">€0 - €500,-</label>
+
+      <input type="radio" id="bedrag2" name="bedragen" value="bedrag2" />
+      <label for="bedrag2">€500 - €1000,-</label>
+
+      <input type="radio" id="bedrag3" name="bedragen" value="bedrag3" />
+      <label for="bedrag3">€1000 - €1500,-</label>
+
+      <input type="radio" id="bedrag4" name="bedragen" value="bedrag4" />
+      <label for="bedrag4">€1500 - €2500,-</label>
+
+      <input type="radio" id="bedrag5" name="bedragen" value="bedrag5" />
+      <label for="bedrag5">€2500 - €5000,-</label>
+
+      <input type="radio" id="bedrag6" name="bedragen" value="bedrag6" />
+      <label for="bedrag6">€5000 +</label>
+    </fieldset>
+
+    <div class="buttons">
+      <button type="button">Volgende stap</button>
+      <button type="button">Vorige stap</button>
+    </div>
+
+    <!--Pagina 7-->
+
+    <fieldset>
+      <p>Optioneel</p>
+      <legend>Wat lijkt jou leuk om te doen deze reis?</legend>
+      <p>
+        Voeg activiteiten toe doe jou interessant lijken om te doen binnen jouw
+        reis.
+      </p>
+
+      <input type="checkbox" id="wandelen" name="activiteit" value="wandelen" />
+      <label for="wandelen">Wandelen</label>
+
+      <input type="checkbox" id="fietsen" name="activiteit" value="fietsen" />
+      <label for="fietsen">Fietsen</label>
+
+      <input type="checkbox" id="zwemmen" name="activiteit" value="zwemmen" />
+      <label for="zwemmen">Wandelen</label>
+
+      <input
+        type="checkbox"
+        id="museau-bezoeken"
+        name="activiteit"
+        value="museau-bezoeken"
+      />
+      <label for="museau-bezoeken">Museau bezoeken</label>
+
+      <input
+        type="checkbox"
+        id="ontdekken"
+        name="activiteit"
+        value="ontdekken"
+      />
+      <label for="ontdekken">Ontdekken</label>
+
+      <button type="button">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="13"
+          height="13"
+          viewBox="0 0 13 13"
+          fill="none"
+        >
+          <path
+            d="M5.24212 6.98949H0.873689C0.626144 6.98949 0.41879 6.90561 0.251625 6.73787C0.0844594 6.57012 0.00058547 6.36276 3.01271e-06 6.1158C-0.000579444 5.86884 0.0832945 5.66149 0.251625 5.49374C0.419955 5.32599 0.627309 5.24212 0.873689 5.24212H5.24212V0.873689C5.24212 0.626144 5.32599 0.41879 5.49374 0.251625C5.66149 0.0844594 5.86884 0.00058547 6.1158 3.01271e-06C6.36276 -0.000579444 6.57041 0.0832945 6.73874 0.251625C6.90707 0.419955 6.99065 0.627309 6.98949 0.873689V5.24212L11.3579 5.24212C11.6055 5.24212 11.8131 5.32599 11.9809 5.49374C12.1486 5.66149 12.2322 5.86884 12.2316 6.1158C12.231 6.36276 12.1471 6.57041 11.98 6.73874C11.8128 6.90707 11.6055 6.99065 11.3579 6.98949L6.98949 6.98949L6.98949 11.3579C6.98949 11.6055 6.90561 11.8131 6.73787 11.9809C6.57012 12.1486 6.36276 12.2322 6.1158 12.2316C5.86884 12.231 5.66149 12.1471 5.49374 11.98C5.32599 11.8128 5.24212 11.6055 5.24212 11.3579L5.24212 6.98949Z"
+          />
+        </svg>
+      </button>
+    </fieldset>
+
+    <div class="buttons">
+      <button type="button">Volgende stap</button>
+      <button type="button">Vorige stap</button>
+    </div>
+
+    <!--Pagina 8-->
+
+    <fieldset>
+      <legend>Wat voor soort reis gaat het worden?</legend>
+      <p>
+        Laat mede reizigers weten wat voor soort reis je van plan bent om te
+        maken.
+      </p>
+
+      <input type="radio" id="reis-optie1" name="reizen" value="reis-optie1" />
+      <label for="reis-optie1">Rondreis (en overig)</label>
+
+      <input type="radio" id="reis-optie2" name="reizen" value="reis-optie2" />
+      <label for="reis-optie2">Resort</label>
+
+      <input type="radio" id="reis-optie3" name="reizen" value="reis-optie3" />
+      <label for="reis-optie3">Wintersport</label>
+
+      <input type="radio" id="reis-optie4" name="reizen" value="reis-optie4" />
+      <label for="reis-optie4">Camping</label>
+
+      <input type="radio" id="reis-optie5" name="reizen" value="reis-optie5" />
+      <label for="reis-optie5">City trip</label>
+
+      <input type="radio" id="reis-optie6" name="reizen" value="reis-optie6" />
+      <label for="reis-optie6">Safari</label>
+    </fieldset>
+
+    <div class="buttons">
+      <button type="button">Volgende stap</button>
+      <button type="button">Vorige stap</button>
+    </div>
+
+    <!--Pagina 9-->
+
+    <fieldset>
+      <p>Optioneel</p>
+      <legend>Waar wil je overnachten?</legend>
+      <p>Laat mede reizigers weten wat jouw voorkeur van verblijf is.</p>
+
+      <input type="checkbox" id="hotel" name="verblijf" value="hotel" />
+      <label for="hotel">Hotel</label>
+
+      <input type="checkbox" id="motel" name="verblijf" value="motel" />
+      <label for="motel">Motel</label>
+
+      <input
+        type="checkbox"
+        id="caravan/camper"
+        name="verblijf"
+        value="caravan/camper"
+      />
+      <label for="caravan/camper">Caravan/camper</label>
+
+      <input type="checkbox" id="b&b" name="verblijf" value="b&b" />
+      <label for="b&b">Bed & breakfast B&B</label>
+
+      <input type="checkbox" id="tent" name="verblijf" value="tent" />
+      <label for="tent">Tent</label>
+    </fieldset>
+
+    <div class="buttons">
+      <button type="button">Volgende stap</button>
+      <button type="button">Vorige stap</button>
+    </div>
+  </form>
+</main>
