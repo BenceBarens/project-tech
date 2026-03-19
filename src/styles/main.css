@@ -1,0 +1,12 @@
+/* Basis */
+@import "./_base.css";
+@import "./layouts/boilerplate.css";
+
+/* Pagina's */
+@import "./paginas/index.css";
+@import "./paginas/inloggen.css";
+@import "./paginas/registreren.css";
+@import "./paginas/reis-aanmaken.css";
+
+/* Partials */
+@import "./partials/reiskaartGroot.css"
