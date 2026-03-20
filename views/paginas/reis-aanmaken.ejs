@@ -4,24 +4,25 @@
 </div>
 
 <main>
-  <form>
+  <form action="/nieuwe-reis" method="POST" enctype="multipart/form-data">
     <!--Pagina 1-->
 
     <fieldset>
-      <input type="file" accept="image/*'" />
+      <input type="file" name="reisFoto" accept="image/*'" required/>
     </fieldset>
 
-    <button type="button">Laten we beginnen!</button>
+    <a href="">Laten we beginnen!</a>
+
 
     <!--Pagina 2-->
 
     <fieldset>
       <label for="reisTitel">Titel van jouw reis</label>
-      <input type="text" id="reisTitel" name="reisTitel" />
+      <input type="text" id="reisTitel" name="reisTitel" required/>
 
       <label for="start-datum">Wanneer ga je weg?</label>
-      <input type="date" id="start-datum" name="start-datum" />
-      <input type="date" id="eind" name="eind-datum" />
+      <input type="date" id="start-datum" name="start-datum" required/>
+      <input type="date" id="eind" name="eind-datum" required/>
       <!--je mag geen placeholder gebruiken als het een type="date" is-->
 
       <label for="aantalDagen">Hoe lang wil je weg?</label>
@@ -30,12 +31,13 @@
         id="aantalDagen"
         name="aantalDagen"
         placeholder="Totaal aantal dagen"
+        required
       />
     </fieldset>
 
     <div class="buttons">
-      <button type="button">Volgende stap</button>
-      <button type="button">Vorige stap</button>
+      <a href="">Volgende stap</a>
+      <a href="">Vorige stap</a>
     </div>
 
     <!--Pagina 3-->
@@ -71,8 +73,8 @@
     </fieldset>
 
     <div class="buttons">
-      <button type="button">Volgende stap</button>
-      <button type="button">Vorige stap</button>
+      <a href="">Volgende stap</a>
+      <a href="">Vorige stap</a>
     </div>
 
     <!--Pagina 4-->
@@ -96,12 +98,13 @@
         name="reis_samenvatting"
         placeholder="Typ hier een beschrijving"
         maxlength="50"
+        required
       />
     </fieldset>
 
     <div class="buttons">
-      <button type="button">Volgende stap</button>
-      <button type="button">Vorige stap</button>
+      <a href="">Volgende stap</a>
+      <a href="">Vorige stap</a>
     </div>
 
     <!--Pagina 5-->
@@ -115,6 +118,7 @@
     <!--Zoeken-->
     
       <input
+        aria-required="true"
         type="text"
         id="locatie-zoeken"
         placeholder="Zoek een bestemming"
@@ -126,23 +130,13 @@
     </fieldset>
 
     <div class="buttons">
-      <button type="button">Volgende stap</button>
-      <button type="button">Vorige stap</button>
+      <a href="">Volgende stap</a>
+      <a href="">Vorige stap</a>
     </div>
-
-    <!--Zoeken-->
-    
-      <input
-        type="text"
-        id="locatie-zoeken"
-        placeholder="Zoek een bestemming"
-      />
-      <button type="button">Opslaan</button>
-
 
     <!--Pagina 6-->
 
-    <fieldset>
+    <fieldset aria-required="true">
       <legend>Wat wordt het bedrag van de reis?</legend>
       <p>
         Geef een range aan met wat de reis ongeveer gaat bedragen (voer hoger in
@@ -169,8 +163,8 @@
     </fieldset>
 
     <div class="buttons">
-      <button type="button">Volgende stap</button>
-      <button type="button">Vorige stap</button>
+      <a href="">Volgende stap</a>
+      <a href="">Vorige stap</a>
     </div>
 
     <!--Pagina 7-->
@@ -211,13 +205,13 @@
     </fieldset>
 
     <div class="buttons">
-      <button type="button">Volgende stap</button>
-      <button type="button">Vorige stap</button>
+      <a href="">Volgende stap</a>
+      <a href="">Vorige stap</a>
     </div>
 
     <!--Pagina 8-->
 
-    <fieldset>
+    <fieldset aria-required="true">
       <legend>Wat voor soort reis gaat het worden?</legend>
       <p>
         Laat mede reizigers weten wat voor soort reis je van plan bent om te
@@ -244,13 +238,13 @@
     </fieldset>
 
     <div class="buttons">
-      <button type="button">Volgende stap</button>
-      <button type="button">Vorige stap</button>
+      <a href="">Volgende stap</a>
+      <a href="">Vorige stap</a>
     </div>
 
     <!--Pagina 9-->
 
-    <fieldset>
+    <fieldset aria-required="true">
       <p>Optioneel</p>
       <legend>Waar wil je overnachten?</legend>
       <p>Laat mede reizigers weten wat jouw voorkeur van verblijf is.</p>
@@ -277,8 +271,8 @@
     </fieldset>
 
     <div class="buttons">
-      <button type="button">Volgende stap</button>
-      <button type="button">Vorige stap</button>
+      <input type="submit" value="Afronden">
+      <a href="">Vorige stap</a>
     </div>
   </form>
 </main>
