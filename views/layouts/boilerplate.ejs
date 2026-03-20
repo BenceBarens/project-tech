@@ -2,19 +2,20 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= data.pagina.titel %></title>
+    <link rel="stylesheet" href="output.css">
 </head>
 <body>
-    <header>Logo</header>
+    <header>AppNaam</header>
     <nav>
         <ul>
-            <li><a href="">Test</a></li>
-            <li><a href="">Test</a></li>
-            <li><a href="">Test</a></li>
-            <li><a href="">Test</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/nieuwe-reis">Nieuwe reis</a></li>
+            <li><a href="/liked">Geliked</a></li>
+            <li><a href="/">Profiel</a></li>
         </ul>
     </nav>
-    <main>
-        <%- body %> </main>
+    <%- body %>
 </body>
 </html>
