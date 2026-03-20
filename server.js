@@ -41,6 +41,14 @@ app.get('/registreren', (req, res) => {
     });
 });
 
+app.use((req, res) => {
+    res.status(404).render('paginas/404', { 
+        data: { 
+            pagina: { titel: '404 - Niet gevonden' } 
+        } 
+    });
+});
+
 app.listen(3000, () => {
     console.log('Server draait op http://localhost:3000/');
 });

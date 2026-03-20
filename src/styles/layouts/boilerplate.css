@@ -1,0 +1,35 @@
+body{
+    display: grid;
+    grid-template: auto 1fr auto / auto 1fr auto;
+    font-size: 1em;
+}
+
+main{
+    grid-column: 1/4;
+    grid-row: 2;
+}
+
+body > nav ul{
+    list-style-type: none;
+    display: flex;
+    padding: 0;
+}
+
+body > nav ul a{
+    text-decoration: none;
+}
+
+@media only screen and (max-width: 768px){
+    body > nav{
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        z-index: 1;
+        background-color: var(--color-surface-1);
+        box-shadow: -0.5em 0 0.5em black;
+    }
+
+    body > nav ul{
+        justify-content: space-around;
+    }
+}
