@@ -1,45 +1,65 @@
-const express = require('express');
-const engine = require('ejs-mate');
-const path = require('path');
-const app = express();
+const dotenv = require("dotenv")
+dotenv.config()
 
-app.engine('ejs', engine); 
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+const express = require('express')
+const {MongoClient} = require('mongodb')
+const engine = require('ejs-mate')
+const path = require('path')
 
-app.get('/', (req, res) => {
-    res.render('paginas/index', { 
-        data: { 
-            pagina: { titel: 'Home' },
-            filters: { bestemmingen: [] }
-        } 
-    });
-});
+const app = express() 
 
-app.get('/nieuwe-reis', (req, res) => {
-    res.render('paginas/reis-aanmaken', { 
-        data: { 
-            pagina: { titel: 'Nieuwe reis aanmaken' }
-        } 
-    });
-});
+// --- CONFIGURATIE & MIDDLEWARE ---
+// Nu pas kun je 'app' gebruiken
+app.use(express.urlencoded({ extended: true }))
+app.use(express.static('public'))
+app.engine('ejs', engine)
+app.set('view engine', 'ejs')
+app.set('views', path.join(__dirname, 'views'))
 
-app.get('/inloggen', (req, res) => {
-    res.render('paginas/inloggen', { 
-        data: { 
-            pagina: { titel: 'Log in' }
-        } 
-    });
-});
+// --- ROUTE HANDLERS IMPORTEREN ---
+const home = require("./routes/index")
+const reisAanmaken = require("./routes/reis-aanmaken")
+const favorieten = require("./routes/favorieten")
+const profiel = require("./routes/profiel")
+const instellingen = require("./routes/instellingen")
 
-app.get('/registreren', (req, res) => {
-    res.render('paginas/registreren', { 
-        data: { 
-            pagina: { titel: 'Registreren' }
-        } 
-    });
-});
+const login = require("./routes/inloggen")
+const register = require("./routes/registreren")
+const error404 = require("./routes/404")
 
-app.listen(3000, () => {
-    console.log('Server draait op http://localhost:3000/');
-});
+// --- ROUTE HANDLERS KOPPELEN ---
+app.use('/', home)
+app.use('/', reisAanmaken)
+app.use('/', favorieten)
+app.use('/', profiel)
+app.use('/', instellingen)
+
+app.use('/', login)
+app.use('/', register)
+
+// --- 404 AFHANDELING ---
+app.use('/', error404) 
+
+// --- DATABASE & SERVER START ---
+const client = new MongoClient(process.env.DB_URI)
+
+async function connectDB() {
+    try {
+        await client.connect()
+        const db = client.db("reizen")
+        
+        // Deel de database met je route-bestanden
+        app.set('db', db) 
+        
+        console.log("MongoDB is verbonden 🫡")
+        
+        app.listen(3000, () => {
+            console.log('Server draait op http://localhost:3000/')
+        })
+    } catch (err) {
+        console.error("Kon niet verbinden met MongoDB:", err)
+        process.exit(1)
+    }
+}
+
+connectDB()

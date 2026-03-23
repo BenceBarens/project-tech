@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Protest+Riot&display=swap');
+
+:root{
+    --color-surface-1: #fffcf2;
+    --color-surface-2: #f4f2e7;
+    --color-surface-3: #31494b;
+    --color-text-1: black;
+    --color-text-2: #31494b;
+    --color-text-3: #fffcf2;
+    --color-accent-1: #ff6f61;
+}
+
+html, body{
+    margin: 0;
+    background-color: var(--color-surface-1);
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    color: var(--color-text-1);
+}
+
+h1, h2, h3, h4, h5, h6, header{
+    font-family: "Protest Riot", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: var(--color-text-2);
+}
+
+a{
+    color: inherit;
+}
+
+input, button, label{
+    cursor: pointer;
+}
+
+::selection {
+    background: var(--color-accent-1);
+    color: var(--color-text-3);
+}
+
+
+/*****************************/
+/* Chips */
+/*****************************/
+
+.chipToggle {
+    display: inline-block;
+    border: 0.1em solid var(--color-surface-3);
+    border-radius: 50em;
+    transition: all 200ms ease;
+}
+
+.chipToggle label{
+    padding: 0.6em;
+    line-height: 1.5;
+}
+
+.chipToggle:has(input:checked) {
+    background-color: var(--color-surface-3);
+    color: var(--color-text-3);
+}
+
+.chipToggle input {
+    display: none;
+}
+
+.chipToggle label::after {
+    content: '✖';
+    display: inline-block;
+    opacity: 0;
+    max-width: 0;
+    margin-left: 0;
+    transition: all 200ms ease;
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+.chipToggle:has(input:checked) label::after {
+    opacity: 1;
+    max-width: 1.5em;
+    margin-left: 0.4em;
+}

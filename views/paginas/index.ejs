@@ -1,58 +1,61 @@
 <% layout('layouts/boilerplate') %>
 <div>
-    <input type="checkbox" id="filtersUitklappen" name="Zoekfilters">
     <label for="filtersUitklappen">Zoekfilters</label>
 </div>
-<main>
-    <form action="">
-        <fieldset>
-            <legend>Bestemmingen</legend>
-            <ul>
-                <%= data.filters.bestemmingen %>
-                <li><button>+</button></li>
-            </ul>
-        </fieldset>
-        <fieldset>
-            <legend>Budget range</legend>
-            <input type="checkbox" id="budget1" value="1" name="Budget"><label for="budget1">€0 tot €500</label>
-            <input type="checkbox" id="budget2" value="2" name="Budget"><label for="budget2">€500 tot €1K</label>
-            <input type="checkbox" id="budget3" value="3" name="Budget"><label for="budget3">€1K tot €1.5K</label>
-            <input type="checkbox" id="budget4" value="4" name="Budget"><label for="budget4">€1.5K tot €2.5K</label>
-            <input type="checkbox" id="budget5" value="5" name="Budget"><label for="budget5">€2.5K tot €5K</label>
-        </fieldset>
-        <fieldset>
-            <legend>Type verblijf</legend>
-            <input type="checkbox" id="verblijf1" value="1" name="Verblijf"><label for="verblijf1">Hotel</label>
-            <input type="checkbox" id="verblijf2" value="2" name="Verblijf"><label for="verblijf2">Motel</label>
-            <input type="checkbox" id="verblijf3" value="3" name="Verblijf"><label for="verblijf3">B&B</label>
-            <input type="checkbox" id="verblijf4" value="4" name="Verblijf"><label for="verblijf4">Camper/caravan</label>
-            <input type="checkbox" id="verblijf5" value="5" name="Verblijf"><label for="verblijf5">Tent</label>
-        </fieldset>
-        <fieldset>
-            <legend>Aantal reizigers</legend>
-            <label for="reizigersMin">Minimum</label>
-            <input type="number" id="reizigersMin" name="Minimum">
-            <label for="reizigersMax">Maximum</label>
-            <input type="number" id="reizigersMax" name="Maximum">
-        </fieldset>
-        <fieldset>
-            <legend>Leeftijd medereizigers</legend>
-            <label for="leeftijdMin">Minimum</label>
-            <input type="number" id="leeftijdMin" name="Minimum">
-            <label for="leeftijdMax">Maximum</label>
-            <input type="number" id="leeftijdMax" name="Maximum">
-        </fieldset>
-        <fieldset>
-            <legend>Geslacht medereizigers</legend>
-            <input type="checkbox" id="geslachtVrouw" value="vrouw" name="Geslacht"><label for="geslachtVrouw">Vrouwen</label>
-            <input type="checkbox" id="geslachtMan" value="man" name="Geslacht"><label for="geslachtMan">Mannen</label>
-            <input type="checkbox" id="geslachtAnders" value="anders" name="Geslacht"><label for="geslachtAnders">Anders</label>
-        </fieldset>
-        <input type="submit" value="Pas filters toe">
-    </form>
-    <button>Accepteren</button>
-    <ul>
-        <!-- <%- data.reizen %> -->
-    </ul>
-    <button>Afwijzen</button>
+<main class="home" id="main">
+    <section>
+        <input type="checkbox" id="filtersUitklappen" name="Zoekfilters">
+        <form action="">
+            <fieldset>
+                <legend>Bestemmingen</legend>
+                <ul>
+                    <li><button>+</button></li>
+                </ul>
+            </fieldset>
+            <fieldset>
+                <legend>Budget range</legend>
+                <div class="chipToggle"><input type="checkbox" id="budget1" value="1" name="Budget"><label for="budget1">€0 tot €500</label></div>
+                <div class="chipToggle"><input type="checkbox" id="budget2" value="2" name="Budget"><label for="budget2">€500 tot €1K</label></div>
+                <div class="chipToggle"><input type="checkbox" id="budget3" value="3" name="Budget"><label for="budget3">€1K tot €1.5K</label></div>
+                <div class="chipToggle"><input type="checkbox" id="budget4" value="4" name="Budget"><label for="budget4">€1.5K tot €2.5K</label></div>
+                <div class="chipToggle"><input type="checkbox" id="budget5" value="5" name="Budget"><label for="budget5">€2.5K tot €5K</label></div>
+            </fieldset>
+            <fieldset>
+                <legend>Type verblijf</legend>
+                <div class="chipToggle"><input type="checkbox" id="verblijf1" value="1" name="Verblijf"><label for="verblijf1">Hotel</label></div>
+                <div class="chipToggle"><input type="checkbox" id="verblijf2" value="2" name="Verblijf"><label for="verblijf2">Motel</label></div>
+                <div class="chipToggle"><input type="checkbox" id="verblijf3" value="3" name="Verblijf"><label for="verblijf3">B&B</label></div>
+                <div class="chipToggle"><input type="checkbox" id="verblijf4" value="4" name="Verblijf"><label for="verblijf4">Camper/caravan</label></div>
+                <div class="chipToggle"><input type="checkbox" id="verblijf5" value="5" name="Verblijf"><label for="verblijf5">Tent</label></div>
+            </fieldset>
+            <fieldset>
+                <legend>Aantal reizigers</legend>
+                <label for="reizigersMin">Minimum</label>
+                <input type="number" id="reizigersMin" name="Minimum">
+                <label for="reizigersMax">Maximum</label>
+                <input type="number" id="reizigersMax" name="Maximum">
+            </fieldset>
+            <fieldset>
+                <legend>Leeftijd medereizigers</legend>
+                <label for="leeftijdMin">Minimum</label>
+                <input type="number" id="leeftijdMin" name="Minimum">
+                <label for="leeftijdMax">Maximum</label>
+                <input type="number" id="leeftijdMax" name="Maximum">
+            </fieldset>
+            <fieldset>
+                <legend>Geslacht medereizigers</legend>
+                <div class="chipToggle"><input type="checkbox" id="geslachtVrouw" value="vrouw" name="Geslacht"><label for="geslachtVrouw">Vrouwen</label></div>
+                <div class="chipToggle"><input type="checkbox" id="geslachtMan" value="man" name="Geslacht"><label for="geslachtMan">Mannen</label></div>
+                <div class="chipToggle"><input type="checkbox" id="geslachtAnders" value="anders" name="Geslacht"><label for="geslachtAnders">Anders</label></div>
+            </fieldset>
+            <input type="submit" value="Pas filters toe">
+        </form>
+    </section>
+    <section>
+        <ul>
+            <!-- <%- data.reizen %> -->
+        </ul>
+        <button>Accepteren</button>
+        <button>Afwijzen</button>
+    </section>
 </main>
