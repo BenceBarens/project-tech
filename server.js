@@ -19,6 +19,8 @@ app.set('views', path.join(__dirname, 'views'));
 // Multer configuratie voor uploads
 const upload = multer({ dest: 'public/uploads/coverfoto' });
 
+let db;
+
 // --- 2. ROUTE FUNCTIES (CONTROLLERS) ---
 
 function toonHome(req, res) {
@@ -57,8 +59,7 @@ function toonProfiel(req, res) {
 function toonFavorieten(req, res) {
     res.render('paginas/favorieten', {
         data: {
-            pagina: { titel: 'Favorieten' },
-            gebruiker: gebruiker
+            pagina: { titel: 'Favorieten' }
         }
     });
 }
@@ -75,8 +76,7 @@ function verwerkUitloggen(req, res) {
     res.redirect('/inloggen');
 }
 
-// --- Routes ---
-
+// Nieuwe reis functies
 function toonNieuweReisFormulier(req, res) {
     res.render('paginas/reis-aanmaken', { 
         data: { pagina: { titel: 'Nieuwe reis aanmaken' } } 
@@ -111,11 +111,11 @@ app.get('/favorieten', toonFavorieten);
 app.get('/instellingen', toonInstellingen);
 app.post('/uitloggen', verwerkUitloggen);
 
-// POST route voor het uploaden van een nieuwe reis
+// Routes voor de nieuwe reis
+app.get('/nieuwe-reis', toonNieuweReisFormulier);
 app.post('/nieuwe-reis', upload.single('reisFoto'), verwerkNieuweReis);
 
 // --- 4. 404 AFHANDELING ---
-// Deze MOET als laatste route staan, vlak voor de database connectie
 app.use((req, res) => {
     res.status(404).render('paginas/404', { 
         data: { 
@@ -127,7 +127,6 @@ app.use((req, res) => {
 // --- 5. DATABASE & SERVER START ---
 
 const client = new MongoClient(process.env.DB_URI);
-let db;
 
 async function connectDB() {
     try {
