@@ -9,10 +9,19 @@ main{
     grid-row: 2;
 }
 
+body > nav, header, body > div{
+    padding: 1em 0;
+}
+
+body > div{
+    text-align: right;
+}
+
 body > nav ul{
     list-style-type: none;
     display: flex;
     padding: 0;
+    margin: 0;
 }
 
 body > nav ul a{
@@ -20,6 +29,7 @@ body > nav ul a{
 }
 
 @media only screen and (max-width: 768px){
+    
     body > nav{
         position: fixed;
         bottom: 0;
@@ -29,7 +39,18 @@ body > nav ul a{
         box-shadow: -0.5em 0 0.5em black;
     }
 
-    body > nav ul{
-        justify-content: space-around;
+    body > nav li{
+        flex-grow: 1;
+    }
+
+    body > nav a{
+        display: block;
+        text-align: center;
+    }
+}
+
+@media only screen and (min-width: 768px){
+    body > nav a{
+        padding: 1em;
     }
 }
