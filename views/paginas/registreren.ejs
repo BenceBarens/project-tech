@@ -10,33 +10,34 @@
     <label>Profielfoto</label>
     <input type="file" name="profielfoto">
 
-    <label>Voornaam</label>
-    <input type="text" name="voornaam">
+    <label>gebruikersnaam*</label>
+    <input type="text" name="voornaam" required>
 
-    <label>Geboortedatum</label>
-    <input type="number" placeholder="Dag" name="geboorteDag">
-    <input type="text" placeholder="Maand" name="geboorteMaand">
-    <input type="number" placeholder="Jaar" name="geboorteJaar">
+    <label>Geboortedatum*</label>
+    <input type="date" name="geboorteDatum">
 
-    <label>Email</label>
-    <input type="email" name="email">
+    <label>Email*</label>
+    <input type="email" name="email" required>
 
-    <label>Wachtwoord</label>
-    <input type="password" name="wachtwoord">
+    <label>Wachtwoord*</label>
+    <input type="password" name="wachtwoord" required>
+
+    <!-- Verder / Terug buttons (zonder submit) -->
+    <button type="button">Verder</button>
 </fieldset>
 
 <!-- STAP 2 -->
 <fieldset>
     <legend>Profiel</legend>
 
-    <label>Land</label>
-    <input type="text" name="land">
+    <label>Land*</label>
+    <input type="text" name="land" required>
 
     <label>Woonplaats</label>
     <input type="text" name="woonplaats">
 
-    <label>Geslacht</label>
-    <select name="geslacht">
+    <label>Geslacht*</label>
+    <select name="geslacht" required>
         <option>Man</option>
         <option>Vrouw</option>
         <option>Anders</option>
@@ -44,6 +45,10 @@
 
     <label>Bio</label>
     <textarea name="bio"></textarea>
+
+    <!-- Verder / Terug buttons (zonder submit) -->
+    <button type="button">Terug</button>
+    <button type="button">Verder</button>
 </fieldset>
 
 <!-- STAP 3 -->
@@ -64,10 +69,13 @@
 
     <label>Prikkelbaar</label>
     <input type="range" min="0" max="100" name="eigenschap5">
-</fieldset>
 
-<!-- SUBMIT -->
-<button type="submit">Afronden</button>
+    <!-- Overslaan button -->
+    <button type="submit" name="overslaan" value="true">Overslaan</button>
+
+    <!-- Afronden button -->
+    <button type="submit">Afronden</button>
+</fieldset>
 
 </form>
 </main>

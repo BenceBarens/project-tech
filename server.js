@@ -10,7 +10,7 @@ const bcryptjs = require('bcryptjs')
 
 const app = express()
 
-// 1. CONFIGURATIE & MIDDLEWARE
+// CONFIGURATIE & MIDDLEWARE
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
 
@@ -21,7 +21,7 @@ app.set('views', path.join(__dirname, 'views'))
 const upload = multer({ dest: 'public/uploads/' })
 
 //////////////////////////////
-//        PAGINA'S          //
+// PAGINA'S
 //////////////////////////////
 
 function toonHome(req, res) {
@@ -40,65 +40,75 @@ function toonRegistratie(req, res) {
 }
 
 //////////////////////////////
-//     REGISTRATIE LOGICA   //
+// REGISTRATIE LOGICA
 //////////////////////////////
 
 async function verwerkRegistratie(req, res) {
     try {
         const collectie = db.collection('gebruikers')
-        const gebruiker = req.body
-
-        console.log("Ontvangen data:", gebruiker)
+        const gebruiker = { ...req.body } // maak een kopie zodat we geen velden verliezen
 
         // wachtwoord hashen
-        const hashed = await bcryptjs.hash(gebruiker.wachtwoord, 10)
-        gebruiker.wachtwoord = hashed
+        if (gebruiker.wachtwoord) {
+            const hashed = await bcryptjs.hash(gebruiker.wachtwoord, 10)
+            gebruiker.wachtwoord = hashed
+        }
 
-        // foto upload
+        // profielfoto
         if (req.file) {
             gebruiker.profielfoto = req.file.filename
         }
 
-        // geboortedatum samenvoegen
-        gebruiker.geboorteDatum = {
-            dag: gebruiker.geboorteDag,
-            maand: gebruiker.geboorteMaand,
-            jaar: gebruiker.geboorteJaar
+        // geboortedatum opslaan als string
+        if (gebruiker.geboorteDatum) {
+        gebruiker.geboorteDatum = gebruiker.geboorteDatum.split('T')[0];
+}
+
+        // eigenschappen alleen toevoegen als Overslaan niet is aangeklikt
+        if (!req.body.overslaan) {
+            // indien velden leeg zijn, zet ze op 0
+            gebruiker.eigenschap1 = Number(gebruiker.eigenschap1 || 0)
+            gebruiker.eigenschap2 = Number(gebruiker.eigenschap2 || 0)
+            gebruiker.eigenschap3 = Number(gebruiker.eigenschap3 || 0)
+            gebruiker.eigenschap4 = Number(gebruiker.eigenschap4 || 0)
+            gebruiker.eigenschap5 = Number(gebruiker.eigenschap5 || 0)
+        } else {
+            // verwijder alleen de eigenschappen zodat ze niet in DB komen
+            delete gebruiker.eigenschap1
+            delete gebruiker.eigenschap2
+            delete gebruiker.eigenschap3
+            delete gebruiker.eigenschap4
+            delete gebruiker.eigenschap5
         }
 
-        delete gebruiker.geboorteDag
-        delete gebruiker.geboorteMaand
-        delete gebruiker.geboorteJaar
-
-        // check dubbele email
+        // controleer dubbele email
         const bestaat = await collectie.findOne({ email: gebruiker.email })
         if (bestaat) {
             return res.send("Email bestaat al!")
         }
 
-        // opslaan
+        // opslaan in MongoDB
         await collectie.insertOne(gebruiker)
 
-        console.log("Gebruiker opgeslagen!")
+        console.log("Gebruiker succesvol opgeslagen!")
         res.redirect('/')
 
     } catch (err) {
-        console.error("Fout:", err)
+        console.error("Fout bij registreren:", err)
         res.send("Registratie mislukt")
     }
 }
 
 //////////////////////////////
-//        ROUTES            //
+// ROUTES
 //////////////////////////////
 
 app.get('/', toonHome)
 app.get('/registreren', toonRegistratie)
-
 app.post('/registreren', upload.single('profielfoto'), verwerkRegistratie)
 
 //////////////////////////////
-//   DATABASE & SERVER      //
+// DATABASE & SERVER START
 //////////////////////////////
 
 const client = new MongoClient(process.env.DB_URI)
@@ -107,7 +117,7 @@ let db
 async function connectDB() {
     try {
         await client.connect()
-        db = client.db("project-tech")
+        db = client.db("Gebruikers")
 
         console.log("MongoDB verbonden!")
 
