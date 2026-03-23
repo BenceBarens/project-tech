@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
 
-router.get('/inloggen', (req, res) => {
-    res.render('paginas/inloggen', { 
+router.get('/favorieten', (req, res) => {
+    res.render('paginas/favorieten', { 
         data: { 
-            pagina: { titel: 'Login' }
+            pagina: { titel: 'Favorieten' }
         } 
     })
 })

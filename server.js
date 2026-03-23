@@ -2,8 +2,7 @@ const dotenv = require("dotenv")
 dotenv.config()
 
 const express = require('express')
-const {MongoClient} = require('mongodb');
-const multer = require('multer')
+const {MongoClient} = require('mongodb')
 const engine = require('ejs-mate')
 const path = require('path')
 
@@ -20,16 +19,24 @@ app.set('views', path.join(__dirname, 'views'))
 
 // --- ROUTE HANDLERS IMPORTEREN ---
 const home = require("./routes/index")
+const reisAanmaken = require("./routes/reis-aanmaken")
+const favorieten = require("./routes/favorieten")
+const profiel = require("./routes/profiel")
+const instellingen = require("./routes/instellingen")
+
 const login = require("./routes/inloggen")
 const register = require("./routes/registreren")
-const reisAanmaken = require("./routes/reis-aanmaken")
 const error404 = require("./routes/404")
 
 // --- ROUTE HANDLERS KOPPELEN ---
 app.use('/', home)
+app.use('/', reisAanmaken)
+app.use('/', favorieten)
+app.use('/', profiel)
+app.use('/', instellingen)
+
 app.use('/', login)
 app.use('/', register)
-app.use('/', reisAanmaken)
 
 // --- 404 AFHANDELING ---
 app.use('/', error404) 
@@ -45,7 +52,7 @@ async function connectDB() {
         // Deel de database met je route-bestanden
         app.set('db', db) 
         
-        console.log("MongoDB staat aan!")
+        console.log("MongoDB is verbonden 🫡")
         
         app.listen(3000, () => {
             console.log('Server draait op http://localhost:3000/')
