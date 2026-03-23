@@ -35,6 +35,12 @@ input, button, label{
     cursor: pointer;
 }
 
+::selection {
+    background: var(--color-accent-1);
+    color: var(--color-text-3);
+}
+
+
 /*****************************/
 /* Chips */
 /*****************************/
