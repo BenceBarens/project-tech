@@ -1,13 +1,10 @@
 <% layout('layouts/boilerplate') %>
-<div>
-    <a href="#">Heb je al een account? Log in</a>
-</div>
-
 
 <main>
-    <form>
-<!-- STAP 1 - registreren -->
-<fieldset id="stap1">
+<form action="/registreren" method="POST" enctype="multipart/form-data">
+
+<!-- STAP 1 -->
+<fieldset>
     <legend>Account aanmaken</legend>
 
     <label for="profielfoto">Profielfoto</label>
@@ -16,22 +13,21 @@
     <label for="voornaam">Voornaam</label>
     <input type="text" placeholder="voornaam" id="voornaam" name="voornaam">
 
-    <label for="geboorteDatum">Geboortedatum</label>
-    <input type="number" placeholder="Dag" id="geboorteDatum" name="geboorteDatum">
-    <input type="text" placeholder="Maand" id="geboorteDatum" name="geboorteDatum">
-    <input type="number" placeholder="Jaar" id="geboorteDatum" name="geboorteDatum">
+    <label for="geboorteDatum">Geboortedatum*</label>
+    <input type="date" id="geboorteDatum" name="geboorteDatum">
 
     <label for="email">Email</label>
     <input type="email" placeholder="E-mail" id="email" name="email">
 
     <label for="wachtwoord">Wachtwoord</label>
-    <input type="password" placeholder="wachtwoord" id="wachtwoord" name="wachtwoord">
+    <input type="password" placeholder="wachtwoord" id="wachtwoord" name="wachtwoord" required>
 
-    <button>Verder</button>
+    <!-- Verder / Terug buttons (zonder submit) -->
+    <button type="button">Verder</button>
 </fieldset>
 
 <!-- STAP 2 - account aanvullen-->
-<fieldset id="stap2" hidden>
+<fieldset id="stap2">
     <legend>Maak je profiel af</legend>
 
     <label for="land">Land</label>
@@ -41,43 +37,44 @@
     <input type="text" placeholder="woonplaats" id="woonplaats" name="woonplaats">
 
     <label for="geslacht">Geslacht</label>
-    <select id="geslacht" name="geslacht">
+    <select id="geslacht" name="geslacht" required>
         <option>Man</option>
         <option>Vrouw</option>
         <option>Anders</option>
     </select>
 
     <label for="bio">Bio</label>
-    <textarea placeholder="Vertel wat leuks over jou zelf!" id="bio" name="bio " ></textarea>
+    <textarea placeholder="Vertel wat leuks over jou zelf!" id="bio" name="bio "></textarea>
 
-    <button>Terug</button>
-    <button>Verder</button>
+    <!-- Verder / Terug buttons (zonder submit) -->
+    <button type="button">Terug</button>
+    <button type="button">Verder</button>
 </fieldset>
 
-<!-- STAP 3- voorkeuren -->
-
-
-<fieldset id="stap3" hidden>
+<!-- STAP 3 -->
+<fieldset id="stap3">
     <legend>persoonlijke eigenschappen</legend>
 
-        <label for="eigenschap1">Voorzichtig - Avontuurlijk</label>
-        <input type="range" min="0" max="100" id="eigenschap1" name="eigenschap1">
+    <label for="eigenschap1">Voorzichtig - Avontuurlijk</label>
+    <input type="range" min="0" max="100" id="eigenschap1" name="eigenschap1">
 
-        <label for="eigenschap2">Gepland gedrag - Spontaan</label>
-        <input type="range" min="0" max="100" id="eigenschap2" name="eigenschap2">
+    <label for="eigenschap2">Gepland gedrag - Spontaan</label>
+    <input type="range" min="0" max="100" id="eigenschap2" name="eigenschap2">
 
-        <label for="eigenschap3">Inactief - Actief</label>
-        <input type="range" min="0" max="100" id="eigenschap3" name="eigenschap3">
+    <label for="eigenschap3">Inactief - Actief</label>
+    <input type="range" min="0" max="100" id="eigenschap3" name="eigenschap3">
 
-        <label for="eigenshap4">Geen culturele interesses - Interesses</label>
-        <input type="range" min="0" max="100" id="eigenschap4" name="eigenschap4">
+    <label for="eigenshap4">Geen culturele interesses - Interesses</label>
+    <input type="range" min="0" max="100" id="eigenschap4" name="eigenschap4">
 
-        <label for="eigenschap5">Niet prikkelbaar - Prikkelbaar</label>
-        <input type="range" min="0" max="100" id="eigenschap5" name="eigenschap5">
+    <label for="eigenschap5">Niet prikkelbaar - Prikkelbaar</label>
+    <input type="range" min="0" max="100" id="eigenschap5" name="eigenschap5">
 
-        <button>Overslaan</button>
-        <button>Afronden</button>
+    <!-- Overslaan button -->
+
+    <!-- Afronden button -->
+    <button type="submit">Afronden</button>
 </fieldset>
+
 </form>
 </main>
-
