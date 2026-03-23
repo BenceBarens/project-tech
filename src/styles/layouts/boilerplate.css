@@ -1,7 +1,16 @@
+/*****************************/
+/* Layout */
+/*****************************/
+
 body{
     display: grid;
     grid-template: auto 1fr auto / auto 1fr auto;
     font-size: 1em;
+}
+
+header{
+    grid-column: 1;
+    grid-row: 1;
 }
 
 main{
@@ -9,17 +18,54 @@ main{
     grid-row: 2;
 }
 
+body > nav{
+    grid-column: 1/4;
+    grid-row: 1;
+}
+
+body > div{
+    grid-column: 3;
+    grid-row: 1;
+}
+
+body > nav, header, body > div{
+    padding: 1em 0;
+}
+
+body > div{
+    text-align: right;
+}
+
+/*****************************/
+/* Header styling */
+/*****************************/
+
+body > nav{
+    margin: auto;
+}
+
 body > nav ul{
     list-style-type: none;
     display: flex;
     padding: 0;
+    margin: 0;
 }
 
 body > nav ul a{
+    display: inline;
+    justify-content: center;
+    align-items: center;
     text-decoration: none;
+    color: var(--color-text-2);
+}
+
+body > nav ul svg{
+    width: 1em;
+    height: 1em;
 }
 
 @media only screen and (max-width: 768px){
+    
     body > nav{
         position: fixed;
         bottom: 0;
@@ -29,7 +75,18 @@ body > nav ul a{
         box-shadow: -0.5em 0 0.5em black;
     }
 
-    body > nav ul{
-        justify-content: space-around;
+    body > nav li{
+        flex-grow: 1;
+    }
+
+    body > nav a{
+        display: block;
+        text-align: center;
+    }
+}
+
+@media only screen and (min-width: 768px){
+    body > nav a{
+        padding: 1em;
     }
 }
