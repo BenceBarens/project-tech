@@ -16,7 +16,7 @@ app.engine('ejs', engine)
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
 
-const upload = multer({ dest: 'public/uploads/' })
+const upload = multer({ dest: 'public/uploads/coverfoto' })
 
 function toonHome(req, res) {
     res.render('paginas/index', { 
