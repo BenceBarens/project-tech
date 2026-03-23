@@ -1,0 +1,4 @@
+#home > div{
+    display: grid;
+    grid-template: auto auto auto / auto;
+}
