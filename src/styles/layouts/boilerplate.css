@@ -1,12 +1,31 @@
+/*****************************/
+/* Layout */
+/*****************************/
+
 body{
     display: grid;
     grid-template: auto 1fr auto / auto 1fr auto;
     font-size: 1em;
 }
 
+header{
+    grid-column: 1;
+    grid-row: 1;
+}
+
 main{
     grid-column: 1/4;
     grid-row: 2;
+}
+
+body > nav{
+    grid-column: 1/4;
+    grid-row: 1;
+}
+
+body > div{
+    grid-column: 3;
+    grid-row: 1;
 }
 
 body > nav, header, body > div{
@@ -17,6 +36,14 @@ body > div{
     text-align: right;
 }
 
+/*****************************/
+/* Header styling */
+/*****************************/
+
+body > nav{
+    margin: auto;
+}
+
 body > nav ul{
     list-style-type: none;
     display: flex;
@@ -25,7 +52,16 @@ body > nav ul{
 }
 
 body > nav ul a{
+    display: inline;
+    justify-content: center;
+    align-items: center;
     text-decoration: none;
+    color: var(--color-text-2);
+}
+
+body > nav ul svg{
+    width: 1em;
+    height: 1em;
 }
 
 @media only screen and (max-width: 768px){
