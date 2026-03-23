@@ -1,83 +1,73 @@
 <% layout('layouts/boilerplate') %>
-<div>
-    <a href="#">Heb je al een account? Log in</a>
-</div>
-
 
 <main>
-    <form>
-<!-- STAP 1 - registreren -->
-<fieldset id="stap1">
+<form action="/registreren" method="POST" enctype="multipart/form-data">
+
+<!-- STAP 1 -->
+<fieldset>
     <legend>Account aanmaken</legend>
 
-    <label for="profielfoto">Profielfoto</label>
-    <input type="file" accept="image/*" id="profielfoto" name="profielfoto">
+    <label>Profielfoto</label>
+    <input type="file" name="profielfoto">
 
-    <label for="voornaam">Voornaam*</label>
-    <input type="text" placeholder="voornaam" id="voornaam" name="voornaam">
+    <label>Voornaam</label>
+    <input type="text" name="voornaam">
 
-    <label for="geboorteDatum">Geboortedatum</label>
-    <input type="number" placeholder="Dag" id="geboorteDatum" name="geboorteDag">
-    <input type="text" placeholder="Maand" id="geboorteDatum" name="geboorteMaand">
-    <input type="number" placeholder="Jaar" id="geboorteDatum" name="geboortejaar">
+    <label>Geboortedatum</label>
+    <input type="number" placeholder="Dag" name="geboorteDag">
+    <input type="text" placeholder="Maand" name="geboorteMaand">
+    <input type="number" placeholder="Jaar" name="geboorteJaar">
 
-    <label for="email">Email*</label>
-    <input type="email" placeholder="E-mail" id="email" name="email">
+    <label>Email</label>
+    <input type="email" name="email">
 
-    <label for="wachtwoord">Wachtwoord*</label>
-    <input type="password" placeholder="wachtwoord" id="wachtwoord" name="wachtwoord">
-
-    <button>Verder</button>
+    <label>Wachtwoord</label>
+    <input type="password" name="wachtwoord">
 </fieldset>
 
-<!-- STAP 2 - account aanvullen-->
-<fieldset id="stap2">
-    <legend>Maak je profiel af</legend>
+<!-- STAP 2 -->
+<fieldset>
+    <legend>Profiel</legend>
 
-    <label for="land">Land*</label>
-    <input type="text" placeholder="land" id="land" name="land" required>
+    <label>Land</label>
+    <input type="text" name="land">
 
-    <label for="woonplaats">Woonplaats</label>
-    <input type="text" placeholder="woonplaats" id="woonplaats" name="woonplaats">
+    <label>Woonplaats</label>
+    <input type="text" name="woonplaats">
 
-    <label for="geslacht">Geslacht*</label>
-    <select id="geslacht" name="geslacht">
+    <label>Geslacht</label>
+    <select name="geslacht">
         <option>Man</option>
         <option>Vrouw</option>
         <option>Anders</option>
     </select>
 
-    <label for="bio">Bio</label>
-    <textarea placeholder="Vertel wat leuks over jou zelf!" id="bio" name="bio " ></textarea>
-
-    <button>Terug</button>
-    <button>Verder</button>
+    <label>Bio</label>
+    <textarea name="bio"></textarea>
 </fieldset>
 
-<!-- STAP 3- voorkeuren -->
+<!-- STAP 3 -->
+<fieldset>
+    <legend>Eigenschappen</legend>
 
+    <label>Avontuurlijk</label>
+    <input type="range" min="0" max="100" name="eigenschap1">
 
-<fieldset id="stap3">
-    <legend>persoonlijke eigenschappen</legend>
+    <label>Spontaan</label>
+    <input type="range" min="0" max="100" name="eigenschap2">
 
-        <label for="eigenschap1">Voorzichtig - Avontuurlijk</label>
-        <input type="range" min="0" max="100" id="eigenschap1" name="eigenschap1">
+    <label>Actief</label>
+    <input type="range" min="0" max="100" name="eigenschap3">
 
-        <label for="eigenschap2">Gepland gedrag - Spontaan</label>
-        <input type="range" min="0" max="100" id="eigenschap2" name="eigenschap2">
+    <label>Cultureel</label>
+    <input type="range" min="0" max="100" name="eigenschap4">
 
-        <label for="eigenschap3">Inactief - Actief</label>
-        <input type="range" min="0" max="100" id="eigenschap3" name="eigenschap3">
-
-        <label for="eigenshap4">Geen culturele interesses - Interesses</label>
-        <input type="range" min="0" max="100" id="eigenschap4" name="eigenschap4">
-
-        <label for="eigenschap5">Niet prikkelbaar - Prikkelbaar</label>
-        <input type="range" min="0" max="100" id="eigenschap5" name="eigenschap5">
-
-        <button>Overslaan</button>
-        <button>Afronden</button>
+    <label>Prikkelbaar</label>
+    <input type="range" min="0" max="100" name="eigenschap5">
 </fieldset>
+
+<!-- SUBMIT -->
+<button type="submit">Afronden</button>
+
 </form>
 </main>
-
