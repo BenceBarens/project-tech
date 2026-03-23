@@ -46,6 +46,37 @@ function toonRegistreren(req, res) {
     });
 }
 
+function toonProfiel(req, res) {
+    res.render('paginas/profiel', {
+        data: {
+            pagina: { titel: 'Profiel' }
+        }
+    });
+}
+
+function toonFavorieten(req, res) {
+    res.render('paginas/favorieten', {
+        data: {
+            pagina: { titel: 'Favorieten' },
+            gebruiker: gebruiker
+        }
+    });
+}
+
+function toonInstellingen(req, res) {
+    res.render('paginas/instellingen', {
+        data: {
+            pagina: { titel: 'Instellingen' }
+        }
+    });
+}
+
+function verwerkUitloggen(req, res) {
+    res.redirect('/inloggen');
+}
+
+// --- Routes ---
+
 function toonNieuweReisFormulier(req, res) {
     res.render('paginas/reis-aanmaken', { 
         data: { pagina: { titel: 'Nieuwe reis aanmaken' } } 
@@ -75,7 +106,10 @@ async function verwerkNieuweReis(req, res) {
 app.get('/', toonHome);
 app.get('/inloggen', toonInloggen);
 app.get('/registreren', toonRegistreren);
-app.get('/nieuwe-reis', toonNieuweReisFormulier);
+app.get('/profiel', toonProfiel);
+app.get('/favorieten', toonFavorieten);
+app.get('/instellingen', toonInstellingen);
+app.post('/uitloggen', verwerkUitloggen);
 
 // POST route voor het uploaden van een nieuwe reis
 app.post('/nieuwe-reis', upload.single('reisFoto'), verwerkNieuweReis);
