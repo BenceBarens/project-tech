@@ -6,7 +6,6 @@ const {MongoClient} = require('mongodb')
 const engine = require('ejs-mate')
 const path = require('path')
 
-// DIT IS DE REGEL DIE BOVENAAN MOET STAAN:
 const app = express() 
 
 // --- CONFIGURATIE & MIDDLEWARE ---
