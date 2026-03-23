@@ -7,6 +7,7 @@ app.engine('ejs', engine);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => {
     res.render('paginas/index', { 
@@ -40,6 +41,37 @@ app.get('/registreren', (req, res) => {
         } 
     });
 });
+
+app.get('/profiel', function (req, res) {
+    res.render('paginas/profiel', {
+        data: {
+            pagina: { titel: 'Profiel' },
+            gebruiker: gebruiker
+        }
+    })
+})
+
+app.get('/favorieten', function (req, res) {
+    res.render('paginas/favorieten', {
+        data: {
+            pagina: { titel: 'Favorieten' },
+            gebruiker: gebruiker
+        }
+    })
+})
+
+app.get('/instellingen', function (req, res) {
+    res.render('paginas/instellingen', {
+        data: {
+            pagina: { titel: 'Instellingen' },
+            gebruiker: gebruiker
+        }
+    })
+})
+
+app.post('/uitloggen', function (req, res) {
+res.redirect('/inloggen')
+})
 
 app.use((req, res) => {
     res.status(404).render('paginas/404', { 
