@@ -1,20 +1,20 @@
 
 <li>
   <article class="reis-kaart">
-    <img class="reis-afbeelding" src="<%= reis.afbeelding %>" alt="<%= reis.afbeeldingAlt %>">
+    <img class="reis-afbeelding" src="<%= data.reis.afbeelding %>" alt="<%= data.reis.afbeeldingAlt %>">
 
-    <h3><%= reis.titel %></h3>
+    <h3><%= data.reis.titel %></h3>
   
     <ul class="reis-eigenschappen">
-       <% reis.eigenschappen.forEach(function (eigenschap) { %> 
+       <% data.reis.eigenschappen.forEach(function (eigenschap) { %> 
            <li><%= eigenschap %></li> 
        <% }) %>
     </ul>
 
 
    <div class="beheerder-reis">
-      <img src="<%= reis.beheerder.foto %>" alt="Profielfoto van <%= reis.beheerder.naam %>">
-      <p><%= reis.beheerder.naam %></p>
+      <img src="<%= data.reis.beheerder.foto %>" alt="Profielfoto van <%= data.reis.beheerder.naam %>">
+      <p><%= data.reis.beheerder.naam %></p>
    </div>
 
   </article>
