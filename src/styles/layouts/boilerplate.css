@@ -8,9 +8,16 @@ body{
     font-size: 1em;
 }
 
+body > nav, header, body > div{
+    padding: 1em 0;
+    text-decoration: none;
+    color: var(--color-text-2);
+}
+
 header{
     grid-column: 1;
     grid-row: 1;
+    padding-left: 1em;
 }
 
 main{
@@ -26,14 +33,8 @@ body > nav{
 body > div{
     grid-column: 3;
     grid-row: 1;
-}
-
-body > nav, header, body > div{
-    padding: 1em 0;
-}
-
-body > div{
     text-align: right;
+    padding-right: 1em;
 }
 
 /*****************************/
@@ -44,19 +45,26 @@ body > nav{
     margin: auto;
 }
 
+body > nav p{
+    display: inline;
+    margin: 0;
+}
+
 body > nav ul{
     list-style-type: none;
     display: flex;
     padding: 0;
     margin: 0;
+    gap: 1.5em;
 }
 
 body > nav ul a{
-    display: inline;
-    justify-content: center;
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
     align-items: center;
+    justify-content: center;
     text-decoration: none;
-    color: var(--color-text-2);
 }
 
 body > nav ul svg{
@@ -64,8 +72,8 @@ body > nav ul svg{
     height: 1em;
 }
 
+/* mobiel en tablet */
 @media only screen and (max-width: 768px){
-    
     body > nav{
         position: fixed;
         bottom: 0;
@@ -75,18 +83,15 @@ body > nav ul svg{
         box-shadow: -0.5em 0 0.5em black;
     }
 
-    body > nav li{
-        flex-grow: 1;
-    }
-
-    body > nav a{
-        display: block;
-        text-align: center;
+    body > nav ul{
+        gap: 0;
+        justify-content: space-around;
     }
 }
 
-@media only screen and (min-width: 768px){
-    body > nav a{
-        padding: 1em;
+/* mobiel */
+@media only screen and (max-width: 500px){
+    body > nav p{
+        display: none;
     }
 }
