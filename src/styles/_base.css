@@ -4,6 +4,7 @@
     --color-surface-1: #fffcf2;
     --color-surface-2: #f4f2e7;
     --color-surface-3: #31494b;
+    --color-surface-4: #738b8d;
     --color-text-1: black;
     --color-text-2: #31494b;
     --color-text-3: #fffcf2;
@@ -25,14 +26,11 @@ h1, h2, h3, h4, h5, h6, header{
     font-weight: 400;
     font-style: normal;
     color: var(--color-text-2);
+    margin: 0;
 }
 
 a{
     color: inherit;
-}
-
-input, button, label{
-    cursor: pointer;
 }
 
 ::selection {
@@ -50,6 +48,10 @@ input, button, label{
     border: 0.1em solid var(--color-surface-3);
     border-radius: 50em;
     transition: all 200ms ease;
+}
+
+.chipToggle:hover {
+    background-color: var(--color-surface-2);
 }
 
 .chipToggle label{
@@ -81,4 +83,47 @@ input, button, label{
     opacity: 1;
     max-width: 1.5em;
     margin-left: 0.4em;
+}
+
+/*****************************/
+/* Buttons */
+/*****************************/
+
+.button{
+    display: inline-block;
+    background-color: var(--color-accent-1);
+    color: var(--color-text-3);
+    font-size: 1em;
+    border: none;
+    border-radius: 2em;
+    padding: 0.5em 1em;
+    transition: all 200ms ease;
+}
+
+.button:hover{
+    border-radius: 0.5em;
+}
+
+/*****************************/
+/* Inputs and forms */
+/*****************************/
+
+input, button, label{
+    cursor: pointer;
+}
+
+input[type=text], input[type=email], input[type=password], input[type=number], select {
+    padding: 0.5em;
+    margin: 0.5em 0 1em 0;
+    border: 0.1em solid var(--color-surface-4);
+    border-radius: 0.5em;
+    font-size: 1em;
+}
+
+input[type=text], input[type=email], input[type=password]{
+    width: 100%;
+}
+
+input[type=number]{
+    width: 5em;
 }
