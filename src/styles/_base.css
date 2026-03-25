@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Protest+Riot&display=swap');
 
+*{
+    scroll-behavior: smooth;
+}
+
 :root{
     --color-surface-1: #fffcf2;
     --color-surface-2: #f4f2e7;
@@ -98,6 +102,7 @@ a{
     border-radius: 2em;
     padding: 0.5em 1em;
     transition: all 200ms ease;
+    width: min-content;
 }
 
 .button:hover{
@@ -108,7 +113,7 @@ a{
 /* Inputs and forms */
 /*****************************/
 
-input, button, label{
+button, .button, .chipToggle label{
     cursor: pointer;
 }
 
@@ -118,6 +123,7 @@ input[type=text], input[type=email], input[type=password], input[type=number], s
     border: 0.1em solid var(--color-surface-4);
     border-radius: 0.5em;
     font-size: 1em;
+    box-sizing: border-box;
 }
 
 input[type=text], input[type=email], input[type=password]{
