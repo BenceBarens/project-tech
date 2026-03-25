@@ -1,0 +1,23 @@
+.registreren{
+    min-height: 100%;
+}
+
+.registreren h1, .registreren p{
+    text-align: center;
+}
+
+.registreren form{
+    display: grid;
+    grid-template-columns: 100% 100% 100% 100%;
+    width: clamp(10em, 50em, 90%);
+    overflow: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    margin: auto;
+}
+
+.registreren form fieldset{
+    width: 100%;
+    box-sizing: border-box;
+    scroll-snap-align: center;
+}
