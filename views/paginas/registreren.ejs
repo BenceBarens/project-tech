@@ -18,12 +18,14 @@
         <input type="text" placeholder="Scott" id="achternaam" name="achternaam" required>
 
         <label for="email">Email</label>
-        <input type="email" placeholder="E-mail" id="email" name="email" required>
+        <input type="email" placeholder="m.scott@dundermifflin.com" id="email" name="email" required>
 
         <label for="wachtwoord">Wachtwoord</label>
-        <input type="password" placeholder="wachtwoord" id="wachtwoord" name="wachtwoord" required>
+        <input type="password" placeholder="Wachtwoord" id="wachtwoord" name="wachtwoord" required>
 
-        <a href="#stap2" role="button">Volgende</a>
+        <div class="formNav">
+            <a href="#stap2" role="button" tabindex="-1">Volgende</a>
+        </div>
     </fieldset>
 
     <fieldset id="stap2">
@@ -38,14 +40,16 @@
             <option>Anders</option>
         </select>
 
-        <label for="land">Land</label>
-        <input type="text" placeholder="land" id="land" name="land" required>
-
         <label for="woonplaats">Woonplaats</label>
-        <input type="text" placeholder="woonplaats" id="woonplaats" name="woonplaats">
+        <input type="text" placeholder="Amsterdam" id="woonplaats" name="woonplaats">
 
-        <a href="#stap1" role="button">Vorige</a>
-        <a href="#stap3" role="button">Volgende</a>
+        <label for="land">Land</label>
+        <input type="text" placeholder="Nederland" id="land" name="land" required>
+
+        <div class="formNav">
+            <a href="#stap1" role="button" tabindex="-1">Vorige</a>
+            <a href="#stap3" role="button" tabindex="-1">Volgende</a>
+        </div>
     </fieldset>
 
     <fieldset id="stap3">
@@ -57,8 +61,10 @@
         <label for="bio">Bio</label>
         <textarea placeholder="Vertel wat leuks over jou zelf!" id="bio" name="bio"></textarea>
 
-        <a href="#stap2" role="button">Vorige</a>
-        <a href="#stap4" role="button">Volgende</a>
+        <div class="formNav">
+            <a href="#stap2" role="button" tabindex="-1">Vorige</a>
+            <a href="#stap4" role="button" tabindex="-1">Volgende</a>
+        </div>
     </fieldset>
 
     <fieldset id="stap4">
@@ -79,8 +85,10 @@
         <label for="eigenschap5">Niet prikkelbaar - Prikkelbaar</label>
         <input type="range" min="0" max="100" id="eigenschap5" name="eigenschap5">
 
-        <a href="#stap3" role="button">Vorige</a>
-        <button type="submit" class="button">Afronden</button>
+        <div class="formNav">
+            <a href="#stap3" role="button" tabindex="-1">Vorige</a>
+            <button type="submit" class="button">Afronden</button>
+        </div>
     </fieldset>
 
 </form>
