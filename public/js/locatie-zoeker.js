@@ -51,8 +51,10 @@ function voegLocatieToe(naam) {
     
     // De checkbox is onzichtbaar maar stuurt de data wel mee naar de server
     div.innerHTML = `
-        <input type="checkbox" name="bestemmingen" value="${naam}" checked style="display:none;"> 
-        <span>${naam}</span>
+        <div class="chipRadio">
+            <input type="checkbox" name="bestemmingen" value="${naam}" checked > 
+            <label>${naam}</label>
+        </div>
     `;
 
     // Verwijder de tag als je erop klikt
