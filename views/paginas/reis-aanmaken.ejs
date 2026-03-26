@@ -122,11 +122,13 @@
         type="text"
         id="locatie-zoeken"
         placeholder="Zoek een bestemming"
+        autocomplete="off"
       />
-      <button type="button">Opslaan</button>
 
-<% data.landZoeken %>
+      <ul id="suggestie-lijst"></ul>
 
+      <p><strong>Geselecteerde bestemmingen:</strong></p>
+      <div id="gekozen-locaties-container"></div>
     </fieldset>
 
     <div class="buttons">
@@ -184,7 +186,7 @@
       <label for="fietsen">Fietsen</label>
 
       <input type="checkbox" id="zwemmen" name="activiteit" value="zwemmen" />
-      <label for="zwemmen">Wandelen</label>
+      <label for="zwemmen">Zwemmen</label>
 
       <input
         type="checkbox"
@@ -275,4 +277,7 @@
       <a href="">Vorige stap</a>
     </div>
   </form>
+
+  <script src="/js/locatie-zoeker.js"></script>
+
 </main>
