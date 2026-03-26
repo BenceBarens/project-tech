@@ -3,21 +3,29 @@
     <a href="#">Nog geen account?</a>
 </div>
 
-<main>
-    <h1>Welkom terug!</h1>
+<main id="main" class="inloggen">
+  <h1>Welkom terug!</h1>
+  <p>Nog geen account? <a href="/registreren">Registreer hier.</a></p>
 
+  <form action="/inloggen" method="post">
+    <label for="email">E-mail</label>
+    <input type="email" id="email" name="email">
 
-    <form action="/inloggen" method="post">
-        <label for="email">e-mail:</label>
-        <input type="email" id="email" name="email">
+    <label for="password">Wachtwoord</label>
+    <input type="password" placeholder="Wachtwoord" id="tonen" name="wachtwoord" required><br><br>
+    <input type="checkbox" onclick="wachtwoordTonen()">Wachtwoord tonen
 
-        <label for="password">Wachtwoord:</label>
-        <input type="password" id="wachtwoordTonen" name="wachtwoord">
-        <input type="checkbox" onclick="toonWachtwoord()">Toon wachtwoord
-
-
-        <input type="submit" value="Inloggen">
-    </form>
-
-    
+    <input type="submit" value="Inloggen" class="button">
+  </form>    
 </main>
+
+<script>
+  function wachtwoordTonen() {
+  var x = document.getElementById("tonen");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>

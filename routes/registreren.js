@@ -17,6 +17,8 @@ router.post('/registreren', upload.single('profielfoto'), verwerkRegistratie);
 
 module.exports = router;
 
+
+
 async function verwerkRegistratie(req, res) {
     try {
         const db = req.app.get('db'); 
@@ -54,13 +56,3 @@ async function verwerkRegistratie(req, res) {
     }
 }
 
-
-    // wachtwoord tonen
-function toonWachtwoord() {
-  var x = document.getElementById("wachtwoordTonen");
-  if (x.type === "password") {
-    x.type = "text";
-  } else {
-    x.type = "password";
-  }
-}
