@@ -11,9 +11,23 @@
         <label for="email">e-mail:</label>
         <input type="email" id="email" name="email">
 
-        <label for="wachtwoord">Wachtwoord:</label>
-        <input type="password" id="wachtwoord" name="wachtwoord">
+        <label for="password">Wachtwoord:</label>
+        <input type="password" id="wachtwoordTonen" name="wachtwoord">
+        <input type="checkbox" onclick="toonWachtwoord()">Toon wachtwoord
+
 
         <input type="submit" value="Inloggen">
     </form>
+
+    
 </main>
+<script>
+function toonWachtwoord() {
+  var x = document.getElementById("wachtwoordTonen");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>

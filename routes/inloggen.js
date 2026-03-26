@@ -50,4 +50,7 @@ router.post('/inloggen', async (req, res) => {
 }
 })
 
+
+// wachtwoord tonen
+
 module.exports = router
