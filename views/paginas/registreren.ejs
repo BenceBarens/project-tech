@@ -24,7 +24,8 @@
     <input type="email" placeholder="E-mail" id="email" name="email">
 
     <label for="wachtwoord">Wachtwoord</label>
-    <input type="password" placeholder="wachtwoord" id="wachtwoord" name="wachtwoord" required>
+    <input type="password" id="wachtwoordTonen" name="wachtwoord">
+    <input type="checkbox" onclick="toonWachtwoord()">Toon wachtwoord
 
     <!-- Verder / Terug buttons (zonder submit) -->
     <button type="button">Verder</button>
@@ -80,3 +81,16 @@
 
 </form>
 </main>
+
+
+<script>
+    // wachtwoord tonen
+function toonWachtwoord() {
+  var x = document.getElementById("wachtwoordTonen");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>
