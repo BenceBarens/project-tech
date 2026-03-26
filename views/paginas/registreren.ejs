@@ -7,9 +7,9 @@
 <p>Heeft u al een account? <a href="/inloggen">Log hier in.</a></p>
 
 <form action="/registreren" method="POST" enctype="multipart/form-data">
-    
-    <fieldset id="stap1">
-        <legend>Basisgegevens (1/4)</legend>
+
+<fieldset id="stap1">
+    <legend>Basisgegevens (1/4)</legend>
 
         <label for="voornaam">Voornaam</label>
         <input type="text" placeholder="Michael" id="voornaam" name="voornaam" required>
@@ -21,14 +21,15 @@
         <input type="email" placeholder="m.scott@dundermifflin.com" id="email" name="email" required>
 
         <label for="wachtwoord">Wachtwoord</label>
-        <input type="password" placeholder="Wachtwoord" id="wachtwoord" name="wachtwoord" required>
+        <input type="password" placeholder="Wachtwoord" id="wachtwoord" name="wachtwoord" required><br><br>
+        <input type="checkbox" onclick="wachtwoordTonen()">Wachtwoord tonen
 
         <div class="formNav">
             <a href="#stap2" role="button" tabindex="-1">Volgende</a>
         </div>
-    </fieldset>
+</fieldset>
 
-    <fieldset id="stap2">
+<fieldset id="stap2">
         <legend>Persoonlijke info (2/4)</legend>
         <label for="geboorteDatum">Geboortedatum*</label>
         <input type="date" id="geboorteDatum" name="geboorteDatum">
@@ -93,3 +94,5 @@
 
 </form>
 </main>
+
+<script src="/js/tonen.js"></script>

@@ -2,6 +2,7 @@ const dotenv = require("dotenv")
 dotenv.config()
 
 const express = require('express')
+const session = require('express-session')
 const {MongoClient} = require('mongodb')
 const engine = require('ejs-mate')
 const path = require('path')
@@ -15,6 +16,18 @@ app.use(express.static('public'))
 app.engine('ejs', engine)
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
+
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 1000 * 60 * 60
+    }
+}))
+
+
+// ---- einde test ---
 
 // --- ROUTE HANDLERS IMPORTEREN ---
 const home = require("./routes/index")
@@ -39,6 +52,10 @@ app.use('/', register)
 
 // --- 404 AFHANDELING ---
 app.use('/', error404) 
+
+// --- TESTION SESION INLOGGEN ---
+
+
 
 // --- DATABASE & SERVER START ---
 const client = new MongoClient(process.env.DB_URI)
