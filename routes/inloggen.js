@@ -52,5 +52,12 @@ router.post('/inloggen', async (req, res) => {
 
 
 // wachtwoord tonen
-
+function toonWachtwoord() {
+  var x = document.getElementById("wachtwoordTonen");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
 module.exports = router
