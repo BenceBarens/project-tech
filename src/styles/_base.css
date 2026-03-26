@@ -103,6 +103,7 @@ a{
     padding: 0.5em 1em;
     transition: all 200ms ease;
     width: min-content;
+    text-decoration: none;
 }
 
 .button:hover{
@@ -117,7 +118,7 @@ button, .button, .chipToggle label{
     cursor: pointer;
 }
 
-input[type=text], input[type=email], input[type=password], input[type=number], select {
+input[type=text], input[type=email], input[type=password], input[type=number], input[type=date], textarea, select{
     padding: 0.5em;
     margin: 0.5em 0 1em 0;
     border: 0.1em solid var(--color-surface-4);

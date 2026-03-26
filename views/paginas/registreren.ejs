@@ -11,83 +11,104 @@
 <fieldset id="stap1">
     <legend>Basisgegevens (1/4)</legend>
 
-        <label for="voornaam">Voornaam</label>
-        <input type="text" placeholder="Michael" id="voornaam" name="voornaam" required>
-
-        <label for="achternaam">Achternaam</label>
-        <input type="text" placeholder="Scott" id="achternaam" name="achternaam" required>
-
-        <label for="email">Email</label>
-        <input type="email" placeholder="m.scott@dundermifflin.com" id="email" name="email" required>
-
-        <label for="wachtwoord">Wachtwoord</label>
-        <input type="password" placeholder="Wachtwoord" id="wachtwoord" name="wachtwoord" required><br><br>
-        <input type="checkbox" onclick="wachtwoordTonen()">Wachtwoord tonen
-
+        <div>
+            <label for="voornaam">Voornaam</label>
+            <input type="text" placeholder="Michael" id="voornaam" name="voornaam" required>
+        </div>
+        <div>
+            <label for="achternaam">Achternaam</label>
+            <input type="text" placeholder="Scott" id="achternaam" name="achternaam" required>
+        </div>
+        <div>
+            <label for="email">Email</label>
+            <input type="email" placeholder="m.scott@dundermifflin.com" id="email" name="email" required>
+        </div>
+        <div>
+            <label for="wachtwoord">Wachtwoord</label>
+            <input type="password" placeholder="Wachtwoord" id="wachtwoord" name="wachtwoord" required>
+            <input type="checkbox" onclick="wachtwoordTonen()">Wachtwoord tonen
+        </div>
         <div class="formNav">
-            <a href="#stap2" role="button" tabindex="-1">Volgende</a>
+            <a href="#stap2" role="button" tabindex="-1" class="button">Volgende</a>
         </div>
 </fieldset>
 
 <fieldset id="stap2">
         <legend>Persoonlijke info (2/4)</legend>
-        <label for="geboorteDatum">Geboortedatum*</label>
-        <input type="date" id="geboorteDatum" name="geboorteDatum">
+        <div>
+            <label for="geboorteDatum">Geboortedatum</label>
+            <input type="date" id="geboorteDatum" name="geboorteDatum">
+        </div>
 
-        <label for="geslacht">Geslacht</label>
-        <select id="geslacht" name="geslacht" required>
-            <option>Man</option>
-            <option>Vrouw</option>
-            <option>Anders</option>
-        </select>
+        <div>
+            <label for="geslacht">Geslacht</label>
+            <select id="geslacht" name="geslacht" required>
+                <option>Man</option>
+                <option>Vrouw</option>
+                <option>Anders</option>
+            </select>
+        </div>
 
-        <label for="woonplaats">Woonplaats</label>
-        <input type="text" placeholder="Amsterdam" id="woonplaats" name="woonplaats">
+        <div>
+            <label for="woonplaats">Woonplaats</label>
+            <input type="text" placeholder="Amsterdam" id="woonplaats" name="woonplaats">
+        </div>
 
-        <label for="land">Land</label>
-        <input type="text" placeholder="Nederland" id="land" name="land" required>
+        <div>
+            <label for="land">Land</label>
+            <input type="text" placeholder="Nederland" id="land" name="land" required>
+        </div>
 
         <div class="formNav">
-            <a href="#stap1" role="button" tabindex="-1">Vorige</a>
-            <a href="#stap3" role="button" tabindex="-1">Volgende</a>
+            <a href="#stap1" role="button" tabindex="-1" class="button">Vorige</a>
+            <a href="#stap3" role="button" tabindex="-1" class="button">Volgende</a>
         </div>
     </fieldset>
 
     <fieldset id="stap3">
         <legend>Vul je profiel aan (3/4)</legend>
 
-        <label for="profielfoto">Profielfoto</label>
-        <input type="file" accept="image/*" id="profielfoto" name="profielfoto">
+        <div>
+            <label for="profielfoto">Profielfoto</label>
+            <input type="file" accept="image/*" id="profielfoto" name="profielfoto">
+        </div>
 
-        <label for="bio">Bio</label>
-        <textarea placeholder="Vertel wat leuks over jou zelf!" id="bio" name="bio"></textarea>
+        <div>
+            <label for="bio">Bio</label>
+            <textarea placeholder="Vertel wat leuks over jou zelf!" id="bio" name="bio"></textarea>
+        </div>
 
         <div class="formNav">
-            <a href="#stap2" role="button" tabindex="-1">Vorige</a>
-            <a href="#stap4" role="button" tabindex="-1">Volgende</a>
+            <a href="#stap2" role="button" tabindex="-1" class="button">Vorige</a>
+            <a href="#stap4" role="button" tabindex="-1" class="button">Volgende</a>
         </div>
     </fieldset>
 
     <fieldset id="stap4">
-        <legend>persoonlijke eigenschappen (4/4)</legend>
+        <legend>Persoonlijke eigenschappen (4/4)</legend>
 
-        <label for="eigenschap1">Voorzichtig - Avontuurlijk</label>
-        <input type="range" min="0" max="100" id="eigenschap1" name="eigenschap1">
-
-        <label for="eigenschap2">Gepland gedrag - Spontaan</label>
-        <input type="range" min="0" max="100" id="eigenschap2" name="eigenschap2">
-
-        <label for="eigenschap3">Inactief - Actief</label>
-        <input type="range" min="0" max="100" id="eigenschap3" name="eigenschap3">
-
-        <label for="eigenshap4">Geen culturele interesses - Interesses</label>
-        <input type="range" min="0" max="100" id="eigenschap4" name="eigenschap4">
-
-        <label for="eigenschap5">Niet prikkelbaar - Prikkelbaar</label>
-        <input type="range" min="0" max="100" id="eigenschap5" name="eigenschap5">
-
+        <div>
+            <label for="eigenschap1">Voorzichtig - Avontuurlijk</label>
+            <input type="range" min="0" max="100" id="eigenschap1" name="eigenschap1">
+        </div>
+        <div>
+            <label for="eigenschap2">Gepland gedrag - Spontaan</label>
+            <input type="range" min="0" max="100" id="eigenschap2" name="eigenschap2">
+        </div>
+        <div>
+            <label for="eigenschap3">Inactief - Actief</label>
+            <input type="range" min="0" max="100" id="eigenschap3" name="eigenschap3">
+        </div>
+        <div>
+            <label for="eigenshap4">Geen culturele interesses - Interesses</label>
+            <input type="range" min="0" max="100" id="eigenschap4" name="eigenschap4">
+        </div>
+        <div>
+            <label for="eigenschap5">Niet prikkelbaar - Prikkelbaar</label>
+            <input type="range" min="0" max="100" id="eigenschap5" name="eigenschap5">
+        </div>
         <div class="formNav">
-            <a href="#stap3" role="button" tabindex="-1">Vorige</a>
+            <a href="#stap3" role="button" tabindex="-1" class="button">Vorige</a>
             <button type="submit" class="button">Afronden</button>
         </div>
     </fieldset>
