@@ -17,16 +17,14 @@ app.engine('ejs', engine)
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
 
-
 app.use(session({
-    secret: 'geheimeSleutel',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
         maxAge: 1000 * 60 * 60
     }
 }))
-
 
 
 // ---- einde test ---
