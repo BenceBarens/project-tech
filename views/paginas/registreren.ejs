@@ -1,13 +1,15 @@
 <% layout('layouts/boilerplate') %>
 <div>
-    <a href="#">Nog geen account?</a>
+    <a href="/inloggen">Inloggen</a>
 </div>
-
 <main id="main" class="registreren">
 <h1>Nieuw account aanmaken</h1>
 <p>Heeft u al een account? <a href="/inloggen">Log hier in.</a></p>
 
 <form action="/registreren" method="POST" enctype="multipart/form-data">
+    
+    <fieldset id="stap1">
+        <legend>Basisgegevens (1/4)</legend>
 
 
 <fieldset id="stap1">

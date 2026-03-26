@@ -65,7 +65,7 @@ const client = new MongoClient(process.env.DB_URI)
 async function connectDB() {
     try {
         await client.connect()
-        const db = client.db("reizen")
+        const db = client.db("opgeslagen-data")
         
         // Deel de database met je route-bestanden
         app.set('db', db) 
