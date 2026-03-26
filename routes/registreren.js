@@ -17,6 +17,8 @@ router.post('/registreren', upload.single('profielfoto'), verwerkRegistratie);
 
 module.exports = router;
 
+
+
 async function verwerkRegistratie(req, res) {
     try {
         const db = req.app.get('db'); 
@@ -39,18 +41,6 @@ async function verwerkRegistratie(req, res) {
             gebruiker.geboorteDatum = gebruiker.geboorteDatum.split('T')[0];
         }
 
-        if (!req.body.overslaan) {
-            const eigenschappen = ['eigenschap1', 'eigenschap2', 'eigenschap3', 'eigenschap4', 'eigenschap5'];
-            eigenschappen.forEach(e => {
-                gebruiker[e] = Number(gebruiker[e] || 0);
-            });
-        } else {
-            delete gebruiker.eigenschap1;
-            delete gebruiker.eigenschap2;
-            delete gebruiker.eigenschap3;
-            delete gebruiker.eigenschap4;
-            delete gebruiker.eigenschap5;
-        }
 
         const bestaat = await collectie.findOne({ email: gebruiker.email });
         if (bestaat) {
@@ -65,3 +55,4 @@ async function verwerkRegistratie(req, res) {
         res.status(500).send("Er is iets misgegaan bij het verwerken van de gegevens.");
     }
 }
+

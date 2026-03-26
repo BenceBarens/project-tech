@@ -7,9 +7,9 @@
 <p>Heeft u al een account? <a href="/inloggen">Log hier in.</a></p>
 
 <form action="/registreren" method="POST" enctype="multipart/form-data">
-    
-    <fieldset id="stap1">
-        <legend>Basisgegevens (1/4)</legend>
+
+<fieldset id="stap1">
+    <legend>Basisgegevens (1/4)</legend>
 
         <div>
             <label for="voornaam">Voornaam</label>
@@ -26,13 +26,14 @@
         <div>
             <label for="wachtwoord">Wachtwoord</label>
             <input type="password" placeholder="Wachtwoord" id="wachtwoord" name="wachtwoord" required>
+            <input type="checkbox" onclick="wachtwoordTonen()">Wachtwoord tonen
         </div>
         <div class="formNav">
             <a href="#stap2" role="button" tabindex="-1" class="button">Volgende</a>
         </div>
-    </fieldset>
+</fieldset>
 
-    <fieldset id="stap2">
+<fieldset id="stap2">
         <legend>Persoonlijke info (2/4)</legend>
         <div>
             <label for="geboorteDatum">Geboortedatum</label>
@@ -114,3 +115,5 @@
 
 </form>
 </main>
+
+<script src="/js/tonen.js"></script>
