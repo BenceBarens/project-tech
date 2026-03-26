@@ -1,5 +1,9 @@
 <% layout('layouts/boilerplate') %>
 
+<div>
+    <a href="#">Nog geen account?</a>
+</div>
+
 <main>
 <form action="/registreren" method="POST" enctype="multipart/form-data">
 
@@ -10,7 +14,7 @@
     <label for="profielfoto">Profielfoto</label>
     <input type="file" accept="image/*" id="profielfoto" name="profielfoto">
 
-    <label for="voornaam">Voornaam</label>
+    <label for="voornaam">Gebruikersnaam</label>
     <input type="text" placeholder="voornaam" id="voornaam" name="voornaam">
 
     <label for="geboorteDatum">Geboortedatum*</label>
@@ -69,8 +73,6 @@
 
     <label for="eigenschap5">Niet prikkelbaar - Prikkelbaar</label>
     <input type="range" min="0" max="100" id="eigenschap5" name="eigenschap5">
-
-    <!-- Overslaan button -->
 
     <!-- Afronden button -->
     <button type="submit">Afronden</button>
