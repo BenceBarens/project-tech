@@ -7,15 +7,16 @@
 }
 
 .registreren form{
+    margin: auto;
     display: grid;
     grid-template-columns: 100% 100% 100% 100%;
     width: clamp(10em, 50em, 90%);
     overflow: auto;
     scroll-snap-type: x mandatory;
     overscroll-behavior-x: contain;
-    margin: auto;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    border-radius: 1em;
 }
 
 .registreren form::-webkit-scrollbar {
@@ -23,16 +24,31 @@
 }
 
 .registreren form fieldset{
-    width: 100%;
     box-sizing: border-box;
     scroll-snap-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    padding-top: 2em;
+    margin-top: 2em;
+    border-radius: 1em;
+    border: 0.1em solid var(--color-surface-4);
+    justify-content: center;
+}
+
+.registreren form legend{
+    font-size: larger;
+}
+
+.registreren form div{
+    width: min(20em, 100%);
     display: flex;
     flex-direction: column;
 }
 
 .registreren form .formNav{
-    align-self: flex-end;
     width: 100%;
-    display: flex;
+    flex-direction: row;
+    margin-top: auto;
     justify-content: space-between;
 }
