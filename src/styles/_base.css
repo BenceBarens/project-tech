@@ -54,7 +54,7 @@ a{
     transition: all 200ms ease;
 }
 
-.chipToggle:hover, .chipRadio:hover{
+.chipToggle:hover, .chipRadio:hover, .chipVerwijderbaar:hover{
     background-color: var(--color-surface-2);
 }
 
@@ -68,7 +68,7 @@ a{
     color: var(--color-text-3);
 }
 
-.chipToggle input, .chipRadio input{
+.chipToggle input, .chipRadio input, .chipVerwijderbaar input{
     display: none;
 }
 
@@ -87,6 +87,38 @@ a{
     opacity: 1;
     max-width: 1.5em;
     margin-left: 0.4em;
+}
+
+.chipSuggestie, .chipVerwijderbaar{
+    list-style-type: none;
+    display: inline-block;
+    border: 0.1em solid var(--color-surface-3);
+    border-radius: 50em;
+    padding: 0.2em 0.6em;
+    transition: all 200ms ease;
+}
+
+.chipSuggestie{
+    background-color: var(--color-surface-4);
+    color: var(--color-text-3);
+    border: 0.1em solid var(--color-surface-4);
+}
+
+.chipSuggestie::before{
+    content: '+';
+    padding-right: 0.4em;
+    font-weight: bolder;
+}
+
+.chipSuggestie:hover{
+    background-color: var(--color-surface-3);
+    border: 0.1em solid var(--color-surface-3);
+}
+
+.chipVerwijderbaar::after {
+    content: '✖';
+    padding-left: 0.4em;
+    font-size: 0.8em;
 }
 
 /*****************************/
@@ -114,7 +146,7 @@ a{
 /* Inputs and forms */
 /*****************************/
 
-button, .button, .chipToggle label, .chipRadio label{
+button, .button, .chipToggle label, .chipRadio label, .chipSuggestie, .chipVerwijderbaar label, .chipVerwijderbaar{
     cursor: pointer;
 }
 
@@ -122,6 +154,7 @@ input[type=text], input[type=email], input[type=password], input[type=number], i
     padding: 0.5em;
     margin: 0.5em 0 1em 0;
     border: 0.1em solid var(--color-surface-4);
+    background-color: var(--color-surface-2);
     border-radius: 0.5em;
     font-size: 1em;
     box-sizing: border-box;

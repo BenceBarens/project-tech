@@ -24,6 +24,7 @@ zoekVeld.addEventListener('input', async (e) => {
         if (Array.isArray(data)) {
             data.forEach(plek => {
                 const li = document.createElement('li');
+                li.classList.add('chipSuggestie');
                 li.textContent = plek.display_name;
                 
                 li.onclick = () => {
@@ -51,7 +52,7 @@ function voegLocatieToe(naam) {
     
     // De checkbox is onzichtbaar maar stuurt de data wel mee naar de server
     div.innerHTML = `
-        <div class="chipRadio">
+        <div class="chipVerwijderbaar">
             <input type="checkbox" name="bestemmingen" value="${naam}" checked > 
             <label>${naam}</label>
         </div>
