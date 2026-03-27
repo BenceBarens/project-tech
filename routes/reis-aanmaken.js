@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const multer = require('multer')
 const axios = require('axios')
+const { ObjectId } = require('mongodb')
 
 const upload = multer({ dest: 'public/uploads/coverfoto' })
 
@@ -68,23 +69,36 @@ router.get('/zoek-locatie', async (req, res) => {
 router.post('/nieuwe-reis', upload.single('reisFoto'), async (req, res) => {
   try {
     const database = req.app.get('db') 
-    const collection = database.collection('reizen')
+    const reizenCollectie = database.collection('reizen')
+    const gebruikersCollectie = database.collection('gebruikers')
     
+    if (!req.session.gebruiker) {
+      return res.redirect('/inloggen')
+  }
+
     const reisData = req.body
 
-    // --- NODIGE AANPASSING VOOR CHECKBOXES ---
     // Zorgt ervoor dat gekozenLocaties altijd een lijst (array) is in je database
     if (reisData.gekozenLocaties && !Array.isArray(reisData.gekozenLocaties)) {
-        reisData.gekozenLocaties = [reisData.gekozenLocaties];
-    }
+      reisData.gekozenLocaties = [reisData.gekozenLocaties]
+  }
     
     if (req.file) {
       reisData.fotoPad = req.file.filename
     }
 
-    await collection.insertOne(reisData)
-    console.log("Reis succesvol opgeslagen in MongoDB!")
-    res.redirect('/')
+    // Voeg de ID van de gebruiker toe aan de reis
+    reisData.gebruikerId = new ObjectId(req.session.gebruiker.id)
+
+    const resultaat = await reizenCollectie.insertOne(reisData)
+    const nieuweReisId = resultaat.insertedId
+
+    await gebruikersCollectie.updateOne(
+      { _id: new ObjectId(req.session.gebruiker.id) },
+      { $push: { reizen: nieuweReisId } } 
+    )
+    console.log("Reis succesvol opgeslagen in MongoDB en gekoppeld aan gebruiker!")
+    res.redirect('/profiel')
     
   } catch (err) {
     console.error("Fout bij opslaan:", err)
