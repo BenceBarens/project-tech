@@ -1,0 +1,10 @@
+.profiel{
+    padding: 0 1em;
+}
+
+.profiel ul{
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+}
