@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const bcryptjs = require('bcryptjs')
+const xss = require('xss');
+
 
 
 router.get('/inloggen', (req, res) => {
@@ -13,41 +15,72 @@ router.get('/inloggen', (req, res) => {
 
 module.exports = router
 
-// LOGIN VERWERKEN
-router.post('/inloggen', async (req, res) => {
+const { body, validationResult } = require('express-validator')
+
+router.post(
+  '/inloggen',
+  [
+    body('email').isEmail().withMessage('De ingevoerde aanmeldgegevens zijn onjuist.'),
+    body('wachtwoord').notEmpty().withMessage('De ingevoerde aanmeldgegevens zijn onjuist.')
+  ],
+  async (req, res) => {
+
+    const errors = validationResult(req)
+
+    // VALIDATIE FOUTEN
+    if (!errors.isEmpty()) {
+      return res.render('paginas/inloggen', {
+        data: {
+          pagina: { titel: 'Login' },
+          fouten: errors.array()
+        }
+      })
+    }
+
     try {
-        const db = req.app.get('db')
-        const { email, wachtwoord } = req.body
+      const db = req.app.get('db')
 
-        const collectie = db.collection('gebruikers')
+      const { email, wachtwoord } = req.body
 
-        // gebruiker zoeken
-        const gebruiker = await collectie.findOne({ email: email })
+      const collectie = db.collection('gebruikers')
+      const gebruiker = await collectie.findOne({ email })
 
-        if (!gebruiker) {
-            return res.send("Email of wachtwoord klopt niet")
-        }
+      if (!gebruiker) {
+        return res.render('paginas/inloggen', {
+          data: {
+            pagina: { titel: 'Login' },
+            fouten: [{ msg: 'De ingevoerde aanmeldgegevens zijn onjuist.' }]
+          }
+        })
+      }
 
-        // wachtwoord checken
-        const klopt = await bcryptjs.compare(wachtwoord, gebruiker.wachtwoord)
+      const klopt = await bcryptjs.compare(wachtwoord, gebruiker.wachtwoord)
 
-        if (!klopt) {
-            return res.send("Email of wachtwoord klopt niet")
-        }
+      if (!klopt) {
+        return res.render('paginas/inloggen', {
+          data: {
+            pagina: { titel: 'Login' },
+            fouten: [{ msg: 'De ingevoerde aanmeldgegevens zijn onjuist.' }]
+          }
+        })
+      }
 
-        // SESSION OPSLAAN
-        req.session.gebruiker = {
-            id: gebruiker._id,
-            email: gebruiker.email,
-            voornaam: gebruiker.voornaam
-        }
+      req.session.gebruiker = {
+        id: gebruiker._id,
+        email: gebruiker.email,
+        voornaam: gebruiker.voornaam
+      }
 
-        res.redirect('/')
+      res.redirect('/')
 
     } catch (err) {
-    console.error(err)
-    res.send(err.message)
-}
-})
-
-module.exports = router
+      console.error(err)
+      res.render('paginas/inloggen', {
+        data: {
+          pagina: { titel: 'Login' },
+          fouten: [{ msg: 'Er ging iets mis, probeer opnieuw' }]
+        }
+      })
+    }
+  }
+)
