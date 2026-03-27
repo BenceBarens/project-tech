@@ -127,7 +127,14 @@ input[type=text], input[type=email], input[type=password], input[type=number], i
     box-sizing: border-box;
 }
 
-input[type=text], input[type=email], input[type=password]{
+textarea{
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+input[type=text], input[type=email], input[type=password], textarea{
     width: 100%;
 }
 

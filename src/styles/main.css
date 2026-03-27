@@ -9,4 +9,5 @@
 @import "./paginas/reis-aanmaken.css";
 
 /* Partials */
-@import "./partials/reiskaartGroot.css"
+@import "./partials/forms.css";
+@import "./partials/reiskaartGroot.css";

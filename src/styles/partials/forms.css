@@ -1,0 +1,63 @@
+.registreren form,
+.reisAanmaken form{
+    margin: auto;
+    display: grid;
+    grid-template-columns: 100% 100% 100% 100% 100% 100% 100% 100% 100% 100% 100% 100% ;
+    gap: 1em;
+    width: clamp(10em, 50em, 90%);
+    overflow: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    border-radius: 1em;
+}
+
+.reisAanmaken form fieldset,
+.registreren form fieldset{
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    scroll-snap-align: center;
+    padding-top: 2em;
+    border-radius: 1em;
+    border: 0.1em solid var(--color-surface-4);
+    background-color: var(--color-surface-1);
+}
+
+.registreren form fieldset{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1em;
+}
+
+.registreren form::-webkit-scrollbar,
+.reisAanmaken form::-webkit-scrollbar{
+    display: none;
+}
+
+.registreren form legend,
+.reisAanmaken form legend{
+    font-size: larger;
+}
+
+.registreren form div{
+    width: min(20em, 100%);
+    display: flex;
+    flex-direction: column;
+}
+
+.registreren form .formNav,
+.reisAanmaken form .formNav{
+    width: 100%;
+    margin-top: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.registreren form .formNav a:last-child,
+.reisAanmaken form .formNav a:last-child{
+    margin-left: auto;
+}
