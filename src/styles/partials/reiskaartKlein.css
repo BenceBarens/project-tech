@@ -1,0 +1,8 @@
+li.reiskaart {
+    list-style: none;
+}
+
+li.reiskaart img {
+    max-width: 5em;
+    max-height: auto;
+}

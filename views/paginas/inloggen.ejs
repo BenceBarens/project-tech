@@ -1,19 +1,22 @@
 <% layout('layouts/boilerplate') %>
 <div>
-    <a href="#">Nog geen account?</a>
+    <a href="/registreren">Registreren</a>
 </div>
 
-<main>
-    <h1>Welkom terug!</h1>
+<main id="main" class="inloggen">
+  <h1>Welkom terug!</h1>
+  <p>Nog geen account? <a href="/registreren">Registreer hier.</a></p>
 
+  <form action="/inloggen" method="post">
+    <label for="email">E-mail</label>
+    <input type="email" id="email" name="email" required>
 
-    <form>
-        <label for="email">e-mail:</label>
-        <input type="email" id="email" name="email">
+    <label for="password">Wachtwoord</label>
+    <input type="password" placeholder="Wachtwoord" id="wachtwoord" name="wachtwoord" required><br><br>
+    <input type="checkbox" onclick="wachtwoordTonen()">Wachtwoord tonen
 
-        <label for="wachtwoord">Wachtwoord:</label>
-        <input type="password" id="wachtwoord" name="wachtwoord">
-
-        <input type="submit" value="Inloggen">
-    </form>
+    <input type="submit" value="Inloggen" class="button">
+  </form>    
 </main>
+
+<script src="/js/tonen.js"></script>

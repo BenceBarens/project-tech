@@ -1,80 +1,119 @@
 <% layout('layouts/boilerplate') %>
+<div>
+    <a href="/inloggen">Inloggen</a>
+</div>
+<main id="main" class="registreren">
+<h1>Nieuw account aanmaken</h1>
+<p>Heeft u al een account? <a href="/inloggen">Log hier in.</a></p>
 
-<main>
 <form action="/registreren" method="POST" enctype="multipart/form-data">
 
-<!-- STAP 1 -->
-<fieldset>
-    <legend>Account aanmaken</legend>
+<fieldset id="stap1">
+    <legend>Basisgegevens (1/4)</legend>
 
-    <label for="profielfoto">Profielfoto</label>
-    <input type="file" accept="image/*" id="profielfoto" name="profielfoto">
-
-    <label for="voornaam">Voornaam</label>
-    <input type="text" placeholder="voornaam" id="voornaam" name="voornaam">
-
-    <label for="geboorteDatum">Geboortedatum*</label>
-    <input type="date" id="geboorteDatum" name="geboorteDatum">
-
-    <label for="email">Email</label>
-    <input type="email" placeholder="E-mail" id="email" name="email">
-
-    <label for="wachtwoord">Wachtwoord</label>
-    <input type="password" placeholder="wachtwoord" id="wachtwoord" name="wachtwoord" required>
-
-    <!-- Verder / Terug buttons (zonder submit) -->
-    <button type="button">Verder</button>
+        <div>
+            <label for="voornaam">Voornaam</label>
+            <input type="text" placeholder="Michael" id="voornaam" name="voornaam" required>
+        </div>
+        <div>
+            <label for="achternaam">Achternaam</label>
+            <input type="text" placeholder="Scott" id="achternaam" name="achternaam" required>
+        </div>
+        <div>
+            <label for="email">Email</label>
+            <input type="email" placeholder="m.scott@dundermifflin.com" id="email" name="email" required>
+        </div>
+        <div>
+            <label for="wachtwoord">Wachtwoord</label>
+            <input type="password" placeholder="Wachtwoord" id="wachtwoord" name="wachtwoord" required>
+            <input type="checkbox" onclick="wachtwoordTonen()">Wachtwoord tonen
+        </div>
+        <div class="formNav">
+            <a href="#stap2" role="button" tabindex="-1" class="button">Volgende</a>
+        </div>
 </fieldset>
 
-<!-- STAP 2 - account aanvullen-->
 <fieldset id="stap2">
-    <legend>Maak je profiel af</legend>
+        <legend>Persoonlijke info (2/4)</legend>
+        <div>
+            <label for="geboorteDatum">Geboortedatum</label>
+            <input type="date" id="geboorteDatum" name="geboorteDatum">
+        </div>
 
-    <label for="land">Land</label>
-    <input type="text" placeholder="land" id="land" name="land" required>
+        <div>
+            <label for="geslacht">Geslacht</label>
+            <select id="geslacht" name="geslacht" required>
+                <option>Man</option>
+                <option>Vrouw</option>
+                <option>Anders</option>
+            </select>
+        </div>
 
-    <label for="woonplaats">Woonplaats</label>
-    <input type="text" placeholder="woonplaats" id="woonplaats" name="woonplaats">
+        <div>
+            <label for="woonplaats">Woonplaats</label>
+            <input type="text" placeholder="Amsterdam" id="woonplaats" name="woonplaats">
+        </div>
 
-    <label for="geslacht">Geslacht</label>
-    <select id="geslacht" name="geslacht" required>
-        <option>Man</option>
-        <option>Vrouw</option>
-        <option>Anders</option>
-    </select>
+        <div>
+            <label for="land">Land</label>
+            <input type="text" placeholder="Nederland" id="land" name="land" required>
+        </div>
 
-    <label for="bio">Bio</label>
-    <textarea placeholder="Vertel wat leuks over jou zelf!" id="bio" name="bio "></textarea>
+        <div class="formNav">
+            <a href="#stap1" role="button" tabindex="-1" class="button">Vorige</a>
+            <a href="#stap3" role="button" tabindex="-1" class="button">Volgende</a>
+        </div>
+    </fieldset>
 
-    <!-- Verder / Terug buttons (zonder submit) -->
-    <button type="button">Terug</button>
-    <button type="button">Verder</button>
-</fieldset>
+    <fieldset id="stap3">
+        <legend>Vul je profiel aan (3/4)</legend>
 
-<!-- STAP 3 -->
-<fieldset id="stap3">
-    <legend>persoonlijke eigenschappen</legend>
+        <div>
+            <label for="profielfoto">Profielfoto</label>
+            <input type="file" accept="image/*" id="profielfoto" name="profielfoto">
+        </div>
 
-    <label for="eigenschap1">Voorzichtig - Avontuurlijk</label>
-    <input type="range" min="0" max="100" id="eigenschap1" name="eigenschap1">
+        <div>
+            <label for="bio">Bio</label>
+            <textarea placeholder="Vertel wat leuks over jou zelf!" id="bio" name="bio"></textarea>
+        </div>
 
-    <label for="eigenschap2">Gepland gedrag - Spontaan</label>
-    <input type="range" min="0" max="100" id="eigenschap2" name="eigenschap2">
+        <div class="formNav">
+            <a href="#stap2" role="button" tabindex="-1" class="button">Vorige</a>
+            <a href="#stap4" role="button" tabindex="-1" class="button">Volgende</a>
+        </div>
+    </fieldset>
 
-    <label for="eigenschap3">Inactief - Actief</label>
-    <input type="range" min="0" max="100" id="eigenschap3" name="eigenschap3">
+    <fieldset id="stap4">
+        <legend>Persoonlijke eigenschappen (4/4)</legend>
 
-    <label for="eigenshap4">Geen culturele interesses - Interesses</label>
-    <input type="range" min="0" max="100" id="eigenschap4" name="eigenschap4">
-
-    <label for="eigenschap5">Niet prikkelbaar - Prikkelbaar</label>
-    <input type="range" min="0" max="100" id="eigenschap5" name="eigenschap5">
-
-    <!-- Overslaan button -->
-
-    <!-- Afronden button -->
-    <button type="submit">Afronden</button>
-</fieldset>
+        <div>
+            <label for="eigenschap1">Voorzichtig - Avontuurlijk</label>
+            <input type="range" min="0" max="100" id="eigenschap1" name="eigenschap1">
+        </div>
+        <div>
+            <label for="eigenschap2">Gepland gedrag - Spontaan</label>
+            <input type="range" min="0" max="100" id="eigenschap2" name="eigenschap2">
+        </div>
+        <div>
+            <label for="eigenschap3">Inactief - Actief</label>
+            <input type="range" min="0" max="100" id="eigenschap3" name="eigenschap3">
+        </div>
+        <div>
+            <label for="eigenshap4">Geen culturele interesses - Interesses</label>
+            <input type="range" min="0" max="100" id="eigenschap4" name="eigenschap4">
+        </div>
+        <div>
+            <label for="eigenschap5">Niet prikkelbaar - Prikkelbaar</label>
+            <input type="range" min="0" max="100" id="eigenschap5" name="eigenschap5">
+        </div>
+        <div class="formNav">
+            <a href="#stap3" role="button" tabindex="-1" class="button">Vorige</a>
+            <button type="submit" class="button">Afronden</button>
+        </div>
+    </fieldset>
 
 </form>
 </main>
+
+<script src="/js/tonen.js"></script>

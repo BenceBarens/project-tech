@@ -1,9 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Protest+Riot&display=swap');
 
+*{
+    scroll-behavior: smooth;
+}
+
 :root{
     --color-surface-1: #fffcf2;
     --color-surface-2: #f4f2e7;
     --color-surface-3: #31494b;
+    --color-surface-4: #738b8d;
     --color-text-1: black;
     --color-text-2: #31494b;
     --color-text-3: #fffcf2;
@@ -25,14 +30,11 @@ h1, h2, h3, h4, h5, h6, header{
     font-weight: 400;
     font-style: normal;
     color: var(--color-text-2);
+    margin: 0;
 }
 
 a{
     color: inherit;
-}
-
-input, button, label{
-    cursor: pointer;
 }
 
 ::selection {
@@ -45,24 +47,28 @@ input, button, label{
 /* Chips */
 /*****************************/
 
-.chipToggle {
+.chipToggle, .chipRadio{
     display: inline-block;
     border: 0.1em solid var(--color-surface-3);
     border-radius: 50em;
     transition: all 200ms ease;
 }
 
-.chipToggle label{
+.chipToggle:hover, .chipRadio:hover{
+    background-color: var(--color-surface-2);
+}
+
+.chipToggle label, .chipRadio label{
     padding: 0.6em;
     line-height: 1.5;
 }
 
-.chipToggle:has(input:checked) {
+.chipToggle:has(input:checked), .chipRadio:has(input:checked){
     background-color: var(--color-surface-3);
     color: var(--color-text-3);
 }
 
-.chipToggle input {
+.chipToggle input, .chipRadio input{
     display: none;
 }
 
@@ -81,4 +87,57 @@ input, button, label{
     opacity: 1;
     max-width: 1.5em;
     margin-left: 0.4em;
+}
+
+/*****************************/
+/* Buttons */
+/*****************************/
+
+.button{
+    display: inline-block;
+    background-color: var(--color-accent-1);
+    color: var(--color-text-3);
+    font-size: 1em;
+    border: none;
+    border-radius: 2em;
+    padding: 0.5em 1em;
+    transition: all 200ms ease;
+    width: min-content;
+    text-decoration: none;
+}
+
+.button:hover{
+    border-radius: 0.5em;
+}
+
+/*****************************/
+/* Inputs and forms */
+/*****************************/
+
+button, .button, .chipToggle label, .chipRadio label{
+    cursor: pointer;
+}
+
+input[type=text], input[type=email], input[type=password], input[type=number], input[type=date], textarea, select{
+    padding: 0.5em;
+    margin: 0.5em 0 1em 0;
+    border: 0.1em solid var(--color-surface-4);
+    border-radius: 0.5em;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+textarea{
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+input[type=text], input[type=email], input[type=password], textarea{
+    width: 100%;
+}
+
+input[type=number]{
+    width: 5em;
 }

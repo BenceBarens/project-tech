@@ -6,11 +6,19 @@ body{
     display: grid;
     grid-template: auto 1fr auto / auto 1fr auto;
     font-size: 1em;
+    min-height: 100vh;
+}
+
+header, body > div{
+    padding: 1.5em 0;
+    color: var(--color-text-2);
 }
 
 header{
     grid-column: 1;
     grid-row: 1;
+    padding-left: 1em;
+    font-size: 1.2em;
 }
 
 main{
@@ -26,14 +34,14 @@ body > nav{
 body > div{
     grid-column: 3;
     grid-row: 1;
-}
-
-body > nav, header, body > div{
-    padding: 1em 0;
-}
-
-body > div{
     text-align: right;
+    padding-right: 1em;
+    height: fit-content;
+    margin: auto;
+}
+
+body > div a{
+    text-decoration: none;
 }
 
 /*****************************/
@@ -42,6 +50,13 @@ body > div{
 
 body > nav{
     margin: auto;
+    text-decoration: none;
+    color: var(--color-text-2);
+}
+
+body > nav p{
+    display: inline;
+    margin: 0;
 }
 
 body > nav ul{
@@ -52,11 +67,13 @@ body > nav ul{
 }
 
 body > nav ul a{
-    display: inline;
-    justify-content: center;
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
     align-items: center;
+    justify-content: center;
     text-decoration: none;
-    color: var(--color-text-2);
+    padding: 1.5em 1em;
 }
 
 body > nav ul svg{
@@ -64,29 +81,28 @@ body > nav ul svg{
     height: 1em;
 }
 
+/* mobiel en tablet */
 @media only screen and (max-width: 768px){
-    
     body > nav{
-        position: fixed;
+        position: sticky;
         bottom: 0;
+        grid-column: 1/4;
+        grid-row: 3;
         width: 100%;
         z-index: 1;
         background-color: var(--color-surface-1);
-        box-shadow: -0.5em 0 0.5em black;
+        box-shadow: -0.5em 0 1em -0.5em var(--color-surface-3);
     }
 
-    body > nav li{
-        flex-grow: 1;
-    }
-
-    body > nav a{
-        display: block;
-        text-align: center;
+    body > nav ul{
+        gap: 0;
+        justify-content: space-around;
     }
 }
 
-@media only screen and (min-width: 768px){
-    body > nav a{
-        padding: 1em;
+/* mobiel */
+@media only screen and (max-width: 500px){
+    body > nav p{
+        display: none;
     }
 }
