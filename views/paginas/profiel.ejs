@@ -23,30 +23,22 @@
  </a>
 
       <section class="profiel-header">
-        <img src="<%= data.gebruiker.profielfoto %>" alt="Profielfoto van <%= data.gebruiker.naam %>">
-        <h1><%= data.gebruiker.naam %></h1>
+        <img src="<%= data.gebruiker.profielfoto %>" alt="Profielfoto van <%= data.gebruiker.voornaam %>">
+        <h1><%= data.gebruiker.voornaam %> <span class="last-name"><%= data.gebruiker.achternaam %></span></h1>
         <p><%= data.gebruiker.bio %></p>
       </section>
 
-    <section class= "huidige-reizen">
+      <section class="huidige-reizen">
         <h2>Huidige reizen</h2>
-
-      <ul class="reizen-lijst">
-       <% data.gebruiker.reizen.forEach(function (reis) { %>
-      <%- include("../partials/reiskaartKlein", {reis: reis }) %>
-      <% }) %>
-      </ul>
+    
+        <ul class="reizen-lijst">
+            <% if (data.gebruiker.reizen.length > 0) { %>
+                <% data.gebruiker.reizen.forEach(function (reis) { %>
+                    <%- include("../partials/reiskaartKlein", { reis: reis }) %>
+                <% }) %>
+            <% } else { %>
+                <p>Je hebt nog geen reizen aangemaakt. <a href="/nieuwe-reis">Begin hier!</a></p>
+            <% } %>
+        </ul>
     </section>
-
-      <section class="vakantiekiekjes">
-        <h2>Vakantiekiekjes</h2>
-       <ul>
-        <% data.gebruiker.vakantiekiekjes.forEach(function (foto) { %>
-        <li>
-          <img src="<%= foto.afbeelding %>" alt="<%= foto.alt %>">
-        </li> 
-      <% }) %>
-       </ul>
-      </section>
     </main>
- 

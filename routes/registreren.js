@@ -47,8 +47,16 @@ async function verwerkRegistratie(req, res) {
             return res.send("Email bestaat al!");
         }
 
-        await collectie.insertOne(gebruiker);
-        res.redirect('/');
+        const resultaat = await collectie.insertOne(gebruiker);
+        
+        // --- DE FIX: Sessie vullen na registratie ---
+        req.session.gebruiker = {
+            id: resultaat.insertedId,
+            email: gebruiker.email,
+            voornaam: gebruiker.voornaam
+        };
+
+        res.redirect('/profiel');
 
     } catch (err) {
         console.error("Fout bij registreren:", err);
