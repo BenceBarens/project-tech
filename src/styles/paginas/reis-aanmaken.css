@@ -1,0 +1,7 @@
+.reisAanmaken h1, .reisAanmaken > p{
+    text-align: center;
+}
+
+.reisAanmaken h1{
+    margin-bottom: 1em;
+}
