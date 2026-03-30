@@ -1,0 +1,78 @@
+<% layout('layouts/boilerplate') %>
+<div></div>
+<main>
+    <img src="../uploads/coverfoto/<%= data.reis.fotoPad %>" alt="Foto van <%= data.reis.titel %>">
+    <div class="reiskaartInhoud">
+        <h1><%= data.reis.reisTitel %></h1>
+        <p><strong>Samenvatting:</strong> <%= data.reis.reis_samenvatting %></p>
+
+        <ul class="reisChips">
+            <li><%= data.reis.aantalDagen %> dagen</li>
+            <li>Budget: <%= data.reis.bedragen %></li>
+            <li>Vervoer: <%= data.reis.reizen %></li>
+            <li>Leeftijd: <%= data.reis.minLeeftijd %> tot <%= data.reis.maxLeeftijd %></li>
+        </ul>
+
+        <h3>Bestemming(en)</h3>
+        <ul>
+            <% if (data.reis.bestemmingen) { %>
+                <% if (Array.isArray(data.reis.bestemmingen)) { %>
+                    <% data.reis.bestemmingen.forEach(function(bestemming) { %>
+                        <li><%= bestemming %></li>
+                    <% }) %>
+                <% } else { %>
+                    <li><%= data.reis.bestemmingen %></li>
+                <% } %>
+            <% } else { %>
+                <li>Geen bestemmingen opgegeven</li>
+            <% } %>
+        </ul>
+
+        <h3>Activiteiten</h3>
+        <ul>
+            <% if (data.reis.activiteit) { %>
+                <% if (Array.isArray(data.reis.activiteit)) { %>
+                    <% data.reis.activiteit.forEach(function(act) { %>
+                        <li><%= act %></li>
+                    <% }) %>
+                <% } else { %>
+                    <li><%= data.reis.activiteit %></li>
+                <% } %>
+            <% } else { %>
+                <li>Geen activiteiten opgegeven</li>
+            <% } %>
+        </ul>
+
+        <h3>Verblijf</h3>
+        <ul>
+            <% if (data.reis.verblijf) { %>
+                <% if (Array.isArray(data.reis.verblijf)) { %>
+                    <% data.reis.verblijf.forEach(function(v) { %>
+                        <li><%= v %></li>
+                    <% }) %>
+                <% } else { %>
+                    <li><%= data.reis.verblijf %></li>
+                <% } %>
+            <% } else { %>
+                <li>Geen verblijfstype opgegeven</li>
+            <% } %>
+        </ul>
+
+        <h3>Reizigers</h3>
+        <p>Capaciteit: <%= data.reis.minReizigers %> - <%= data.reis.maxReizigers %> personen</p>
+        <% if (data.reis.reizigers) { %>
+            <ul>
+                <% if (Array.isArray(data.reis.reizigers)) { %>
+                    <% data.reis.reizigers.forEach(function(reiziger) { %>
+                        <li><%= reiziger %></li>
+                    <% }) %>
+                <% } else { %>
+                    <li><%= data.reis.reizigers %></li>
+                <% } %>
+            </ul>
+        <% } %>
+
+        <h3>Beschrijving</h3>
+        <p style="white-space: pre-line;"><%= data.reis.reis_beschrijving %></p>
+    </div>
+</main>

@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-    <title><%= data.pagina.titel %></title>
-    <link rel="stylesheet" href="output.css">
+    <title><%= (typeof data !== 'undefined' && data.pagina) ? data.pagina.titel : 'Viamigo' %></title>
+    <link rel="stylesheet" href="/output.css">
 </head>
 <body>
-    <header><a href="/">AppNaam</a></header>
+    <header><a href="/">Viamigo</a></header>
     <nav>
         <ul>
             <li><a href="/">
