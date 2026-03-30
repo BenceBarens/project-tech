@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Protest+Riot&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Protest+Riot&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
 
 *{
     scroll-behavior: smooth;
@@ -18,9 +18,9 @@
 html, body{
     margin: 0;
     background-color: var(--color-surface-1);
-    font-family: "Inter", sans-serif;
+    font-family: "Urbanist", sans-serif;
     font-optical-sizing: auto;
-    font-weight: 400;
+    font-weight: 450;
     font-style: normal;
     color: var(--color-text-1);
 }
