@@ -1,3 +1,15 @@
+.homeDiv label{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
+    cursor: pointer;
+}
+
+.homeDiv label svg{
+    width: 1.5em;
+}
+
 /*****************************/
 /* Filters */
 /*****************************/
@@ -28,10 +40,16 @@
 .home form fieldset{
     border: none;
     padding: 0;
+    margin-bottom: 0.5em;
 }
 
 .home form legend{
     font-weight: bold;
+    margin-bottom: 0.2em;
+}
+
+.home form fieldset div{
+    margin: 0.2em 0.1em;
 }
 
 /*****************************/
@@ -44,6 +62,10 @@
     overflow: hidden;
     box-shadow: inset 0 0 1em -0.5em var(--color-surface-3);
     flex-grow: 1;
+    max-width: 100%;
+    overflow-y: auto;
+    text-align: center;
+    padding: 2em 0;
 }
 
 /* desktop */
@@ -51,4 +73,12 @@
     .home > section:last-of-type{
         margin: 0 1em 1em 1em;
     }
+}
+
+.home .reisKaartContainer{
+    text-align: left;
+    list-style-type: none;
+    padding: 1em;
+    display: flex;
+    gap: 1em;
 }

@@ -121,6 +121,23 @@ a{
     font-size: 0.8em;
 }
 
+.chipsInfo{
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    gap: 0.5em;
+    flex-wrap: wrap;
+    margin: 0.5em 0;
+}
+
+.chipsInfo li{
+    display: inline-block;
+    border: 0.1em solid var(--color-surface-4);
+    border-radius: 50em;
+    transition: all 200ms ease;
+    padding: 0.2em 0.6em;
+}
+
 /*****************************/
 /* Buttons */
 /*****************************/
@@ -158,12 +175,9 @@ input[type=text], input[type=email], input[type=password], input[type=number], i
     border-radius: 0.5em;
     font-size: 1em;
     box-sizing: border-box;
-}
-
-textarea{
-    font-family: "Inter", sans-serif;
+    font-family: "Urbanist", sans-serif;
     font-optical-sizing: auto;
-    font-weight: 400;
+    font-weight: 450;
     font-style: normal;
 }
 

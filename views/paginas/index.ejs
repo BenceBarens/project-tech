@@ -1,18 +1,23 @@
 <% layout('layouts/boilerplate') %>
-<div>
-    <label for="filtersUitklappen">Zoekfilters</label>
+<div class="homeDiv">
+    <label for="filtersUitklappen">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M22 3H2L10 12.46V19L14 21V12.46L22 3Z" stroke="#31494B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Zoekfilters
+    </label>
 </div>
 
 <main class="home" id="main">
     <section>
         <input type="checkbox" id="filtersUitklappen" name="Zoekfilters">
         <form method="GET" action="/">
-            <fieldset>
+            <!-- <fieldset>
                 <legend>Bestemmingen</legend>
                 <ul>
                     <li><button type="button">+</button></li>
                 </ul>
-            </fieldset>
+            </fieldset> -->
 
             <fieldset>
                 <legend>Budget range</legend>
@@ -38,33 +43,20 @@
                 <label for="reizigersMax">Maximum</label>
                 <input type="number" id="reizigersMax" name="reizigersMax">
             </fieldset>
-            <fieldset>
-                <legend>Leeftijd medereizigers</legend>
-                <label for="leeftijdMin">Minimum</label>
-                <input type="number" id="leeftijdMin" name="leeftijdMin">
-                <label for="leeftijdMax">Maximum</label>
-                <input type="number" id="leeftijdMax" name="leeftijdMax">
-            </fieldset>
-            <fieldset>
-                <legend>Geslacht medereizigers</legend>
-                <div class="chipToggle"><input type="checkbox" id="geslachtVrouw" value="vrouwen" name="geslacht"><label for="geslachtVrouw">Vrouwen</label></div>
-                <div class="chipToggle"><input type="checkbox" id="geslachtMan" value="mannen" name="geslacht"><label for="geslachtMan">Mannen</label></div>
-                <div class="chipToggle"><input type="checkbox" id="geslachtAnders" value="anders" name="geslacht"><label for="geslachtAnders">Anders</label></div>
-            </fieldset>
             <input type="submit" value="Pas filters toe">
         </form>
     </section>
     <section>
-        <ul class="reisKaartContainer">
-    <% if (data.reizen && data.reizen.length > 0) { %>
-      <% data.reizen.forEach(function (reis) { %>
-      <%- include("../partials/reiskaartGroot",  { data: { reis: reis } })  %>
-      <% }) %>
-    <% } else { %>
-      <li>Er is op dit moment geen reis beschikbaar.</li>
-    <% } %>
-        </ul>
         <button class="button">Accepteren</button>
+        <ul class="reisKaartContainer">
+            <% if (data.reizen && data.reizen.length > 0) { %>
+                <% data.reizen.forEach(function (reis) { %>
+                <%- include("../partials/reiskaartGroot",  { data: { reis: reis } })  %>
+            <% }) %>
+            <% } else { %>
+                <li>Er is op dit moment geen reis beschikbaar.</li>
+            <% } %>
+        </ul>
         <button class="button">Afwijzen</button>
     </section>
 </main>
