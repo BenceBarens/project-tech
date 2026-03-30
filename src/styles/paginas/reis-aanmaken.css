@@ -5,3 +5,25 @@
 .reisAanmaken h1{
     margin-bottom: 1em;
 }
+
+#gekozen-locaties-container{
+    display: inline-flex;
+    padding: 0;
+    margin: 0;
+    gap: 0.5em;
+    flex-wrap: wrap;
+}
+
+#suggestie-lijst{
+    display: inline-flex;
+    padding: 0;
+    margin: 0;
+    gap: 0.5em;
+    flex-wrap: wrap;
+}
+
+#stap5 div:first-of-type{
+    display: flex;
+    gap: 0.5em;
+    flex-wrap: wrap;
+}
