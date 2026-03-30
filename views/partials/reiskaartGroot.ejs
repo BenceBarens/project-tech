@@ -3,9 +3,19 @@
         <img src="/uploads/coverfoto/<%= data.reis.fotoPad %>" alt="<%= data.reis.reisTitel %>">
         <div class="reiskaartInhoud">
             <h2><%= data.reis.reisTitel %></h2>
+            <p>
+                Tussen 
+                <b><time datetime="<%= data.reis.startDatum %>">
+                    <%= new Date(data.reis.startDatum).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' }) %>
+                </time></b>
+                en 
+                <b><time datetime="<%= data.reis.eindDatum %>">
+                    <%= new Date(data.reis.eindDatum).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' }) %>
+                </time></b>
+                voor een periode van <b><%= data.reis.aantalDagen %></b> dagen.
+            </p>
 
             <ul class="chipsInfo">
-                <li><%= data.reis.aantalDagen %> dagen </li>
                 <li><%= data.reis.bedragen %></li>
                 <li><%= data.reis.reizen %></li>
                 <li><%= data.reis.verblijf %></li>
