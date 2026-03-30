@@ -1,0 +1,15 @@
+.reisDetail{
+    width: clamp(10em, 50em, calc(100%-2em));
+    margin: auto;
+}
+
+.reisDetail > img{
+    width: 100%;
+    height: 15em;
+    object-fit: cover;
+    border-radius: 2em;
+}
+
+.reisDetail h1{
+    font-size: 3em;
+}

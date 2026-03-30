@@ -1,20 +1,30 @@
 <% layout('layouts/boilerplate') %>
 <div></div>
-<main>
+<main id="main" class="reisDetail">
     <img src="../uploads/coverfoto/<%= data.reis.fotoPad %>" alt="Foto van <%= data.reis.titel %>">
     <div class="reiskaartInhoud">
         <h1><%= data.reis.reisTitel %></h1>
-        <p><strong>Samenvatting:</strong> <%= data.reis.reis_samenvatting %></p>
-
-        <ul class="reisChips">
-            <li><%= data.reis.aantalDagen %> dagen</li>
-            <li>Budget: <%= data.reis.bedragen %></li>
-            <li>Vervoer: <%= data.reis.reizen %></li>
-            <li>Leeftijd: <%= data.reis.minLeeftijd %> tot <%= data.reis.maxLeeftijd %></li>
+        <ul class="chipsInfo">
+            <li>€<%= data.reis.bedragen %></li>
+            <li><%= data.reis.minLeeftijd %> tot <%= data.reis.maxLeeftijd %> jaar oud</li>
         </ul>
+        
+        <p>
+            Tussen 
+            <b><time datetime="<%= data.reis.startDatum %>">
+                <%= new Date(data.reis.startDatum).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' }) %>
+            </time></b>
+            en 
+            <b><time datetime="<%= data.reis.eindDatum %>">
+                <%= new Date(data.reis.eindDatum).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' }) %>
+            </time></b>
+            voor een periode van <b><%= data.reis.aantalDagen %></b> dagen.
+        </p>
+        
+        <p><%= data.reis.reis_samenvatting %></p>
 
         <h3>Bestemming(en)</h3>
-        <ul>
+        <ul class="chipsInfo">
             <% if (data.reis.bestemmingen) { %>
                 <% if (Array.isArray(data.reis.bestemmingen)) { %>
                     <% data.reis.bestemmingen.forEach(function(bestemming) { %>
@@ -29,7 +39,7 @@
         </ul>
 
         <h3>Activiteiten</h3>
-        <ul>
+        <ul class="chipsInfo">
             <% if (data.reis.activiteit) { %>
                 <% if (Array.isArray(data.reis.activiteit)) { %>
                     <% data.reis.activiteit.forEach(function(act) { %>
@@ -44,7 +54,7 @@
         </ul>
 
         <h3>Verblijf</h3>
-        <ul>
+        <ul class="chipsInfo">
             <% if (data.reis.verblijf) { %>
                 <% if (Array.isArray(data.reis.verblijf)) { %>
                     <% data.reis.verblijf.forEach(function(v) { %>
