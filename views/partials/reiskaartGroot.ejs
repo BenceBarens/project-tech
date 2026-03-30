@@ -1,28 +1,60 @@
-<% layout('layouts/boilerplate') %>
+
 <li>
     <article>
-        <img src="<%= data.reis.afbeelding %>" alt="<%= data.reis.afbeeldingAlt %>">
-        <div>
-            <h2><%= data.reis.titel %></h2>
-            <p><%= data.reis.korteBeschrijving %></p>
+        <img src="/images/default-avatar.svg" alt="<%= data.reis.reisTitel %>">
+        <div class="reiskaartInhoud">
+            <h2><%= data.reis.reisTitel %></h2>
+            <p><%= data.reis.reis_samenvatting %></p>
             <ul>
                 <%= data.reis.eigenschappen %>
             </ul>
+
+            <ul class="reisChips">
+                <li><%= data.reis.aantalDagen %> dagen </li>
+                <li><%= data.reis.bedragen %></li>
+                <li><%= data.reis.reizen %></li>
+                <li><%= data.reis.verblijf %></li>
+                <li><%= data.reis.minLeeftijd %> tot <%= data.reis.maxLeeftijd %></li>
+               
+            </ul>
+
             <h3>Bestemming(en)</h3>
             <ul>
-                <%= data.reis.bestemmingen %>
+                <% if (data.reis.bestemmingen && data.reis.bestemmingen.length > 0) { %>
+                    <% data.reis.bestemmingen.forEach(function(bestemming) { %>
+                        <li><%= bestemming %></li>
+                    <% }) %>
+                <% } else { %>
+                    <li>Geen bestemming</li>
+                <% } %>
             </ul>
+        
             <h3>Activiteiten</h3>
-            <ul>
-                <%= data.reis.activiteiten %>
+             <ul>
+                <% if (data.reis.activiteit && data.reis.activiteit.length > 0) { %>
+                    <% data.reis.activiteit.forEach(function(activiteit) { %>
+                        <li><%= activiteit %></li>
+                    <% }) %>
+                <% } else { %>
+                    <li>Geen activiteiten</li>
+                <% } %>
             </ul>
-            <h3>Deelnemers</h3>
-            <ul>
-                <%= data.reis.deelnemers %>
+
+            <h3>Reizigers</h3>
+             <ul>
+                <li><%= data.reis.minReizigers  %> - <%= data.reis.maxReizigers %></li>
             </ul>
+
+             <div class="reizigerAvatars">
+                <img src="/images/default-avatar.svg" alt="organisator">
+                <img src="/images/default-avatar.svg" alt="reiziger 1">
+                <img src="/images/default-avatar.svg" alt="reiziger 2">
+            </div>
+
+
             <input type="checkbox" id="reisUitklappen" name="Meer lezen">
             <label for="reisUitklappen">Meer lezen</label>
-            <p><%= data.reis.langeBeschrijving %></p>
+            <p><%= data.reis.reis_beschrijving %></p>
         </div>
     </article>
 </li>
