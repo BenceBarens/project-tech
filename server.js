@@ -35,10 +35,12 @@ const reisAanmaken = require("./routes/reis-aanmaken")
 const favorieten = require("./routes/favorieten")
 const profiel = require("./routes/profiel")
 const instellingen = require("./routes/instellingen")
+const reisDetail = require("./routes/reis-detail")
 
 const login = require("./routes/inloggen")
 const register = require("./routes/registreren")
 const error404 = require("./routes/404")
+const logout = require("./routes/uitloggen")
 
 // --- ROUTE HANDLERS KOPPELEN ---
 app.use('/', home)
@@ -46,15 +48,14 @@ app.use('/', reisAanmaken)
 app.use('/', favorieten)
 app.use('/', profiel)
 app.use('/', instellingen)
+app.use('/', reisDetail)
 
 app.use('/', login)
 app.use('/', register)
+app.use('/', logout)
 
 // --- 404 AFHANDELING ---
 app.use('/', error404) 
-
-// --- TESTION SESION INLOGGEN ---
-
 
 
 // --- DATABASE & SERVER START ---
