@@ -15,6 +15,23 @@
     --color-accent-1: #ff6f61;
 }
 
+@media (prefers-color-scheme: dark) {
+    :root{
+        --color-surface-1: #2a2f2f;
+        --color-surface-2: #212424;
+        --color-surface-3: #fffcf2;
+        --color-surface-4: #4f5757;
+        --color-text-1: #fffcf2;
+        --color-text-2: #becfd1;
+        --color-text-3: #31494b;
+        --color-accent-1: #ff6f61;
+    }
+}
+
+*{
+    color: var(--color-text-1);
+}
+
 html, body{
     margin: 0;
     background-color: var(--color-surface-1);
