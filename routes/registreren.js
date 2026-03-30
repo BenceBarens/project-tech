@@ -4,11 +4,16 @@ const multer = require('multer');
 const bcryptjs = require('bcryptjs');
 
 router.get('/registreren', (req, res) => {
-    res.render('paginas/registreren', { 
-        data: { 
-            pagina: { titel: 'Registreren' }
-        } 
-    });
+    if (req.session.gebruiker) {
+        return res.redirect('/profiel')
+    }
+    else{
+        res.render('paginas/registreren', { 
+            data: { 
+                pagina: { titel: 'Registreren' }
+            } 
+        });
+    }
 });
 
 const upload = multer({ dest: 'public/uploads/profielfoto' });

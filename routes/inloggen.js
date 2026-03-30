@@ -6,11 +6,16 @@ const xss = require('xss');
 
 
 router.get('/inloggen', (req, res) => {
-    res.render('paginas/inloggen', { 
-        data: { 
-            pagina: { titel: 'Login' }
-        } 
-    })
+    if (req.session.gebruiker) {
+        return res.redirect('/profiel')
+    }
+    else{
+      res.render('paginas/inloggen', { 
+          data: { 
+              pagina: { titel: 'Login' }
+          } 
+      })
+    }
 })
 
 module.exports = router
@@ -71,7 +76,7 @@ router.post(
         voornaam: gebruiker.voornaam
       }
 
-      res.redirect('/')
+      res.redirect('/profiel')
 
     } catch (err) {
       console.error(err)
