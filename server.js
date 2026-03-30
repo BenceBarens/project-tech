@@ -39,6 +39,7 @@ const instellingen = require("./routes/instellingen")
 const login = require("./routes/inloggen")
 const register = require("./routes/registreren")
 const error404 = require("./routes/404")
+const logout = require("./routes/uitloggen")
 
 // --- ROUTE HANDLERS KOPPELEN ---
 app.use('/', home)
@@ -49,12 +50,10 @@ app.use('/', instellingen)
 
 app.use('/', login)
 app.use('/', register)
+app.use('/', logout)
 
 // --- 404 AFHANDELING ---
 app.use('/', error404) 
-
-// --- TESTION SESION INLOGGEN ---
-
 
 
 // --- DATABASE & SERVER START ---
