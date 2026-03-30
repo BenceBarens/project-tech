@@ -36,7 +36,7 @@ router.get('/profiel', async function(req, res) {
                     bio: gebruikerData["bio"] || "Nog geen bio toegevoegd.",
                     woonplaats: gebruikerData.woonplaats,
                     land: gebruikerData.land,
-                    profielfoto: gebruikerData.profielfoto ? '/uploads/profielfoto/' + gebruikerData.profielfoto : '/images/default-avatar.svg',
+                    profielfoto: gebruikerData.profielfoto ? '/uploads/profielfoto/' + gebruikerData.profielfoto : '/images/default-avatar.svg',              
                     reizen: deReizen
                 }
             }
