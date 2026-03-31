@@ -12,7 +12,9 @@ const app = express()
 // --- CONFIGURATIE & MIDDLEWARE ---
 // Nu pas kun je 'app' gebruiken
 app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 app.use(express.static('public'))
+
 app.engine('ejs', engine)
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
@@ -39,8 +41,10 @@ const reisDetail = require("./routes/reis-detail")
 
 const login = require("./routes/inloggen")
 const register = require("./routes/registreren")
-const error404 = require("./routes/404")
+const reisAfhandelingDB = require('./routes/reisAfhandelingDB')
 const logout = require("./routes/uitloggen")
+const error404 = require("./routes/404")
+
 
 // --- ROUTE HANDLERS KOPPELEN ---
 app.use('/', home)
@@ -49,6 +53,7 @@ app.use('/', favorieten)
 app.use('/', profiel)
 app.use('/', instellingen)
 app.use('/', reisDetail)
+app.use('/', reisAfhandelingDB)
 
 app.use('/', login)
 app.use('/', register)

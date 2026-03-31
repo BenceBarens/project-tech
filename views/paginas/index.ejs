@@ -49,14 +49,23 @@
     <section>
         <button class="button">Accepteren</button>
         <ul class="reisKaartContainer">
-            <% if (data.reizen && data.reizen.length > 0) { %>
-                <% data.reizen.forEach(function (reis) { %>
-                <%- include("../partials/reiskaartGroot",  { data: { reis: reis } })  %>
-            <% }) %>
-            <% } else { %>
-                <li>Er is op dit moment geen reis beschikbaar.</li>
-            <% } %>
+           <% if (data.reizen && data.reizen.length > 0) { %>
+           <% data.reizen.forEach(function (reis) { %>
+         
+         <%- include("../partials/reiskaartGroot",  { data: { reis: reis } })  %>
+
+         <% }) %>
+         <% } else { %>
+         <li>Er is op dit moment geen reis beschikbaar.</li>
+         <% } %>
         </ul>
-        <button class="button">Afwijzen</button>
+            
+         <div class= "matchKnoppen">
+         <button  type="button" id="btn-accepteren" class="button">Accepteren</button>
+         <button  type="button" id="btn-afwijzen" class="button">Afwijzen</button>
+         </div>
+         
     </section>
 </main>
+
+<script src="/js/verwerkMatch.js"></script> 

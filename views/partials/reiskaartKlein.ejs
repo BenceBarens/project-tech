@@ -1,11 +1,21 @@
 <li class="reiskaart">
-   <a href="/reis/<%= reis._id %>">
-      <article>
-         <img src="/uploads/coverfoto/<%= reis.fotoPad %>" alt="Foto van <%= reis.titel %>">
-         <div>
-            <h3><%= reis.reisTitel %></h3>
-            <p><%= reis.bestemmingen %></p>
-         </div>
-      </article>
-   </a>
+  <a href="/reis/<%= data.reis._id %>">
+    <article>
+      <img
+        src="/uploads/coverfoto/<%= data.reis.fotoPad %>"
+        alt="Foto van <%= data.reis.reisTitel %>"
+      />
+      <div>
+        <h2><%= data.reis.reisTitel %></h2>
+        <ul class="reisChips">
+          <li><%= data.reis.aantalDagen %> dagen</li>
+          <li><%= data.reis.bedragen %></li>
+          <li><%= data.reis.reizen %></li>
+          <li><%= data.reis.verblijf %></li>
+          <li><%= data.reis.minLeeftijd %> tot <%= data.reis.maxLeeftijd %></li>
+        </ul>
+        <img src="/images/default-avatar.svg" alt="organisator" />
+      </div>
+    </article>
+  </a>
 </li>
