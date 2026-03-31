@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Protest+Riot&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Protest+Riot&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
 
 *{
     scroll-behavior: smooth;
@@ -15,12 +15,29 @@
     --color-accent-1: #ff6f61;
 }
 
+@media (prefers-color-scheme: dark) {
+    :root{
+        --color-surface-1: #2a2f2f;
+        --color-surface-2: #212424;
+        --color-surface-3: #fffcf2;
+        --color-surface-4: #4f5757;
+        --color-text-1: #fffcf2;
+        --color-text-2: #becfd1;
+        --color-text-3: #31494b;
+        --color-accent-1: #ff6f61;
+    }
+}
+
+*{
+    color: var(--color-text-1);
+}
+
 html, body{
     margin: 0;
     background-color: var(--color-surface-1);
-    font-family: "Inter", sans-serif;
+    font-family: "Urbanist", sans-serif;
     font-optical-sizing: auto;
-    font-weight: 400;
+    font-weight: 450;
     font-style: normal;
     color: var(--color-text-1);
 }
@@ -54,7 +71,7 @@ a{
     transition: all 200ms ease;
 }
 
-.chipToggle:hover, .chipRadio:hover{
+.chipToggle:hover, .chipRadio:hover, .chipVerwijderbaar:hover{
     background-color: var(--color-surface-2);
 }
 
@@ -65,10 +82,13 @@ a{
 
 .chipToggle:has(input:checked), .chipRadio:has(input:checked){
     background-color: var(--color-surface-3);
+}
+
+.chipToggle:has(input:checked) label, .chipRadio:has(input:checked){
     color: var(--color-text-3);
 }
 
-.chipToggle input, .chipRadio input{
+.chipToggle input, .chipRadio input, .chipVerwijderbaar input{
     display: none;
 }
 
@@ -87,6 +107,55 @@ a{
     opacity: 1;
     max-width: 1.5em;
     margin-left: 0.4em;
+}
+
+.chipSuggestie, .chipVerwijderbaar{
+    list-style-type: none;
+    display: inline-block;
+    border: 0.1em solid var(--color-surface-3);
+    border-radius: 50em;
+    padding: 0.2em 0.6em;
+    transition: all 200ms ease;
+}
+
+.chipSuggestie{
+    background-color: var(--color-surface-4);
+    color: var(--color-text-3);
+    border: 0.1em solid var(--color-surface-4);
+}
+
+.chipSuggestie::before{
+    content: '+';
+    padding-right: 0.4em;
+    font-weight: bolder;
+}
+
+.chipSuggestie:hover{
+    background-color: var(--color-surface-3);
+    border: 0.1em solid var(--color-surface-3);
+}
+
+.chipVerwijderbaar::after {
+    content: '✖';
+    padding-left: 0.4em;
+    font-size: 0.8em;
+}
+
+.chipsInfo{
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    gap: 0.5em;
+    flex-wrap: wrap;
+    margin: 0.5em 0;
+}
+
+.chipsInfo li{
+    display: inline-block;
+    border: 0.1em solid var(--color-surface-4);
+    border-radius: 50em;
+    transition: all 200ms ease;
+    padding: 0.2em 0.6em;
 }
 
 /*****************************/
@@ -114,7 +183,7 @@ a{
 /* Inputs and forms */
 /*****************************/
 
-button, .button, .chipToggle label, .chipRadio label{
+button, .button, .chipToggle label, .chipRadio label, .chipSuggestie, .chipVerwijderbaar label, .chipVerwijderbaar{
     cursor: pointer;
 }
 
@@ -122,15 +191,13 @@ input[type=text], input[type=email], input[type=password], input[type=number], i
     padding: 0.5em;
     margin: 0.5em 0 1em 0;
     border: 0.1em solid var(--color-surface-4);
+    background-color: var(--color-surface-2);
     border-radius: 0.5em;
     font-size: 1em;
     box-sizing: border-box;
-}
-
-textarea{
-    font-family: "Inter", sans-serif;
+    font-family: "Urbanist", sans-serif;
     font-optical-sizing: auto;
-    font-weight: 400;
+    font-weight: 450;
     font-style: normal;
 }
 

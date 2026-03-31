@@ -1,5 +1,11 @@
 <li class="reiskaart">
-   <img src="/uploads/coverfoto/<%= reis.fotoPad %>" alt="Foto van <%= reis.titel %>">
-   <h3><%= reis.reisTitel %></h3>
-   <p><%= reis.bestemmingen %></p>
+   <a href="/reis/<%= reis._id %>">
+      <article>
+         <img src="/uploads/coverfoto/<%= reis.fotoPad %>" alt="Foto van <%= reis.titel %>">
+         <div>
+            <h3><%= reis.reisTitel %></h3>
+            <p><%= reis.bestemmingen %></p>
+         </div>
+      </article>
+   </a>
 </li>

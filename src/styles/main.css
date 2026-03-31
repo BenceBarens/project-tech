@@ -4,9 +4,11 @@
 
 /* Pagina's */
 @import "./paginas/index.css";
+@import "./paginas/reis-aanmaken.css";
+@import "./paginas/profiel.css";
 @import "./paginas/inloggen.css";
 @import "./paginas/registreren.css";
-@import "./paginas/reis-aanmaken.css";
+@import "./paginas/reis-detail.css";
 
 /* Partials */
 @import "./partials/forms.css";

@@ -1,8 +1,39 @@
-li.reiskaart {
+.reiskaart{
     list-style: none;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    width: 25em;
+    min-width: 15em;
+    height: min-content;
 }
 
-li.reiskaart img {
-    max-width: 5em;
-    max-height: auto;
+.reiskaart article{
+    display: grid;
+    grid-template: auto / 30% 70%;
+    height: min-content;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.reiskaart div, .reiskaart img{
+    border: 0.1em solid var(--color-surface-3);
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.reiskaart div{
+    padding: 1em;
+    border-radius: 0.5em 1em 1em 0.5em;
+}
+
+.reiskaart img {
+    object-fit: cover;
+    width: 100%;
+    border-radius: 1em 0.5em 0.5em 1em;
+}
+
+.reiskaart a{
+    text-decoration: none;
 }
