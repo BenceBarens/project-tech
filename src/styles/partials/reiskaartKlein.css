@@ -1,4 +1,4 @@
-.reiskaart{
+.reiskaartKlein{
     list-style: none;
     overflow: hidden;
     margin: 0;
@@ -9,7 +9,7 @@
     height: min-content;
 }
 
-.reiskaart article{
+.reiskaartKlein article{
     display: grid;
     grid-template: auto / 30% 70%;
     height: min-content;
@@ -17,23 +17,23 @@
     box-sizing: border-box;
 }
 
-.reiskaart div, .reiskaart img{
+.reiskaartKlein div, .reiskaartKlein img{
     border: 0.1em solid var(--color-surface-3);
     box-sizing: border-box;
     height: 100%;
 }
 
-.reiskaart div{
+.reiskaartKlein div{
     padding: 1em;
     border-radius: 0.5em 1em 1em 0.5em;
 }
 
-.reiskaart img {
+.reiskaartKlein img {
     object-fit: cover;
     width: 100%;
     border-radius: 1em 0.5em 0.5em 1em;
 }
 
-.reiskaart a{
+.reiskaartKlein a{
     text-decoration: none;
 }

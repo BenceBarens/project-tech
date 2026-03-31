@@ -1,43 +1,39 @@
 const express = require('express')
 const router = express.Router()
 
-const { normaliseer, filter } = require('../public/js/matching')
+const { haalMatchesOp } = require('./matching')
 
 router.get('/', async (req, res) => {
 
     // reis binnenhalen 
         try {
         const db = req.app.get('db')
+        const gebruikerId = req.session?.gebruiker?.id || null
 
-        //checken wat vanuit form binnenkomt
-        console.log("filters:", req.query)
+        console.log('filters:', req.query)
+    
+         //alle reizen ophalen
+        const resultaat = await haalMatchesOp(
+            db,
+            gebruikerId,
+            req.query
+        )
 
-        //alle reizen ophalen
-        const alleReizen = await db.collection('reizen').find().toArray()
+        res.render('paginas/index', {
+            data: {
+                pagina: { titel: 'Home' },
+                reizen: resultaat
+            }
+        })
 
-
-        const reizen = normaliseer(alleReizen)
-        const resultaat = filter(reizen,req.query)
-
-
-console.log('Aantal resultaten:', resultaat.length)
-
-        // homepagina inladen 
-    res.render('paginas/index', { 
-        data: { 
-            pagina: { titel: 'Home' },
-            reizen: resultaat
-
-        } 
-    })
-} catch (err) {
-     console.error(err)
-     res.status(500).send('Fout bij het laden van de reis.')
-}
-     })
-
+    } catch (err) {
+        console.error(err)
+        res.status(500).send('Fout bij laden')
+    }
+})
+      
 module.exports = router
-
+ 
 
 
 

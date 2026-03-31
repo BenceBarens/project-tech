@@ -1,7 +1,8 @@
+const { ObjectId } = require('mongodb')
+
 //data normaliseren (consistent maken)
 //Bron: OpenAI. (2026). ChatGPT (GPT-5.3) [Large language model]. Geraadpleegd op 29 maart 2026, van https://chat.openai.com 
 //prompt: Hoe maak ik arrays bij een data model bestaande uit arrays en strings?
-
 function maakArray(waarde) {
     if (Array.isArray(waarde)) return waarde
     if (!waarde) return []
@@ -91,9 +92,37 @@ function maakArray(waarde) {
 
     }
   
+////////////////// matches ophalen ///////////////////
+
+async function haalMatchesOp(db,gebruikerId,query) {
+const alleReizen = await db.collection('reizen').find().toArray()
+
+let reizenOmTeTonen = alleReizen
+
+if (gebruikerId) {
+ const gebruiker = await db.collection('gebruikers').findOne ({
+            _id: new ObjectId(gebruikerId)
+        })
+
+        const geaccepteerde = gebruiker?.geaccepteerdeReizen || []
+        const afgewezen = gebruiker?.afgewezenReizen || []
+
+        const verwerkteIds = [...geaccepteerde, ...afgewezen].map(id => id.toString())
+
+        reizenOmTeTonen = alleReizen.filter(reis => 
+            !verwerkteIds.includes(reis._id.toString())
+        )
+    }
+
+        const genormaliseerdeReizen = normaliseer(reizenOmTeTonen)
+        return filter(genormaliseerdeReizen, query)
+    }
+
 //exporteren maakt code naar keuze zichtbaar voor index.js (encapsulation)
  module.exports = {
     maakArray,
     normaliseer,
-    filter
+    filter,
+    haalMatchesOp
 }
+
