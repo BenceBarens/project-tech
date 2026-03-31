@@ -61,13 +61,22 @@ router.get('/profiel-bewerken', async (req, res) => {
             _id: new ObjectId(req.session.gebruiker.id) 
         })
 
+        // Voeg hier de pad-logica toe
+        const profielfotoPad = gebruikerData.profielfoto 
+            ? '/uploads/profielfoto/' + gebruikerData.profielfoto 
+            : '/images/default-avatar.svg';
+
         res.render('paginas/profiel-bewerken', {
             data: {
                 pagina: { titel: 'Bewerk mijn profiel' },
-                gebruiker: gebruikerData
+                gebruiker: {
+                    ...gebruikerData, // Kopieer alle bestaande data
+                    profielfoto: profielfotoPad // Overschrijf de foto met het juiste pad
+                }
             }
         })
     } catch (err) {
+        console.error(err);
         res.status(500).send("Kon de bewerkpagina niet laden.");
     }
 })

@@ -1,0 +1,38 @@
+.profielBewerken{
+    padding: 0 1em;
+    margin: 0 auto;
+    display: flex;
+    gap: 2em;
+    flex-direction: column;
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+.profielBewerken fieldset:first-of-type{
+    display: grid;
+    grid-template: auto / 30% 70%;
+}
+
+.profielBewerken fieldset:first-of-type img{
+    width: 10em;
+    height: 10em;
+    object-fit: cover;
+    border-radius: 50em;
+}
+
+.profielBewerken fieldset:first-of-type div div:first-of-type{
+    display: grid;
+    grid-auto-flow: column;
+    column-gap: 0.5em;
+    grid-template: auto auto / auto auto;
+}
+
+@media only screen and (max-width: 768px){
+    .profielBewerken fieldset:first-of-type{
+        grid-template: auto / auto;
+    }
+
+    .profielBewerken fieldset:first-of-type div div:first-of-type{
+        grid-template: auto / auto;
+    }
+}
