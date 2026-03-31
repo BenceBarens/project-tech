@@ -82,6 +82,9 @@ a{
 
 .chipToggle:has(input:checked), .chipRadio:has(input:checked){
     background-color: var(--color-surface-3);
+}
+
+.chipToggle:has(input:checked) label, .chipRadio:has(input:checked){
     color: var(--color-text-3);
 }
 
