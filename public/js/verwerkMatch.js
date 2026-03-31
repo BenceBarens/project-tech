@@ -7,7 +7,7 @@ const knopAccepteren = document.getElementById('btn-accepteren')
 const knopAfwijzen = document.getElementById('btn-afwijzen')
 
 async function verwerkMatch(actie) {
-    const eersteKaart = container.querySelector('.reiskaart')
+    const eersteKaart = container.querySelector('.reiskaartGroot')
 
     if (!eersteKaart) {
         alert('Geen reizen meer beschikbaar!')
