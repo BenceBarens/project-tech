@@ -1,21 +1,18 @@
-<li class="reiskaart">
-  <a href="/reis/<%= data.reis._id %>">
-    <article>
-      <img
-        src="/uploads/coverfoto/<%= data.reis.fotoPad %>"
-        alt="Foto van <%= data.reis.reisTitel %>"
-      />
-      <div>
-        <h2><%= data.reis.reisTitel %></h2>
-        <ul class="reisChips">
-          <li><%= data.reis.aantalDagen %> dagen</li>
-          <li><%= data.reis.bedragen %></li>
-          <li><%= data.reis.reizen %></li>
-          <li><%= data.reis.verblijf %></li>
-          <li><%= data.reis.minLeeftijd %> tot <%= data.reis.maxLeeftijd %></li>
-        </ul>
-        <img src="/images/default-avatar.svg" alt="organisator" />
-      </div>
-    </article>
-  </a>
+<li class="reiskaartKlein">
+   <a href="/reis/<%= reis._id %>">
+      <article>
+            <img src="/uploads/coverfoto/<%= reis.fotoPad %>" alt="Foto van <%= reis.titel %>">
+            <div>
+                <h3><%= reis.reisTitel %></h3>
+                <p><%= reis.bestemmingen %></p>
+                <ul class="chipsInfo">
+                    <li><%= reis.aantalDagen %> dagen</li>
+                    <li><%= reis.bedragen %></li>
+                    <li><%= reis.reizen %></li>
+                    <li><%= reis.verblijf %></li>
+                    <li><%= reis.minLeeftijd %> tot <%= reis.maxLeeftijd %> jaar oud</li>
+                </ul>
+            </div>
+      </article>
+   </a>
 </li>
