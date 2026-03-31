@@ -91,7 +91,7 @@ body > nav ul svg{
         width: 100%;
         z-index: 1;
         background-color: var(--color-surface-1);
-        box-shadow: -0.5em 0 1em -0.5em var(--color-surface-3);
+        box-shadow: -0.5em 0 1em -0.5em black;
     }
 
     body > nav ul{

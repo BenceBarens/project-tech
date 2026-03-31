@@ -1,49 +1,53 @@
 
 <li class="reiskaart" data-reis-id="<%= data.reis._id %>">
     <article>
-        <img src="/images/default-avatar.svg" alt="<%= data.reis.reisTitel %>">
+        <img src="/uploads/coverfoto/<%= data.reis.fotoPad %>" alt="<%= data.reis.reisTitel %>">
         <div class="reiskaartInhoud">
             <h2><%= data.reis.reisTitel %></h2>
-            <p><%= data.reis.reis_samenvatting %></p>
-            <ul>
-                <%= data.reis.eigenschappen %>
-            </ul>
+            <p>
+                Tussen 
+                <b><time datetime="<%= data.reis.startDatum %>">
+                    <%= new Date(data.reis.startDatum).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' }) %>
+                </time></b>
+                en 
+                <b><time datetime="<%= data.reis.eindDatum %>">
+                    <%= new Date(data.reis.eindDatum).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' }) %>
+                </time></b>
+                voor een periode van <b><%= data.reis.aantalDagen %></b> dagen.
+            </p>
 
-            <ul class="reisChips">
-                <li><%= data.reis.aantalDagen %> dagen </li>
+            <ul class="chipsInfo">
                 <li><%= data.reis.bedragen %></li>
                 <li><%= data.reis.reizen %></li>
                 <li><%= data.reis.verblijf %></li>
-                <li><%= data.reis.minLeeftijd %> tot <%= data.reis.maxLeeftijd %></li>
-               
+                <li><%= data.reis.minLeeftijd %> tot <%= data.reis.maxLeeftijd %> jaar oud</li>
             </ul>
+            <p><%= data.reis.reis_samenvatting %></p>
 
             <h3>Bestemming(en)</h3>
-            <ul>
+            <ul class="chipsInfo">
                 <% if (data.reis.bestemmingen && data.reis.bestemmingen.length > 0) { %>
                     <% data.reis.bestemmingen.forEach(function(bestemming) { %>
                         <li><%= bestemming %></li>
                     <% }) %>
                 <% } else { %>
-                    <li>Geen bestemming</li>
+                    <li>Nog geen bestemmingen</li>
                 <% } %>
             </ul>
         
             <h3>Activiteiten</h3>
-             <ul>
+             <ul class="chipsInfo">
                 <% if (data.reis.activiteit && data.reis.activiteit.length > 0) { %>
                     <% data.reis.activiteit.forEach(function(activiteit) { %>
                         <li><%= activiteit %></li>
                     <% }) %>
                 <% } else { %>
-                    <li>Geen activiteiten</li>
+                    <li>Nog geen activiteiten</li>
                 <% } %>
             </ul>
 
             <h3>Reizigers</h3>
-             <ul>
-                <li><%= data.reis.minReizigers  %> - <%= data.reis.maxReizigers %></li>
-            </ul>
+            <p><%= data.reis.minReizigers  %> tot <%= data.reis.maxReizigers %> reizigers in totaal</p>
 
              <div class="reizigerAvatars">
                 <img src="/images/default-avatar.svg" alt="organisator">
@@ -51,11 +55,11 @@
                 <img src="/images/default-avatar.svg" alt="reiziger 2">
             </div>
 
-
-            <input type="checkbox" id="reisUitklappen" name="Meer lezen">
-            <label for="reisUitklappen">Meer lezen</label>
-            <p><%= data.reis.reis_beschrijving %></p>
-
+            <div>
+                <input type="checkbox" id="reisUitklappen" name="Meer lezen">
+                <label for="reisUitklappen">Meer lezen</label>
+                <p><%= data.reis.reis_beschrijving %></p>
+            </div>
         </div>
     </article>
 </li>
