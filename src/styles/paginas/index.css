@@ -52,6 +52,10 @@
     margin: 0.2em 0.1em;
 }
 
+.home form input[type=submit]{
+    margin-bottom: 2em;
+}
+
 /*****************************/
 /* Reis cards */
 /*****************************/
@@ -60,12 +64,14 @@
     background-color: var(--color-surface-2);
     border-radius: 2em;
     overflow: hidden;
-    box-shadow: inset 0 0 1em -0.5em var(--color-surface-3);
+    box-shadow: inset 0 0 1em -0.5em black;
     flex-grow: 1;
     max-width: 100%;
     overflow-y: auto;
     text-align: center;
     padding: 2em 0;
+    opacity: 1;
+    transition: all 300ms ease;
 }
 
 /* desktop */
@@ -73,6 +79,20 @@
     .home > section:last-of-type{
         margin: 0 1em 1em 1em;
     }
+}
+
+.home:has(#filtersUitklappen:checked) section:last-of-type{
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.home section:last-of-type *{
+    filter: blur(0);
+    transition: all 300ms ease;
+}
+
+.home:has(#filtersUitklappen:checked) section:last-of-type *{
+    filter: blur(0.5em);
 }
 
 .home .reisKaartContainer{

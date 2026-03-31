@@ -33,3 +33,7 @@
     width: 100%;
     border-radius: 1em 0.5em 0.5em 1em;
 }
+
+.reiskaart a{
+    text-decoration: none;
+}
