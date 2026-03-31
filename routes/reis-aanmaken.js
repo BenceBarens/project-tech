@@ -7,6 +7,14 @@ const { ObjectId } = require('mongodb')
 const upload = multer({ dest: 'public/uploads/coverfoto' })
 
 router.get('/nieuwe-reis', (req, res) => {
+  if (!req.session.gebruiker) {
+    return res.render('paginas/inlog-required', { 
+      data: { 
+        pagina: { titel: 'Inloggen vereist' } 
+      } 
+    })
+  }
+
   res.render('paginas/reis-aanmaken', { 
     data: { 
       pagina: { titel: 'Nieuwe reis aanmaken' } 
@@ -19,12 +27,13 @@ router.get('/nieuwe-reis', (req, res) => {
 
 router.get('/zoek-locatie', async (req, res) => {
   try {
-    // Functie om accenten te verwijderen: bijv. "Málaga" -> "Malaga"
     const verwijderAccenten = (str) => {
       return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
     };
 
     const origineleZoekTerm = req.query.q;
+    if (!origineleZoekTerm) return res.json([]);
+
     const zoekTermSchoon = verwijderAccenten(origineleZoekTerm);
     const username = 'itsjoeyhere'; 
 
@@ -46,13 +55,10 @@ router.get('/zoek-locatie', async (req, res) => {
         
         return {
           display_name: display,
-          // We slaan een "schone" versie van de naam op voor de vergelijking
           schoonNaam: verwijderAccenten(naam)
         };
       })
       .filter(item => {
-        // We vergelijken nu de "schone" zoekterm met de "schone" naam
-        // "mal" matcht nu op "Malaga" (van Málaga)
         return item.schoonNaam.startsWith(zoekTermSchoon);
       })
       .sort((a, b) => a.display_name.length - b.display_name.length);
@@ -72,22 +78,27 @@ router.post('/nieuwe-reis', upload.single('reisFoto'), async (req, res) => {
     const reizenCollectie = database.collection('reizen')
     const gebruikersCollectie = database.collection('gebruikers')
     
+    // Dubbele check: mocht de sessie verlopen tijdens het invullen
     if (!req.session.gebruiker) {
-      return res.redirect('/inloggen')
-  }
+      return res.render('paginas/inlog-required', { 
+        data: { 
+          pagina: { titel: 'Inloggen vereist' } 
+        } 
+      })
+    }
 
     const reisData = req.body
 
-    // Zorgt ervoor dat gekozenLocaties altijd een lijst (array) is in je database
+    // Normaliseer locaties: zorg dat het altijd een array is
     if (reisData.gekozenLocaties && !Array.isArray(reisData.gekozenLocaties)) {
       reisData.gekozenLocaties = [reisData.gekozenLocaties]
-  }
+    }
     
     if (req.file) {
       reisData.fotoPad = req.file.filename
     }
 
-    // Voeg de ID van de gebruiker toe aan de reis
+    // Koppel de reis aan de huidige gebruiker
     reisData.gebruikerId = new ObjectId(req.session.gebruiker.id)
 
     const resultaat = await reizenCollectie.insertOne(reisData)
@@ -97,13 +108,14 @@ router.post('/nieuwe-reis', upload.single('reisFoto'), async (req, res) => {
       { _id: new ObjectId(req.session.gebruiker.id) },
       { $push: { reizen: nieuweReisId } } 
     )
-    console.log("Reis succesvol opgeslagen in MongoDB en gekoppeld aan gebruiker!")
-    res.redirect('/profiel')
+
+    console.log("Reis succesvol opgeslagen en gekoppeld aan gebruiker!");
+    res.redirect('/profiel');
     
   } catch (err) {
-    console.error("Fout bij opslaan:", err)
-    res.status(500).send("Er ging iets mis bij het opslaan.")
+    console.error("Fout bij opslaan:", err);
+    res.status(500).send("Er ging iets mis bij het opslaan van de reis.");
   }
 })
 
-module.exports = router
+module.exports = router;
