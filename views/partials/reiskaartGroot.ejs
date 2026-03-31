@@ -1,5 +1,5 @@
 
-<li>
+<li class="reiskaart" data-reis-id="<%= data.reis._id %>">
     <article>
         <img src="/images/default-avatar.svg" alt="<%= data.reis.reisTitel %>">
         <div class="reiskaartInhoud">
@@ -55,6 +55,7 @@
             <input type="checkbox" id="reisUitklappen" name="Meer lezen">
             <label for="reisUitklappen">Meer lezen</label>
             <p><%= data.reis.reis_beschrijving %></p>
+
         </div>
     </article>
 </li>
