@@ -21,6 +21,10 @@ header{
     font-size: 1.2em;
 }
 
+header svg{
+    width: 7.5em;
+}
+
 main{
     grid-column: 1/4;
     grid-row: 2;
