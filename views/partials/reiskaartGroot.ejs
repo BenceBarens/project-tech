@@ -46,10 +46,28 @@
             </ul>
 
             <h3>Reizigers</h3>
-            <p>Capaciteit: <%= data.reis.minReizigers  %> tot <%= data.reis.maxReizigers %> reizigers in totaal</p>
-            
-            <ul id="deelnemers">
+            <p>Capaciteit: <%= data.reis.minReizigers %> tot <%= data.reis.maxReizigers %> reizigers in totaal</p>
 
+            <ul id="deelnemers">
+                <% if (data.reis.organisator) { %>
+                    <%- include('reiziger', { 
+                        data: { 
+                            gebruiker: data.reis.organisator,
+                            status: "Organisator" 
+                        } 
+                    }) %>
+                <% } %>
+
+                <% if (data.reis.deelnemersLijst && data.reis.deelnemersLijst.length > 0) { %>
+                    <% data.reis.deelnemersLijst.forEach(function(deelnemer) { %>
+                        <%- include('reiziger', { 
+                            data: { 
+                                gebruiker: deelnemer,
+                                status: "Aangevraagd" 
+                            } 
+                        }) %>
+                    <% }) %>
+                <% } %>
             </ul>
 
             <div>

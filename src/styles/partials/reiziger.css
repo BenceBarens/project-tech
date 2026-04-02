@@ -1,0 +1,17 @@
+.reizigersKaart a{
+    display: flex;
+    gap: 1em;
+    text-decoration: none;
+}
+
+.reizigersKaart img{
+    width: 3em;
+    height: 3em;
+    object-fit: cover;
+    border-radius: 50em;
+}
+
+.reizigersKaart p{
+    margin: 0;
+    width: max-content;
+}

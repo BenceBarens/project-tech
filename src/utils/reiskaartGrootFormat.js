@@ -16,11 +16,31 @@ const reisLabels = {
     'reis-optie6': 'Safari'
 };
 
+/**
+ * Formatteert de data van de grote reiskaarten voor de weergave.
+ */
 function formatteerGroteReizen(reizen) {
     if (!reizen || !Array.isArray(reizen)) return [];
     
     return reizen.map(reis => {
+        // 1. Formatteer de profielfoto van de organisator
+        if (reis.organisator) {
+            reis.organisator.profielfoto = reis.organisator.profielfoto 
+                ? '/uploads/profielfoto/' + reis.organisator.profielfoto 
+                : '/images/default-avatar.svg';
+        }
 
+        // 2. Formatteer de profielfoto's van alle deelnemers in de lijst
+        if (reis.deelnemersLijst && Array.isArray(reis.deelnemersLijst)) {
+            reis.deelnemersLijst = reis.deelnemersLijst.map(deelnemer => ({
+                ...deelnemer,
+                profielfoto: deelnemer.profielfoto 
+                    ? '/uploads/profielfoto/' + deelnemer.profielfoto 
+                    : '/images/default-avatar.svg'
+            }));
+        }
+
+        // 3. Vertaal de labels voor bedragen en reistypes
         return {
             ...reis,
             bedragen: bedragLabels[reis.bedragen] || reis.bedragen,
@@ -29,4 +49,4 @@ function formatteerGroteReizen(reizen) {
     });
 }
 
-module.exports = { formatteerGroteReizen }
+module.exports = { formatteerGroteReizen };

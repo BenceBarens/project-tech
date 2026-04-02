@@ -1,22 +1,20 @@
 const express = require('express')
 const router = express.Router()
+const { ObjectId } = require('mongodb')
 const { haalMatchesOp } = require('./matching')
 
-// Importeer de nieuwe helper voor de grote reiskaarten
+// Importeer de helper voor de grote reiskaarten
 const { formatteerGroteReizen } = require('../src/utils/reiskaartGrootFormat')
 
 /**
- * helper functie: haalt reizen op op basis van request
- * De data wordt hier direct door de formatter gehaald
+ * helper functie: haalt reizen op, verrijkt deze met alle gebruikersdata en formatteert ze.
  */
 async function haalReizenVoorRequest(req, limiet) {
     try {
         const db = req.app.get('db')
         const gebruikerId = req.session?.gebruiker?.id || null
 
-        console.log('filters:', req.query)
-
-        // Haal de ruwe data op uit de matching module
+        // 1. Haal de basis reizen op via de matching module
         const resultaat = await haalMatchesOp(
             db,
             gebruikerId,
@@ -24,19 +22,51 @@ async function haalReizenVoorRequest(req, limiet) {
             limiet
         )
 
-        // Formatteer de resultaten direct naar leesbare tekst
-        // Dit zorgt ervoor dat zowel de homepage als de /meer route de juiste data krijgen
-        return formatteerGroteReizen(resultaat);
+        // 2. Verrijk elke reis met data van de organisator EN de deelnemers
+        const reizenVerrijkt = await Promise.all(resultaat.map(async (reis) => {
+            
+            // Haal de data van de organisator op
+            let organisatorData = null;
+            if (reis.gebruikerId && ObjectId.isValid(reis.gebruikerId)) {
+                organisatorData = await db.collection('gebruikers').findOne(
+                    { _id: new ObjectId(reis.gebruikerId) },
+                    { projection: { voornaam: 1, achternaam: 1, profielfoto: 1 } }
+                );
+            }
+
+            // Haal de data van alle deelnemers uit de 'gebruikers' array op
+            let deelnemersData = [];
+            if (reis.gebruikers && Array.isArray(reis.gebruikers) && reis.gebruikers.length > 0) {
+                // Zet alle ID's om naar ObjectIds en zoek ze in één keer op met $in
+                const deelnemerIds = reis.gebruikers.map(id => new ObjectId(id));
+                deelnemersData = await db.collection('gebruikers').find(
+                    { _id: { $in: deelnemerIds } },
+                    { projection: { voornaam: 1, achternaam: 1, profielfoto: 1 } }
+                ).toArray();
+            }
+
+            return {
+                ...reis,
+                organisator: organisatorData || { 
+                    voornaam: "Onbekende", 
+                    achternaam: "Reiziger", 
+                    profielfoto: null 
+                },
+                deelnemersLijst: deelnemersData
+            };
+        }));
+
+        // 3. Formatteer de verrijkte reizen via de helper
+        return formatteerGroteReizen(reizenVerrijkt);
         
     } catch (err) {
-        console.error("Fout in haalReizenVoorRequest:", err)
-        throw err; // Gooi de fout door naar de route handler
+        console.error("Fout in haalReizenVoorRequest:", err);
+        throw err; 
     }
 }
 
 /**
- * helper functie: render 1 kaart naar HTML string
- * Wordt vooral gebruikt voor de AJAX /meer route
+ * helper functie: render 1 kaart naar HTML string voor de AJAX 'meer' route
  */
 function renderKaart(res, reis) {
     return new Promise((resolve, reject) => {
@@ -54,7 +84,6 @@ function renderKaart(res, reis) {
 // Homepage route
 router.get('/', async (req, res) => {
     try {
-        // Haal 3 geformatteerde reizen op
         const resultaat = await haalReizenVoorRequest(req, 3)
 
         res.render('paginas/index', {
@@ -69,20 +98,16 @@ router.get('/', async (req, res) => {
     }
 })
 
-// Extra kaarten ophalen (prefetch/infinite scroll)
+// Extra kaarten ophalen (AJAX)
 router.get('/meer', async (req, res) => {
     try {
-        // Haal 5 extra geformatteerde reizen op
         const reizen = await haalReizenVoorRequest(req, 5)
 
         let html = ''
-
-        // Loop door de reizen en plak de gerenderde HTML achter elkaar
         for (const reis of reizen) {
             html += await renderKaart(res, reis)
         }
         
-        // Stuur de volledige HTML-string terug naar de client
         res.send(html)
 
     } catch (err) {
