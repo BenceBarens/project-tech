@@ -1,78 +1,119 @@
 const express = require('express')
 const router = express.Router()
-
+const { ObjectId } = require('mongodb')
 const { haalMatchesOp } = require('./matching')
 
-// helper functie: haalt reizen op op basis van request
-async function haalReizenVoorRequest(req,limiet) {
-    const db = req.app.get('db')
-    const gebruikerId = req.session?.gebruiker?.id || null
+// Importeer de helper voor de grote reiskaarten
+const { formatteerGroteReizen } = require('../src/utils/reiskaartGrootFormat')
 
-    console.log('filters:', req.query)
+/**
+ * helper functie: haalt reizen op, verrijkt deze met alle gebruikersdata en formatteert ze.
+ */
+async function haalReizenVoorRequest(req, limiet) {
+    try {
+        const db = req.app.get('db')
+        const gebruikerId = req.session?.gebruiker?.id || null
 
-    return haalMatchesOp(
-        db,
-        gebruikerId,
-        req.query,
-        limiet
-    )  
+        // 1. Haal de basis reizen op via de matching module
+        const resultaat = await haalMatchesOp(
+            db,
+            gebruikerId,
+            req.query,
+            limiet
+        )
+
+        // 2. Verrijk elke reis met data van de organisator EN de deelnemers
+        const reizenVerrijkt = await Promise.all(resultaat.map(async (reis) => {
+            
+            // Haal de data van de organisator op
+            let organisatorData = null;
+            if (reis.gebruikerId && ObjectId.isValid(reis.gebruikerId)) {
+                organisatorData = await db.collection('gebruikers').findOne(
+                    { _id: new ObjectId(reis.gebruikerId) },
+                    { projection: { voornaam: 1, achternaam: 1, profielfoto: 1 } }
+                );
+            }
+
+            // Haal de data van alle deelnemers uit de 'gebruikers' array op
+            let deelnemersData = [];
+            if (reis.gebruikers && Array.isArray(reis.gebruikers) && reis.gebruikers.length > 0) {
+                // Zet alle ID's om naar ObjectIds en zoek ze in één keer op met $in
+                const deelnemerIds = reis.gebruikers.map(id => new ObjectId(id));
+                deelnemersData = await db.collection('gebruikers').find(
+                    { _id: { $in: deelnemerIds } },
+                    { projection: { voornaam: 1, achternaam: 1, profielfoto: 1 } }
+                ).toArray();
+            }
+
+            return {
+                ...reis,
+                organisator: organisatorData || { 
+                    voornaam: "Onbekende", 
+                    achternaam: "Reiziger", 
+                    profielfoto: null 
+                },
+                deelnemersLijst: deelnemersData
+            };
+        }));
+
+        // 3. Formatteer de verrijkte reizen via de helper
+        return formatteerGroteReizen(reizenVerrijkt);
+        
+    } catch (err) {
+        console.error("Fout in haalReizenVoorRequest:", err);
+        throw err; 
+    }
 }
 
-//helper functie: render 1 kaart naar HTML  
+/**
+ * helper functie: render 1 kaart naar HTML string voor de AJAX 'meer' route
+ */
 function renderKaart(res, reis) {
-    return new Promise((resolve,reject) => {
+    return new Promise((resolve, reject) => {
         res.render(
             'partials/reiskaartGroot',
-            { data: {reis} },
+            { data: { reis } },
             (err, rendered) => {
                 if (err) return reject(err)
-                    resolve(rendered)
+                resolve(rendered)
             }
         )
     })
 }
 
+// Homepage route
 router.get('/', async (req, res) => {
+    try {
+        const resultaat = await haalReizenVoorRequest(req, 3)
 
-    // reis binnenhalen 
-        try {
-            const resultaat = await haalReizenVoorRequest(req,3)
-
-            res.render('paginas/index', {
-                data: {
-                    pagina: {titel: 'Home' },
-                    reizen: resultaat
-                    }
-            })
-        } catch (err) {
-            console.error(err)
-            res.status(500).send('Fout bij laden')
-        }
-    })
-
-      
-// extra kaarten ophalen (prefetch)
-router.get('/meer', async (req,res) => {
-   try {
-       const reizen = await haalReizenVoorRequest(req, 5)
-
-       let html = ''
-
-       for (const reis of reizen) {
-       html += await renderKaart (res, reis)
+        res.render('paginas/index', {
+            data: {
+                pagina: { titel: 'Home' },
+                reizen: resultaat
+            }
+        })
+    } catch (err) {
+        console.error("Fout bij laden homepage:", err)
+        res.status(500).send('Fout bij laden van de homepagina')
     }
-       
-       res.send(html)
+})
+
+// Extra kaarten ophalen (AJAX)
+router.get('/meer', async (req, res) => {
+    try {
+        const reizen = await haalReizenVoorRequest(req, 5)
+
+        let html = ''
+        for (const reis of reizen) {
+            html += await renderKaart(res, reis)
+        }
+        
+        res.send(html)
 
     } catch (err) {
-    console.error(err)
-    res.status(500).send('Fout bij het ophalen van extra kaarten')
-   }
+        console.error("Fout bij ophalen extra kaarten:", err)
+        res.status(500).send('Fout bij het ophalen van extra kaarten')
+    }
 })
-      
+
 module.exports = router
- 
-
-
-
-

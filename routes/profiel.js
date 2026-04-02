@@ -32,7 +32,8 @@ router.get('/profiel', async function(req, res) {
                 _id: { $in: gebruikerData.reizen }
             }).toArray();
 
-            deReizen = formatteerReizen(opgehaaldeReizen)
+            // Formatteer de reizen voor eigen profiel
+            deReizen = formatteerReizen(opgehaaldeReizen);
         }
 
         res.render('paginas/profiel', {
@@ -61,7 +62,7 @@ router.get('/profiel/:id', async (req, res) => {
         const db = req.app.get('db')
         const profielId = req.params.id
 
-        // Als de gebruiker ID hetzelfde is als jouw ingelogde ID, stuur mij dan naar mijn eigen profiel
+        // Als de gebruiker ID hetzelfde is als jouw ingelogde ID, stuur mij naar eigen profiel
         if (req.session.gebruiker && req.session.gebruiker.id === profielId) {
             return res.redirect('/profiel');
         }
@@ -74,17 +75,18 @@ router.get('/profiel/:id', async (req, res) => {
             return res.status(404).send("Deze reiziger bestaat niet.")
         }
 
-        // Haalt de reizen op van de reiziger die je wilt bekijken.
         let deReizen = []
         if (bekijkReiziger.reizen && bekijkReiziger.reizen.length > 0) {
-            deReizen = await db.collection('reizen').find({
+            const opgehaaldeReizen = await db.collection('reizen').find({
                 _id: { $in: bekijkReiziger.reizen }
             }).toArray()
+
+            deReizen = formatteerReizen(opgehaaldeReizen);
         }
 
         res.render('paginas/bezoek-profiel', {
             data: {
-                pagina: { titel: 'Reiziger: ${bekijkReiziger}' },
+                pagina: { titel: "Profiel van " + bekijkReiziger.voornaam },
                 gebruiker: {
                     voornaam: bekijkReiziger.voornaam,
                     achternaam: bekijkReiziger.achternaam,
@@ -115,8 +117,8 @@ router.get('/profiel-bewerken', async (req, res) => {
             data: {
                 pagina: { titel: 'Bewerk mijn profiel' },
                 gebruiker: {
-                    ...gebruikerData, // Kopieer alle bestaande data
-                    profielfoto: profielfotoPad // Overschrijf de foto met het juiste pad
+                    ...gebruikerData,
+                    profielfoto: profielfotoPad
                 }
             }
         })
@@ -132,32 +134,26 @@ router.post('/profiel/bewerken', upload.single('profielfoto'), async (req, res) 
         const db = req.app.get('db')
         const { huidigWachtwoord, nieuwWachtwoord, voornaam, achternaam, email, geslacht, woonplaats, land, bio } = req.body
         
-        // Haal de huidige gebruiker op uit de database
         const gebruiker = await db.collection('gebruikers').findOne({
             _id: new ObjectId(req.session.gebruiker.id)
         })
 
         const updateData = { voornaam, achternaam, email, geslacht, woonplaats, land, bio }
 
-        // Foto check
         if (req.file) { 
             updateData.profielfoto = req.file.filename 
         }
 
-        // WACHTWOORD LOGICA: Alleen als de gebruiker een nieuw wachtwoord heeft ingevuld
         if (nieuwWachtwoord && nieuwWachtwoord.trim() !== "") {
-            // Vergelijk het getypte huidige wachtwoord met de hash uit de DB
             const match = await bcryptjs.compare(huidigWachtwoord, gebruiker.wachtwoord)
 
             if (!match) {
                 return res.send("Huidig wachtwoord is onjuist. Wijzigingen niet opgeslagen.")
             }
 
-            // Hash het nieuwe wachtwoord en voeg toe aan de updateData
             updateData.wachtwoord = await bcryptjs.hash(nieuwWachtwoord, 10)
         }
 
-        // UPDATE DATABASE: Dit moet BINNEN de try staan
         await db.collection('gebruikers').updateOne(
             { _id: new ObjectId(req.session.gebruiker.id) },
             { $set: updateData }
