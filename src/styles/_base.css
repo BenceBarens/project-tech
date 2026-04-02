@@ -171,7 +171,7 @@ a{
     border-radius: 2em;
     padding: 0.5em 1em;
     transition: all 200ms ease;
-    width: min-content;
+    width: fit-content;
     text-decoration: none;
 }
 
@@ -188,7 +188,7 @@ a{
     border-radius: 2em;
     padding: 0.5em 1em;
     transition: all 200ms ease;
-    width: min-content;
+    width: fit-content;
     text-decoration: none;
 }
 
