@@ -22,8 +22,6 @@ router.post('/registreren', upload.single('profielfoto'), verwerkRegistratie);
 
 module.exports = router;
 
-
-
 async function verwerkRegistratie(req, res) {
     try {
         const db = req.app.get('db'); 
@@ -33,6 +31,15 @@ async function verwerkRegistratie(req, res) {
 
         const collectie = db.collection('gebruikers');
         const gebruiker = { ...req.body };
+
+        if (gebruiker.email) {
+            gebruiker.email = gebruiker.email.toLowerCase().trim();
+        }
+
+        const bestaat = await collectie.findOne({ email: gebruiker.email });
+        if (bestaat) {
+            return res.send("Dit emailadres is al in gebruik.");
+        }
 
         if (gebruiker.wachtwoord) {
             gebruiker.wachtwoord = await bcryptjs.hash(gebruiker.wachtwoord, 10);
@@ -46,15 +53,8 @@ async function verwerkRegistratie(req, res) {
             gebruiker.geboorteDatum = gebruiker.geboorteDatum.split('T')[0];
         }
 
-
-        const bestaat = await collectie.findOne({ email: gebruiker.email });
-        if (bestaat) {
-            return res.send("Email bestaat al!");
-        }
-
         const resultaat = await collectie.insertOne(gebruiker);
         
-        // --- DE FIX: Sessie vullen na registratie ---
         req.session.gebruiker = {
             id: resultaat.insertedId,
             email: gebruiker.email,

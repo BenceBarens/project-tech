@@ -25,7 +25,7 @@ const { body, validationResult } = require('express-validator')
 router.post(
   '/inloggen',
   [
-    body('email').isEmail().withMessage('De ingevoerde aanmeldgegevens zijn onjuist.'),
+    body('email').isEmail().normalizeEmail({ gmail_remove_dots: false }).withMessage('De ingevoerde aanmeldgegevens zijn onjuist.'),
     body('wachtwoord').notEmpty().withMessage('De ingevoerde aanmeldgegevens zijn onjuist.')
   ],
   async (req, res) => {
