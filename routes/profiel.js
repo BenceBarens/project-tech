@@ -26,9 +26,38 @@ router.get('/profiel', async function(req, res) {
 
         let deReizen = []
         if (gebruikerData.reizen && gebruikerData.reizen.length > 0) {
-            deReizen = await db.collection('reizen').find({
+            const opgehaaldeReizen = await db.collection('reizen').find({
                 _id: { $in: gebruikerData.reizen }
-            }) .toArray()
+            }).toArray()
+
+            const bedragLabels = {
+                'bedrag1': '€0 tot €500',
+                'bedrag2': '€500 tot €1K',
+                'bedrag3': '€1K tot €1.5K',
+                'bedrag4': '€1.5K tot €2.5K',
+                'bedrag5': '€2.5K tot €5K',
+                'bedrag6': 'Meer dan €5K'
+            };
+
+            const reisLabels = {
+                'reis-optie1': 'Rondreis',
+                'reis-optie2': 'Resort',
+                'reis-optie3': 'Wintersport',
+                'reis-optie4': 'Camping',
+                'reis-optie5': 'City trip',
+                'reis-optie6': 'Safari'
+            };
+
+            // Pas de data aan voor elke reis
+            deReizen = opgehaaldeReizen.map(reis => {
+                return {
+                    ...reis,
+                    // Vervang de technische waarde door de leesbare tekst
+                    // Als de waarde niet gevonden wordt, behoudt hij de originele waarde
+                    bedragen: bedragLabels[reis.bedragen] || reis.bedragen,
+                    reizen: reisLabels[reis.reizen] || reis.reizen
+                };
+            });
         }
 
         // Stuur de data naar profiel pagina
