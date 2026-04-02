@@ -38,7 +38,6 @@ async function haalReizenVoorRequest(req, limiet) {
             // Haal de data van alle deelnemers uit de 'gebruikers' array op
             let deelnemersData = [];
             if (reis.gebruikers && Array.isArray(reis.gebruikers) && reis.gebruikers.length > 0) {
-                // Zet alle ID's om naar ObjectIds en zoek ze in één keer op met $in
                 const deelnemerIds = reis.gebruikers.map(id => new ObjectId(id));
                 deelnemersData = await db.collection('gebruikers').find(
                     { _id: { $in: deelnemerIds } },
@@ -67,7 +66,7 @@ async function haalReizenVoorRequest(req, limiet) {
 }
 
 /**
- * helper functie: render 1 kaart naar HTML string voor de AJAX 'meer' route
+ * helper functie: render 1 kaart naar HTML string
  */
 function renderKaart(res, reis) {
     return new Promise((resolve, reject) => {
@@ -85,46 +84,22 @@ function renderKaart(res, reis) {
 // Homepage route
 router.get('/', async (req, res) => {
     try {
-        const resultaat = await haalReizenVoorRequest(req, 3)
+        const resultaat = await haalReizenVoorRequest(req, 3);
 
-    // reis binnenhalen 
-        try {
-            const resultaat = await haalReizenVoorRequest(req,3)
-
-            res.render('paginas/index', {
-                data: {
-                    pagina: {titel: 'Home' },
-                    reizen: resultaat,
-                    filters: normaliseerFilters(req.query) // filter toevoegen
-                    }
-            })
-        } catch (err) {
-            console.error(err)
-            res.status(500).send('Fout bij laden')
-        }
-    })
-
-      
-// extra kaarten ophalen (prefetch)
-router.get('/meer', async (req,res) => {
-   try {
-       const reizen = await haalReizenVoorRequest(req, 5)
-
-       let html = ''
-
-       for (const reis of reizen) {
-       html += await renderKaart (res, reis)
-    }
-       
-       res.send(html)
-
+        res.render('paginas/index', {
+            data: {
+                pagina: { titel: 'Home' },
+                reizen: resultaat,
+                filters: normaliseerFilters(req.query) // Filter van collega toegevoegd
+            }
+        });
     } catch (err) {
-        console.error("Fout bij laden homepage:", err)
-        res.status(500).send('Fout bij laden van de homepagina')
+        console.error("Fout bij laden homepage:", err);
+        res.status(500).send('Fout bij laden');
     }
-})
+});
 
-// Extra kaarten ophalen (AJAX)
+// Extra kaarten ophalen (AJAX/Prefetch)
 router.get('/meer', async (req, res) => {
     try {
         const reizen = await haalReizenVoorRequest(req, 5)
@@ -138,7 +113,7 @@ router.get('/meer', async (req, res) => {
 
     } catch (err) {
         console.error("Fout bij ophalen extra kaarten:", err)
-        res.status(500).send('Fout bij het ophalen van extra kaarten')
+        res.status(500).send('Er ging iets mis bij het ophalen van extra kaarten.')
     }
 })
 
