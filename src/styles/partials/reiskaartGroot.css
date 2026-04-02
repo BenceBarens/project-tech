@@ -26,6 +26,16 @@
     display: none;
 }
 
+.reiskaartGroot .button2::after{
+    content: "▼";
+    font-size: 0.8em;
+    margin-left: 0.5em;
+}
+
+.home:has(#reisUitklappen:checked) .button2::after{
+    content: "▲";
+}
+
 .reiskaartInhoud{
     padding: 1em;
     background-color: var(--color-surface-1);
@@ -33,5 +43,21 @@
 }
 
 .home:has(#reisUitklappen:checked) section:last-of-type button{
+    display: none;
+}
+
+.reiskaartGroot #deelnemers{
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    gap: 2em;
+    max-width: 100%;
+    margin-bottom: 1em;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.reiskaartGroot #deelnemers::-webkit-scrollbar{
     display: none;
 }

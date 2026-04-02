@@ -1,0 +1,29 @@
+<% layout('layouts/boilerplate') %>
+
+<main class="profiel" id="main">
+    <section>
+        <img src="<%= data.gebruiker.profielfoto %>" alt="Profielfoto">
+        <div>
+            <h1><%= data.gebruiker.voornaam %> <span class="last-name"><%= data.gebruiker.achternaam %></span></h1>
+            <p><%= data.gebruiker.bio %></p>
+        </div>
+    </section>
+
+    <section>
+        <h2>Reizen van <%= data.gebruiker.voornaam %></h2>
+        <ul>
+            <% if (data.gebruiker.reizen.length > 0) { %>
+                <% data.gebruiker.reizen.forEach(function (reis) { %>
+                    <%- include("../partials/reiskaartKlein", { reis: reis }) %>
+                <% }) %>
+            <% } else { %>
+                <p>Deze reiziger heeft nog geen reizen geplaatst.</p>
+            <% } %>
+        </ul>
+    </section>
+
+    <section>
+		<h2>Deelnemende reizen</h2>
+		<p>Je neemt nog niet deel aan reizen.</p>
+	</section>
+</main>

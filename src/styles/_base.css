@@ -167,11 +167,11 @@ a{
     background-color: var(--color-accent-1);
     color: var(--color-text-3);
     font-size: 1em;
-    border: none;
+    border: 0.05em solid var(--color-accent-1);
     border-radius: 2em;
     padding: 0.5em 1em;
     transition: all 200ms ease;
-    width: min-content;
+    width: fit-content;
     text-decoration: none;
 }
 
@@ -179,11 +179,28 @@ a{
     border-radius: 0.5em;
 }
 
+.button2{
+    display: inline-block;
+    background-color: var(--color-surface-2);
+    color: var(--color-text-1);
+    font-size: 1em;
+    border: 0.05em solid var(--color-surface-4);
+    border-radius: 2em;
+    padding: 0.5em 1em;
+    transition: all 200ms ease;
+    width: fit-content;
+    text-decoration: none;
+}
+
+.button2:hover{
+    border-radius: 0.5em;
+}
+
 /*****************************/
 /* Inputs and forms */
 /*****************************/
 
-button, .button, .chipToggle label, .chipRadio label, .chipSuggestie, .chipVerwijderbaar label, .chipVerwijderbaar{
+button, .button, .button2, .chipToggle label, .chipRadio label, .chipSuggestie, .chipVerwijderbaar label, .chipVerwijderbaar{
     cursor: pointer;
 }
 
@@ -203,6 +220,10 @@ input[type=text], input[type=email], input[type=password], input[type=number], i
 
 input[type=text], input[type=email], input[type=password], textarea{
     width: 100%;
+}
+
+textarea{
+    resize: vertical;
 }
 
 input[type=number]{
