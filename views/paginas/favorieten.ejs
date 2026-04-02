@@ -1,18 +1,19 @@
 <% layout('layouts/boilerplate') %>
-  <main class="favorieten">
+
+<main class="favorieten" id="main">
     <section class="favorieten-header">
-      <h1>Favorieten</h1>
+        <h1>Favorieten</h1>
     </section>
 
-  <section class="favorieten-lijst">
-  <% if (data.gebruiker.favorieten.length === 0 ) { %>
-    <p>Je hebt nog geen favoriete reizen opgeslagen.</p>
-     <% } else { %>
-      <ul class="reizen-lijst">
-        <% data.gebruiker.favorieten.forEach(function (reis) { %>
-          <%- include('../partials/reiskaartKlein', { reis: reis }) %>
-        <% }) %>
-      </ul>
-      <% } %>
-</section>
+    <section class="favorieten-lijst">
+        <% if (data.reizen.length === 0 ) { %>
+            <p>Je hebt nog geen favoriete reizen opgeslagen.</p>
+        <% } else { %>
+            <ul class="reizen-lijst">
+                <% data.reizen.forEach(function (reis) { %>
+                    <%- include('../partials/reiskaartKlein', { reis: reis }) %>
+                <% }) %>
+            </ul>
+        <% } %>
+    </section>
 </main>

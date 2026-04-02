@@ -6,31 +6,31 @@ const bcryptjs = require('bcryptjs')
 const { formatteerReizen } = require('../src/utils/reiskaartKleinFormat')
 
 // Route waar profielfoto's worden opgeslagen
-const upload = multer({ dest: 'public/uploads/profielfoto' });
+const upload = multer({ dest: 'public/uploads/profielfoto' })
 
 router.get('/profiel', async function(req, res) {
     try {
-        const db = req.app.get('db');
+        const db = req.app.get('db')
 
         // 1. Check of er iemand is ingelogd
         if (!req.session.gebruiker) {
-            return res.redirect('/inloggen');
+            return res.redirect('/inloggen') 
         }
 
         // 2. Haal de volledige gebruikerData echt op uit de database
         const gebruikerData = await db.collection('gebruikers').findOne({ 
             _id: new ObjectId(req.session.gebruiker.id) 
-        });
+        })
 
         if (!gebruikerData) {
-            return res.send("Gebruiker niet gevonden");
+            return res.send("Gebruiker niet gevonden")
         }
 
-        let deReizen = [];
+        let deReizen = []
         if (gebruikerData.reizen && gebruikerData.reizen.length > 0) {
             const opgehaaldeReizen = await db.collection('reizen').find({
                 _id: { $in: gebruikerData.reizen }
-            }).toArray();
+            }).toArray()
 
             // Formatteer de reizen voor eigen profiel
             deReizen = formatteerReizen(opgehaaldeReizen);
@@ -49,12 +49,12 @@ router.get('/profiel', async function(req, res) {
                     reizen: deReizen
                 }
             } 
-        });
+        })
     } catch (err) {
-        console.error("Profiel fout:", err);
-        res.status(500).send("Er ging iets mis.");
+        console.error("Profiel fout:", err)
+        res.status(500).send("Er ging iets mis.")
     }
-});
+})
 
 // Bekijk andermans profiel
 router.get('/profiel/:id', async (req, res) => {
@@ -64,7 +64,7 @@ router.get('/profiel/:id', async (req, res) => {
 
         // Als de gebruiker ID hetzelfde is als jouw ingelogde ID, stuur mij naar eigen profiel
         if (req.session.gebruiker && req.session.gebruiker.id === profielId) {
-            return res.redirect('/profiel');
+            return res.redirect('/profiel')
         }
         
         const bekijkReiziger = await db.collection('gebruikers').findOne({
@@ -111,7 +111,7 @@ router.get('/profiel-bewerken', async (req, res) => {
             _id: new ObjectId(req.session.gebruiker.id) 
         })
 
-        const profielfotoPad = gebruikerData.profielfoto ? '/uploads/profielfoto/' + gebruikerData.profielfoto : '/images/default-avatar.svg';
+        const profielfotoPad = gebruikerData.profielfoto ? '/uploads/profielfoto/' + gebruikerData.profielfoto : '/images/default-avatar.svg'
 
         res.render('paginas/profiel-bewerken', {
             data: {
@@ -123,8 +123,8 @@ router.get('/profiel-bewerken', async (req, res) => {
             }
         })
     } catch (err) {
-        console.error(err);
-        res.status(500).send("Kon de bewerkpagina niet laden.");
+        console.error(err)
+        res.status(500).send("Kon de bewerkpagina niet laden.")
     }
 })
 
@@ -144,6 +144,7 @@ router.post('/profiel/bewerken', upload.single('profielfoto'), async (req, res) 
             updateData.profielfoto = req.file.filename 
         }
 
+        // Alleen als de gebruiker een nieuw wachtwoord heeft ingevuld
         if (nieuwWachtwoord && nieuwWachtwoord.trim() !== "") {
             const match = await bcryptjs.compare(huidigWachtwoord, gebruiker.wachtwoord)
 
@@ -154,6 +155,7 @@ router.post('/profiel/bewerken', upload.single('profielfoto'), async (req, res) 
             updateData.wachtwoord = await bcryptjs.hash(nieuwWachtwoord, 10)
         }
 
+        // Update de database
         await db.collection('gebruikers').updateOne(
             { _id: new ObjectId(req.session.gebruiker.id) },
             { $set: updateData }
