@@ -1,9 +1,9 @@
 /* Basis */
 @import "./_base.css";
-@import "./layouts/boilerplate.css";
+@import "./layouts/boilerplate.css"; 
 
 /* Pagina's */
-@import "./paginas/index.css";
+@import "./paginas/index.css"; 
 @import "./paginas/reis-aanmaken.css";
 @import "./paginas/profiel.css";
 @import "./paginas/inloggen.css";

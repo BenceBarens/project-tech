@@ -94,7 +94,7 @@ function maakArray(waarde) {
   
 ////////////////// matches ophalen ///////////////////
 
-async function haalMatchesOp(db,gebruikerId,query) {
+async function haalMatchesOp(db,gebruikerId,query, limiet=10) {
 const alleReizen = await db.collection('reizen').find().toArray()
 
 let reizenOmTeTonen = alleReizen
@@ -109,13 +109,24 @@ if (gebruikerId) {
 
         const verwerkteIds = [...geaccepteerde, ...afgewezen].map(id => id.toString())
 
-        reizenOmTeTonen = alleReizen.filter(reis => 
+        reizenOmTeTonen = reizenOmTeTonen.filter(reis => 
             !verwerkteIds.includes(reis._id.toString())
         )
     }
 
+    if (query.excludeIds) {
+        const excludeIds = query.excludeIds
+             .split(',')
+             .map(id => id.trim())
+             .filter(Boolean)
+             
+        reizenOmTeTonen = reizenOmTeTonen.filter(reis => 
+            !excludeIds.includes(reis._id.toString())
+        )
+    }
+
         const genormaliseerdeReizen = normaliseer(reizenOmTeTonen)
-        return filter(genormaliseerdeReizen, query)
+        return filter(genormaliseerdeReizen, query).slice(0, limiet)
     }
 
 //exporteren maakt code naar keuze zichtbaar voor index.js (encapsulation)
