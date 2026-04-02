@@ -1,5 +1,5 @@
 const { ObjectId } = require('mongodb')
-const { maakArray, normaliseerFilters } = require('../utils/array')
+const { maakArray, normaliseerFilters } = require('../src/utils/array')
 
 
 //reisdata uit DB. Objecten voor de reis zelf netjes maken
