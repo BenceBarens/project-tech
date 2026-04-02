@@ -22,29 +22,7 @@
                 <li><%= data.reis.minLeeftijd %> tot <%= data.reis.maxLeeftijd %> jaar oud</li>
             </ul>
             <p><%= data.reis.reis_samenvatting %></p>
-
-            <h3>Bestemming(en)</h3>
-            <ul class="chipsInfo">
-                <% if (data.reis.bestemmingen && data.reis.bestemmingen.length > 0) { %>
-                    <% data.reis.bestemmingen.forEach(function(bestemming) { %>
-                        <li><%= bestemming %></li>
-                    <% }) %>
-                <% } else { %>
-                    <li>Nog geen bestemmingen</li>
-                <% } %>
-            </ul>
-        
-            <h3>Activiteiten</h3>
-             <ul class="chipsInfo">
-                <% if (data.reis.activiteit && data.reis.activiteit.length > 0) { %>
-                    <% data.reis.activiteit.forEach(function(activiteit) { %>
-                        <li><%= activiteit %></li>
-                    <% }) %>
-                <% } else { %>
-                    <li>Nog geen activiteiten</li>
-                <% } %>
-            </ul>
-
+            
             <h3>Reizigers</h3>
             <p>Capaciteit: <%= data.reis.minReizigers %> tot <%= data.reis.maxReizigers %> reizigers in totaal</p>
 

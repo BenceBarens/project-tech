@@ -17,10 +17,14 @@ isFetching = true
 
 try {
     const exclude = Array.from(geladenIds).join(',')
-    const response = await fetch(`/meer?excludeIds=${encodeURIComponent(exclude)}`)
+
+    const params = new URLSearchParams(window.location.search)
+    params.set('excludeIds', exclude)
+
+    const response = await fetch(`/meer?${params.toString()}`)
 
     if (!response.ok) {
-        throw new Error(`Serverfout: ${response.status}`)
+       throw new Error(`Serverfout: ${response.status}`)
     }
 
     const html = await response.text()

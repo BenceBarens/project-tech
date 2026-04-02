@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { ObjectId } = require('mongodb')
 const { haalMatchesOp } = require('./matching')
+const { normaliseerFilters } = require('../src/utils/array')
 
 // Importeer de helper voor de grote reiskaarten
 const { formatteerGroteReizen } = require('../src/utils/reiskaartGrootFormat')
@@ -86,12 +87,37 @@ router.get('/', async (req, res) => {
     try {
         const resultaat = await haalReizenVoorRequest(req, 3)
 
-        res.render('paginas/index', {
-            data: {
-                pagina: { titel: 'Home' },
-                reizen: resultaat
-            }
-        })
+    // reis binnenhalen 
+        try {
+            const resultaat = await haalReizenVoorRequest(req,3)
+
+            res.render('paginas/index', {
+                data: {
+                    pagina: {titel: 'Home' },
+                    reizen: resultaat,
+                    filters: normaliseerFilters(req.query) // filter toevoegen
+                    }
+            })
+        } catch (err) {
+            console.error(err)
+            res.status(500).send('Fout bij laden')
+        }
+    })
+
+      
+// extra kaarten ophalen (prefetch)
+router.get('/meer', async (req,res) => {
+   try {
+       const reizen = await haalReizenVoorRequest(req, 5)
+
+       let html = ''
+
+       for (const reis of reizen) {
+       html += await renderKaart (res, reis)
+    }
+       
+       res.send(html)
+
     } catch (err) {
         console.error("Fout bij laden homepage:", err)
         res.status(500).send('Fout bij laden van de homepagina')
