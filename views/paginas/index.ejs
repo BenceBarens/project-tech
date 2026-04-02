@@ -46,24 +46,32 @@
             <input type="submit" value="Pas filters toe" class="button">
         </form>
     </section>
-    <section>
-        <button  type="button" id="btn-accepteren" class="button">Accepteren</button>
+    <section class="matching-container">
+        <div class="knop-boven">
+            <% if (data.reizen && data.reizen.length > 0) { %>
+                <button type="button" id="btn-accepteren" class="button button-save" data-id="<%= data.reizen[0]._id %>">
+                    Accepteren
+                </button>
+            <% } %>
+        </div>
+    
         <ul class="reisKaartContainer">
            <% if (data.reizen && data.reizen.length > 0) { %>
-           <% data.reizen.forEach(function (reis) { %>
-         
-         <%- include("../partials/reiskaartGroot",  { data: { reis: reis } })  %>
-
-         <% }) %>
-         <% } else { %>
-         <li>Er is op dit moment geen reis beschikbaar.</li>
-         <% } %>
+               <% data.reizen.forEach(function (reis) { %>
+                   <%- include("../partials/reiskaartGroot", { data: { reis: reis } }) %>
+               <% }) %>
+           <% } else { %>
+               <li>Er is op dit moment geen reis beschikbaar.</li>
+           <% } %>
         </ul>
             
-         <div class= "matchKnoppen">
-         <button  type="button" id="btn-afwijzen" class="button">Afwijzen</button>
-         </div>
-         
+        <div class="knop-onder">
+            <% if (data.reizen && data.reizen.length > 0) { %>
+                <button type="button" id="btn-afwijzen" class="button button-skip" data-id="<%= data.reizen[0]._id %>">
+                    Afwijzen
+                </button>
+            <% } %>
+        </div>
     </section>
 </main>
 
