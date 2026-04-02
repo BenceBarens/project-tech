@@ -46,17 +46,15 @@
             </ul>
 
             <h3>Reizigers</h3>
-            <p><%= data.reis.minReizigers  %> tot <%= data.reis.maxReizigers %> reizigers in totaal</p>
+            <p>Capaciteit: <%= data.reis.minReizigers  %> tot <%= data.reis.maxReizigers %> reizigers in totaal</p>
+            
+            <ul id="deelnemers">
 
-             <div class="reizigerAvatars">
-                <img src="/images/default-avatar.svg" alt="organisator">
-                <img src="/images/default-avatar.svg" alt="reiziger 1">
-                <img src="/images/default-avatar.svg" alt="reiziger 2">
-            </div>
+            </ul>
 
             <div>
                 <input type="checkbox" id="reisUitklappen" name="Meer lezen">
-                <label for="reisUitklappen">Meer lezen</label>
+                <label for="reisUitklappen" class="button2">Meer lezen</label>
                 <p><%= data.reis.reis_beschrijving %></p>
             </div>
         </div>
