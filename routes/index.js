@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const { haalMatchesOp } = require('./matching')
-const { normaliseerFilters } = require('../utils/array')
+const { normaliseerFilters } = require('../src/utils/array')
 
 // helper functie: haalt reizen op op basis van request
 async function haalReizenVoorRequest(req,limiet) {
