@@ -20,7 +20,7 @@
                     <input type="text" id="achternaam" name="achternaam" value="<%= data.gebruiker.achternaam %>">
                 </div>
                 <div>
-                    <label for="bio">Over mij (Bio)</label>
+                    <label for="bio">Over mij (bio)</label>
                     <textarea id="bio" name="bio"><%= data.gebruiker.bio || '' %></textarea>
                 </div>
             </div>
@@ -32,21 +32,23 @@
             <label for="email">Email</label>
             <input type="email" id="email" name="email" value="<%= data.gebruiker.email %>">
 
-                <label for="geslacht">Geslacht</label>
-                <select id="geslacht" name="geslacht" required>
-                    <option value="Man" <%= data.gebruiker.geslacht === 'Man' ? 'selected' : '' %>>Man</option>
-                    <option value="Vrouw" <%= data.gebruiker.geslacht === 'Vrouw' ? 'selected' : '' %>>Vrouw</option>
-                    <option value="Anders" <%= data.gebruiker.geslacht === 'Anders' ? 'selected' : '' %>>Anders</option>
-                </select>
+            <label for="geslacht">Geslacht</label><br>
+            <select id="geslacht" name="geslacht" required>
+                <option value="Man" <%= data.gebruiker.geslacht === 'Man' ? 'selected' : '' %>>Man</option>
+                <option value="Vrouw" <%= data.gebruiker.geslacht === 'Vrouw' ? 'selected' : '' %>>Vrouw</option>
+                <option value="Anders" <%= data.gebruiker.geslacht === 'Anders' ? 'selected' : '' %>>Anders</option>
+            </select>
 
-            <label for="woonplaats">Woonplaats</label>
-            <input type="text" id="woonplaats" name="woonplaats" value="<%= data.gebruiker.woonplaats || '' %>">
+            <div>
+                <label for="woonplaats">Woonplaats</label>
+                <input type="text" id="woonplaats" name="woonplaats" value="<%= data.gebruiker.woonplaats || '' %>">
+            </div>
 
         </fieldset>
 
         <fieldset>
             <legend>Wachtwoord wijzigen</legend>
-            <p>Laat leeg als je je wachtwoord niet wilt veranderen</p>
+            <p>Laat leeg als je je wachtwoord niet wilt veranderen.</p>
 
             <label for="huidigWachtwoord">Huidig wachtwoord</label>
             <input type="password" id="huidigWachtwoord" name="huidigWachtwoord" placeholder="Huidige wachtwoord">
@@ -55,6 +57,6 @@
             <input type="password" id="nieuwWachtwoord" name="nieuwWachtwoord" placeholder="Nieuwe wachtwoord">
         </fieldset>
 
-        <button type="submit" class="button">Wijzigingen opslaan</button>
+        <button type="submit" class="button">Wijzigingen opslaan</button> <a href="/profiel" class="button2">Annuleren</a>
     </form>
 </main>
