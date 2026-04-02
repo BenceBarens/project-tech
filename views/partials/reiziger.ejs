@@ -1,5 +1,9 @@
-<li>
-    <img src="<%= data.gebruiker.profielfoto %>" alt="Profielfoto van <%= data.gebruiker.voornaam %>">
-    <p><%= data.gebruiker.voornaam %> <%= data.gebruiker.achternaam %></p>
-    <p>Status persoon</p>
+<li class="reizigersKaart">
+    <a href="profiel/<%= data.gebruiker._id %>">
+        <img src="<%= data.gebruiker.profielfoto %>" alt="Profielfoto van <%= data.gebruiker.voornaam %>">
+        <div>
+            <p><%= data.gebruiker.voornaam %> <%= data.gebruiker.achternaam %></p>
+            <p><%= data.status %></p>
+        </div>
+    </a>
 </li>

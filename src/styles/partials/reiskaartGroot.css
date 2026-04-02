@@ -45,3 +45,19 @@
 .home:has(#reisUitklappen:checked) section:last-of-type button{
     display: none;
 }
+
+.reiskaartGroot #deelnemers{
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    gap: 2em;
+    max-width: 100%;
+    margin-bottom: 1em;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.reiskaartGroot #deelnemers::-webkit-scrollbar{
+    display: none;
+}
