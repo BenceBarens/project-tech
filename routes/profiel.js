@@ -52,6 +52,51 @@ router.get('/profiel', async function(req, res) {
     }
 })
 
+// Bekijk andermans profiel
+router.get('/profiel/:id', async (req, res) => {
+    try {
+        const db = req.app.get('db')
+        const profielId = req.params.id
+
+        // Als de gebruiker ID hetzelfde is als jouw ingelogde ID, stuur mij dan naar mijn eigen profiel
+        if (req.session.gebruiker && req.session.gebruiker.id === profielId) {
+            return res.redirect('/profiel');
+        }
+        
+        const bekijkReiziger = await db.collection('gebruikers').findOne({
+            _id: new ObjectId(profielId)
+        })
+
+        if (!bekijkReiziger) {
+            return res.status(404).send("Deze reiziger bestaat niet.")
+        }
+
+        // Haalt de reizen op van de reiziger die je wilt bekijken.
+        let deReizen = []
+        if (bekijkReiziger.reizen && bekijkReiziger.reizen.length > 0) {
+            deReizen = await db.collection('reizen').find({
+                _id: { $in: bekijkReiziger.reizen }
+            }).toArray()
+        }
+
+        res.render('paginas/bezoek-profiel', {
+            data: {
+                pagina: { titel: 'Reiziger: ${bekijkReiziger}' },
+                gebruiker: {
+                    voornaam: bekijkReiziger.voornaam,
+                    achternaam: bekijkReiziger.achternaam,
+                    bio: bekijkReiziger.bio || "Deze reiziger heeft nog geen bio.",
+                    profielfoto: bekijkReiziger.profielfoto ? '/uploads/profielfoto/' + bekijkReiziger.profielfoto : '/images/default-avatar.svg',
+                    reizen: deReizen
+                }
+            }
+        })
+    } catch (err) {
+        console.error("Fout bij het laden van een reizigers profiel:", err)
+        res.status(500).send("Er ging iets mis.")
+    }
+})
+
 router.get('/profiel-bewerken', async (req, res) => {
     try {
         const db = req.app.get('db')
@@ -61,10 +106,7 @@ router.get('/profiel-bewerken', async (req, res) => {
             _id: new ObjectId(req.session.gebruiker.id) 
         })
 
-        // Voeg hier de pad-logica toe
-        const profielfotoPad = gebruikerData.profielfoto 
-            ? '/uploads/profielfoto/' + gebruikerData.profielfoto 
-            : '/images/default-avatar.svg';
+        const profielfotoPad = gebruikerData.profielfoto ? '/uploads/profielfoto/' + gebruikerData.profielfoto : '/images/default-avatar.svg';
 
         res.render('paginas/profiel-bewerken', {
             data: {
@@ -81,7 +123,6 @@ router.get('/profiel-bewerken', async (req, res) => {
     }
 })
 
-// Wijzigingen opslaan (POST)
 // Wijzigingen opslaan (POST)
 router.post('/profiel/bewerken', upload.single('profielfoto'), async (req, res) => {
     try {
