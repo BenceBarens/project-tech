@@ -3,8 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-    <title><%= (typeof data !== 'undefined' && data.pagina) ? data.pagina.titel : 'Viamigo' %></title>
+    <title><%= (typeof data !== 'undefined' && data.pagina && data.pagina.titel) ? data.pagina.titel + ' | Viamigo' : 'Viamigo' %></title>
     <link rel="stylesheet" href="/output.css">
+    <link rel="icon" type="image/x-icon" href="/images/beeldmerk.svg">
 </head>
 <body>
     <header>
