@@ -59,6 +59,9 @@ a{
     color: var(--color-text-3);
 }
 
+.hidden{
+    display: none;
+}
 
 /*****************************/
 /* Chips */
@@ -228,4 +231,31 @@ textarea{
 
 input[type=number]{
     width: 5em;
+}
+
+#togglePassword {
+    position: absolute;
+    padding: 1em;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+}
+
+#togglePassword svg{
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.password-container{
+    margin: 0.5em 0 1em 0;
+    position: relative;
+    width: 100%;
+}
+
+.password-container input[type=text], .password-container input[type=password]{
+    margin: 0;
 }
