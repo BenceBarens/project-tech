@@ -212,6 +212,7 @@ input[type=text], input[type=email], input[type=password], input[type=number], i
     margin: 0.5em 0 1em 0;
     border: 0.1em solid var(--color-surface-4);
     background-color: var(--color-surface-2);
+    color: var(--color-text-1);
     border-radius: 0.5em;
     font-size: 1em;
     box-sizing: border-box;
