@@ -1,3 +1,10 @@
+.reisAanmaken{
+    height: fit-content;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-bottom: 6em;
+}
+
 .reisAanmaken h1, .reisAanmaken > p{
     text-align: center;
 }
