@@ -12,6 +12,7 @@
 @import "./paginas/inlog-required.css";
 @import "./paginas/reis-detail.css";
 @import "./paginas/favorieten.css";
+@import "./paginas/404.css";
 
 /* Partials */
 @import "./partials/forms.css";
