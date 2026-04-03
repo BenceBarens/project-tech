@@ -119,9 +119,9 @@ a{
 }
 
 .chipSuggestie{
-    background-color: var(--color-surface-4);
+    background-color: var(--color-surface-3);
     color: var(--color-text-3);
-    border: 0.1em solid var(--color-surface-4);
+    border: 0.1em solid var(--color-surface-3);
 }
 
 .chipSuggestie::before{

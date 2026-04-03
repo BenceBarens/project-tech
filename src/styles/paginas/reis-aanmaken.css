@@ -1,3 +1,59 @@
+/* --- */
+.dropzone {
+    display: flex;
+    margin-bottom: 1em;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 15em;
+    border: 0.1em solid var(--color-surface-4);
+    background-color: var(--color-surface-2);
+    border-radius: 1em;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    overflow: hidden;
+    position: relative;
+    padding: 1em;
+}
+
+/* Verbergt de standaard lelijke input knop */
+#reisFoto {
+    display: none;
+}
+
+/* De live preview afbeelding */
+#image-preview {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 10;
+}
+
+/* Verberg de preview image */
+.hidden {
+    display: none !important;
+}
+
+.dropzone-content {
+    text-align: center;
+}
+
+.dropzone-content p {
+    margin: 1em 0 0.5em 0;
+}
+
+.dropzone-content small {
+    color: var(--color-accent-1);
+    font-size: 0.8rem;
+}
+
+.input-error {
+    border-color: red;
+}
+
+/* --- */
+
 .reisAanmaken h1, .reisAanmaken > p{
     text-align: center;
 }
