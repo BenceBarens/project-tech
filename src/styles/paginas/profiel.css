@@ -1,5 +1,15 @@
 .profiel{
     padding: 0 1em;
+    margin: 0 auto;
+    display: flex;
+    gap: 2em;
+    flex-direction: column;
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+.profiel p{
+    max-width: 30em;
 }
 
 .profiel ul{
@@ -7,4 +17,28 @@
     display: flex;
     flex-wrap: wrap;
     gap: 1em;
+}
+
+.profiel h1{
+    display: inline;
+}
+
+.profiel section:first-of-type{
+    display: flex;
+    gap: 1em;
+    align-items: center;
+}
+
+.profiel section:first-of-type img{
+    width: 10em;
+    height: 10em;
+    object-fit: cover;
+    border-radius: 50em;
+}
+
+@media only screen and (max-width: 768px){
+    .profiel section:first-of-type{
+        flex-direction: column;
+        text-align: center;
+    }
 }

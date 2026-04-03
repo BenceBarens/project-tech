@@ -1,18 +1,37 @@
 <li class="reiskaartKlein">
-   <a href="/reis/<%= reis._id %>">
-      <article>
-            <img src="/uploads/coverfoto/<%= reis.fotoPad %>" alt="Foto van <%= reis.titel %>">
+    <a href="/reis/<%= reis._id %>">
+        <article>
+            <% if (reis.fotoPad) { %>
+                <img src="/uploads/coverfoto/<%= reis.fotoPad %>" alt="Foto van <%= reis.titel %>">
+            <% } %>
+
             <div>
-                <h3><%= reis.reisTitel %></h3>
-                <p><%= reis.bestemmingen %></p>
+                <% if (reis.reisTitel) { %>
+                    <h3><%= reis.reisTitel %></h3>
+                <% } %>
+
+                <% if (reis.bestemmingen) { %>
+                    <p><%= reis.bestemmingen %></p>
+                <% } %>
+
                 <ul class="chipsInfo">
-                    <li><%= reis.aantalDagen %> dagen</li>
-                    <li><%= reis.bedragen %></li>
-                    <li><%= reis.reizen %></li>
-                    <li><%= reis.verblijf %></li>
-                    <li><%= reis.minLeeftijd %> tot <%= reis.maxLeeftijd %> jaar oud</li>
+                    <% if (reis.aantalDagen) { %>
+                        <li><%= reis.aantalDagen %> dagen</li>
+                    <% } %>
+
+                    <% if (reis.bedragen) { %>
+                        <li><%= reis.bedragen %></li>
+                    <% } %>
+
+                    <% if (reis.reizen) { %>
+                        <li><%= reis.reizen %></li>
+                    <% } %>
+
+                    <% if (reis.minLeeftijd && reis.maxLeeftijd) { %>
+                        <li><%= reis.minLeeftijd %> tot <%= reis.maxLeeftijd %> jaar oud</li>
+                    <% } %>
                 </ul>
             </div>
-      </article>
-   </a>
+        </article>
+    </a>
 </li>

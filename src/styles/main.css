@@ -1,17 +1,20 @@
 /* Basis */
 @import "./_base.css";
-@import "./layouts/boilerplate.css";
+@import "./layouts/boilerplate.css"; 
 
 /* Pagina's */
-@import "./paginas/index.css";
+@import "./paginas/index.css"; 
 @import "./paginas/reis-aanmaken.css";
 @import "./paginas/profiel.css";
+@import "./paginas/porfiel-bewerken.css";
 @import "./paginas/inloggen.css";
 @import "./paginas/registreren.css";
 @import "./paginas/inlog-required.css";
 @import "./paginas/reis-detail.css";
+@import "./paginas/favorieten.css";
 
 /* Partials */
 @import "./partials/forms.css";
 @import "./partials/reiskaartGroot.css";
 @import "./partials/reiskaartKlein.css";
+@import "./partials/reiziger.css";

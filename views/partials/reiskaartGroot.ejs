@@ -22,41 +22,35 @@
                 <li><%= data.reis.minLeeftijd %> tot <%= data.reis.maxLeeftijd %> jaar oud</li>
             </ul>
             <p><%= data.reis.reis_samenvatting %></p>
-
-            <h3>Bestemming(en)</h3>
-            <ul class="chipsInfo">
-                <% if (data.reis.bestemmingen && data.reis.bestemmingen.length > 0) { %>
-                    <% data.reis.bestemmingen.forEach(function(bestemming) { %>
-                        <li><%= bestemming %></li>
-                    <% }) %>
-                <% } else { %>
-                    <li>Nog geen bestemmingen</li>
-                <% } %>
-            </ul>
-        
-            <h3>Activiteiten</h3>
-             <ul class="chipsInfo">
-                <% if (data.reis.activiteit && data.reis.activiteit.length > 0) { %>
-                    <% data.reis.activiteit.forEach(function(activiteit) { %>
-                        <li><%= activiteit %></li>
-                    <% }) %>
-                <% } else { %>
-                    <li>Nog geen activiteiten</li>
-                <% } %>
-            </ul>
-
+            
             <h3>Reizigers</h3>
-            <p><%= data.reis.minReizigers  %> tot <%= data.reis.maxReizigers %> reizigers in totaal</p>
+            <p>Capaciteit: <%= data.reis.minReizigers %> tot <%= data.reis.maxReizigers %> reizigers in totaal</p>
 
-             <div class="reizigerAvatars">
-                <img src="/images/default-avatar.svg" alt="organisator">
-                <img src="/images/default-avatar.svg" alt="reiziger 1">
-                <img src="/images/default-avatar.svg" alt="reiziger 2">
-            </div>
+            <ul id="deelnemers">
+                <% if (data.reis.organisator) { %>
+                    <%- include('reiziger', { 
+                        data: { 
+                            gebruiker: data.reis.organisator,
+                            status: "Organisator" 
+                        } 
+                    }) %>
+                <% } %>
+
+                <% if (data.reis.deelnemersLijst && data.reis.deelnemersLijst.length > 0) { %>
+                    <% data.reis.deelnemersLijst.forEach(function(deelnemer) { %>
+                        <%- include('reiziger', { 
+                            data: { 
+                                gebruiker: deelnemer,
+                                status: "Aangevraagd" 
+                            } 
+                        }) %>
+                    <% }) %>
+                <% } %>
+            </ul>
 
             <div>
                 <input type="checkbox" id="reisUitklappen" name="Meer lezen">
-                <label for="reisUitklappen">Meer lezen</label>
+                <label for="reisUitklappen" class="button2">Meer lezen</label>
                 <p><%= data.reis.reis_beschrijving %></p>
             </div>
         </div>

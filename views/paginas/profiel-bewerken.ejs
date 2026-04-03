@@ -1,42 +1,54 @@
 <% layout('layouts/boilerplate') %>
-<main id="main" class="profielBwerken">
+<div>
+    <a href="/profiel" class="button2">Annuleren</a>
+</div>
+<main id="main" class="profielBewerken">
     <h1>Profiel aanpassen</h1>
     
     <form action="/profiel/bewerken" method="POST" enctype="multipart/form-data">
         <fieldset>
             <legend>Persoonlijke info</legend>
-            
-            <label for="voornaam">Voornaam</label>
-            <input type="text" id="voornaam" name="voornaam" value="<%= data.gebruiker.voornaam %>">
+            <div>
+                <img src="<%= data.gebruiker.profielfoto %>" alt="Profielfoto van <%= data.gebruiker.voornaam %>">
+                <input type="file" name="profielfoto">
+            </div>
+            <div>
+                <div>
+                    <label for="voornaam">Voornaam</label>
+                    <input type="text" id="voornaam" name="voornaam" value="<%= data.gebruiker.voornaam %>">
+                    <label for="achternaam">Achternaam</label>
+                    <input type="text" id="achternaam" name="achternaam" value="<%= data.gebruiker.achternaam %>">
+                </div>
+                <div>
+                    <label for="bio">Over mij (bio)</label>
+                    <textarea id="bio" name="bio"><%= data.gebruiker.bio || '' %></textarea>
+                </div>
+            </div>
+        </fieldset>
 
-            <label for="achternaam">Achternaam</label>
-            <input type="text" id="achternaam" name="achternaam" value="<%= data.gebruiker.achternaam %>">
+        <fieldset>
+            <legend>Gegevens</legend>
 
             <label for="email">Email</label>
             <input type="email" id="email" name="email" value="<%= data.gebruiker.email %>">
 
-                <label for="geslacht">Geslacht</label>
-                <select id="geslacht" name="geslacht" required>
-                    <option value="Man" <%= data.gebruiker.geslacht === 'Man' ? 'selected' : '' %>>Man</option>
-                    <option value="Vrouw" <%= data.gebruiker.geslacht === 'Vrouw' ? 'selected' : '' %>>Vrouw</option>
-                    <option value="Anders" <%= data.gebruiker.geslacht === 'Anders' ? 'selected' : '' %>>Anders</option>
-                </select>
+            <label for="geslacht">Geslacht</label><br>
+            <select id="geslacht" name="geslacht" required>
+                <option value="Man" <%= data.gebruiker.geslacht === 'Man' ? 'selected' : '' %>>Man</option>
+                <option value="Vrouw" <%= data.gebruiker.geslacht === 'Vrouw' ? 'selected' : '' %>>Vrouw</option>
+                <option value="Anders" <%= data.gebruiker.geslacht === 'Anders' ? 'selected' : '' %>>Anders</option>
+            </select>
 
-            <label for="woonplaats">Woonplaats</label>
-            <input type="text" id="woonplaats" name="woonplaats" value="<%= data.gebruiker.woonplaats || '' %>">
+            <div>
+                <label for="woonplaats">Woonplaats</label>
+                <input type="text" id="woonplaats" name="woonplaats" value="<%= data.gebruiker.woonplaats || '' %>">
+            </div>
 
-            <label for="bio">Over mij (Bio)</label>
-            <textarea id="bio" name="bio"><%= data.gebruiker.bio || '' %></textarea>
         </fieldset>
 
         <fieldset>
-            <legend>Profielfoto</legend>
-            <input type="file" name="profielfoto">
-        </fieldset>
-
-        <fieldset>
-            <legend>Wachtwoord wijzigen (optioneel)</legend>
-            <p>Laat leeg als je je wachtwoord niet wilt veranderen</p>
+            <legend>Wachtwoord wijzigen</legend>
+            <p>Laat leeg als je je wachtwoord niet wilt veranderen.</p>
 
             <label for="huidigWachtwoord">Huidig wachtwoord</label>
             <input type="password" id="huidigWachtwoord" name="huidigWachtwoord" placeholder="Huidige wachtwoord">
@@ -45,7 +57,6 @@
             <input type="password" id="nieuwWachtwoord" name="nieuwWachtwoord" placeholder="Nieuwe wachtwoord">
         </fieldset>
 
-        <button type="submit" class="save-btn">Wijzigingen opslaan</button>
-        <a href="/profiel" class="cancel-link">Annuleren</a>
+        <button type="submit" class="button">Wijzigingen opslaan</button> <a href="/profiel" class="button2">Annuleren</a>
     </form>
 </main>

@@ -21,49 +21,60 @@
 
             <fieldset>
                 <legend>Budget range</legend>
-                <div class="chipToggle"><input type="checkbox" id="budget1" value="bedrag1" name="bedragen"><label for="budget1">€0 tot €500</label></div>
-                <div class="chipToggle"><input type="checkbox" id="budget2" value="bedrag2" name="bedragen"><label for="budget2">€500 tot €1K</label></div>
-                <div class="chipToggle"><input type="checkbox" id="budget3" value="bedrag3" name="bedragen"><label for="budget3">€1K tot €1.5K</label></div>
-                <div class="chipToggle"><input type="checkbox" id="budget4" value="bedrag4" name="bedragen"><label for="budget4">€1.5K tot €2.5K</label></div>
-                <div class="chipToggle"><input type="checkbox" id="budget5" value="bedrag5" name="bedragen"><label for="budget5">€2.5K tot €5K</label></div>
-                <div class="chipToggle"><input type="checkbox" id="budget6" value="bedrag6" name="bedragen"><label for="budget6">Meer dan €5K</label></div>
+                <div class="chipToggle"><input type="checkbox" id="budget1" value="bedrag1" name="bedragen" <%= data.filters.bedragen.includes('bedrag1') ? 'checked' : '' %>> <label for="budget1">€0 tot €500</label></div>
+                <div class="chipToggle"><input type="checkbox" id="budget2" value="bedrag2" name="bedragen" <%= data.filters.bedragen.includes('bedrag2') ? 'checked' : '' %>> <label for="budget2">€500 tot €1K</label></div>
+                <div class="chipToggle"><input type="checkbox" id="budget3" value="bedrag3" name="bedragen" <%= data.filters.bedragen.includes('bedrag3') ? 'checked' : '' %>> <label for="budget3">€1K tot €1.5K</label></div>
+                <div class="chipToggle"><input type="checkbox" id="budget4" value="bedrag4" name="bedragen" <%= data.filters.bedragen.includes('bedrag4') ? 'checked' : '' %>> <label for="budget4">€1.5K tot €2.5K</label></div>
+                <div class="chipToggle"><input type="checkbox" id="budget5" value="bedrag5" name="bedragen" <%= data.filters.bedragen.includes('bedrag5') ? 'checked' : '' %>> <label for="budget5">€2.5K tot €5K</label></div>
+                <div class="chipToggle"><input type="checkbox" id="budget6" value="bedrag6" name="bedragen" <%= data.filters.bedragen.includes('bedrag6') ? 'checked' : '' %>> <label for="budget6">Meer dan €5K</label></div>
             </fieldset>
+
             <fieldset>
                 <legend>Type verblijf</legend>
-                <div class="chipToggle"><input type="checkbox" id="verblijf1" value="hotel" name="verblijf"><label for="verblijf1">Hotel</label></div>
-                <div class="chipToggle"><input type="checkbox" id="verblijf2" value="motel" name="verblijf"><label for="verblijf2">Motel</label></div>
-                <div class="chipToggle"><input type="checkbox" id="verblijf3" value="b&b" name="verblijf"><label for="verblijf3">B&B</label></div>
-                <div class="chipToggle"><input type="checkbox" id="verblijf4" value="camper-caravan" name="verblijf"><label for="verblijf4">Camper/caravan</label></div>
-                <div class="chipToggle"><input type="checkbox" id="verblijf5" value="tent" name="verblijf"><label for="verblijf5">Tent</label></div>
+                <div class="chipToggle"><input type="checkbox" id="verblijf1" value="hotel" name="verblijf" <%= data.filters.verblijf.includes('hotel') ? 'checked' : '' %>> <label for="verblijf1">Hotel</label></div>
+                <div class="chipToggle"><input type="checkbox" id="verblijf2" value="motel" name="verblijf" <%= data.filters.verblijf.includes('motel') ? 'checked' : '' %>> <label for="verblijf2">Motel</label></div>
+                <div class="chipToggle"><input type="checkbox" id="verblijf3" value="b&b" name="verblijf" <%= data.filters.verblijf.includes('b&b') ? 'checked' : '' %>> <label for="verblijf3">B&B</label></div>
+                <div class="chipToggle"><input type="checkbox" id="verblijf4" value="camper-caravan" name="verblijf" <%= data.filters.verblijf.includes('camper-caravan') ? 'checked' : '' %>> <label for="verblijf4">Camper/caravan</label></div>
+                <div class="chipToggle"><input type="checkbox" id="verblijf5" value="tent" name="verblijf" <%= data.filters.verblijf.includes('tent') ? 'checked' : '' %>> <label for="verblijf5">Tent</label></div>
             </fieldset>
+
             <fieldset>
                 <legend>Aantal reizigers</legend>
                 <label for="reizigersMin">Minimum</label>
-                <input type="number" id="reizigersMin" name="reizigersMin">
+                <input type="number" id="reizigersMin" name="reizigersMin" value="<%= data.filters.reizigersMin %>"> 
                 <label for="reizigersMax">Maximum</label>
-                <input type="number" id="reizigersMax" name="reizigersMax">
+                <input type="number" id="reizigersMax" name="reizigersMax" value="<%= data.filters.reizigersMax %>">
             </fieldset>
+
             <input type="submit" value="Pas filters toe" class="button">
         </form>
     </section>
-    <section>
-        <button  type="button" id="btn-accepteren" class="button">Accepteren</button>
+    <section class="matching-container">
+        <div class="knop-boven">
+            <% if (data.reizen && data.reizen.length > 0) { %>
+                <button type="button" id="btn-accepteren" class="button button-save" data-id="<%= data.reizen[0]._id %>">
+                    Accepteren
+                </button>
+            <% } %>
+        </div>
+    
         <ul class="reisKaartContainer">
            <% if (data.reizen && data.reizen.length > 0) { %>
-           <% data.reizen.forEach(function (reis) { %>
-         
-         <%- include("../partials/reiskaartGroot",  { data: { reis: reis } })  %>
-
-         <% }) %>
-         <% } else { %>
-         <li>Er is op dit moment geen reis beschikbaar.</li>
-         <% } %>
+               <% data.reizen.forEach(function (reis) { %>
+                   <%- include("../partials/reiskaartGroot", { data: { reis: reis } }) %>
+               <% }) %>
+           <% } else { %>
+               <li>Er is op dit moment geen reis beschikbaar.</li>
+           <% } %>
         </ul>
             
-         <div class= "matchKnoppen">
-         <button  type="button" id="btn-afwijzen" class="button">Afwijzen</button>
-         </div>
-         
+        <div class="knop-onder">
+            <% if (data.reizen && data.reizen.length > 0) { %>
+                <button type="button" id="btn-afwijzen" class="button button-skip" data-id="<%= data.reizen[0]._id %>">
+                    Afwijzen
+                </button>
+            <% } %>
+        </div>
     </section>
 </main>
 

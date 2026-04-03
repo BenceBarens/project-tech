@@ -9,16 +9,15 @@ body{
     min-height: 100vh;
 }
 
-header, body > div{
-    padding: 1.5em 0;
-    color: var(--color-text-2);
-}
-
 header{
     grid-column: 1;
     grid-row: 1;
-    padding-left: 1em;
+    padding: 1em 0 1em 1em;
     font-size: 1.2em;
+}
+
+header svg{
+    width: 7.5em;
 }
 
 main{

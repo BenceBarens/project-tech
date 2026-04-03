@@ -8,32 +8,44 @@
     <form action="/nieuwe-reis" method="POST" enctype="multipart/form-data">
 
         <fieldset id="stap1">
-            <legend>Let's do this shit</legend>
+            <legend>Laten we een reis aanmaken!</legend>
+            <label for="reisTitel">Geef jouw reis een naam*</label>
+            <input type="text" id="reisTitel" name="reisTitel" placeholder="Stedentrip door Zuid-Europa" required oninvalid="this.setCustomValidity('Oeps! Je bent vergeten je reis een naam te geven.')" oninput="this.setCustomValidity('')">
 
-            <label for="reisTitel">Geef jouw reis een naam</label>
-            <input type="text" id="reisTitel" name="reisTitel" placeholder="Stedentrip door Zuid-Europa" required>
-
-            <label for="reisFoto">Kies een omslagfoto voor jouw reis</label>
-            <input type="file" name="reisFoto" accept="image/*'" required>
+            <!-- Reis foto met een live preview -->
+            <label for="reisFoto" class="dropzone" id="dropzone">
+                <input type="file" id="reisFoto" name="reisFoto" accept="image/*" required oninvalid="this.setCustomValidity('Je mist nog een cover foto voor jouw reis!')" oninput="this.setCustomValidity('')">
+            
+                <div class="dropzone-content" id="dropzone-text">
+                    <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                        <circle cx="12" cy="13" r="4"></circle>
+                    </svg>
+                    <p>Sleep een foto hiernaartoe of <strong>klik om te uploaden*</strong></p>
+                    <small>PNG, JPG of JPEG (max. 5MB)</small>
+                </div>
+                
+                <img id="image-preview" src="" alt="Preview" class="hidden">
+            </label>
 
             <div class="formNav">
-                <a href="#stap2" role="button" tabindex="-1" class="button">Volgende</a>
+                <a href="#stap2" role="button" tabindex="-1" class="button btn-volgende">Volgende</a>
             </div>
         </fieldset>
 
         <fieldset id="stap2">
             <legend>Duur van de reis</legend>
 
-            <label for="start-datum">Vanaf wanneer wil je weg?</label>
-            <input type="date" id="start-datum" name="startDatum" min="2026-03-25" required><br>
-            <label for="eind-datum">Wanneer wil je uiterlijk weer terug zijn?</label>
-            <input type="date" id="eind" name="eindDatum" min="2026-03-25" required><br>
+            <label for="start-datum">Vanaf wanneer wil je weg?*</label>
+            <input type="date" id="start-datum" name="startDatum" min="2026-03-25" required oninvalid="this.setCustomValidity('Je mist nog een start datum.')" oninput="this.setCustomValidity('')"><br>
+            <label for="eind-datum">Wanneer wil je uiterlijk weer terug zijn?*</label>
+            <input type="date" id="eind" name="eindDatum" min="2026-03-25" required oninvalid="this.setCustomValidity('Je mist nog een eind datum.')" oninput="this.setCustomValidity('')"><br>
 
-            <label for="aantalDagen">In totaal wil ik ongeveer <input type="number" id="aantalDagen" name="aantalDagen" placeholder="14" min="2" max="365" required> dagen weg.</label>
+            <label for="aantalDagen">In totaal wil ik ongeveer <input type="number" id="aantalDagen" name="aantalDagen" placeholder="Dagen" min="2" max="365" required oninvalid="this.setCustomValidity('Je hebt nog geen aantal dagen aangegeven!)" oninput="this.setCustomValidity('')"> dagen weg*</label>
 
             <div class="formNav">
-                <a href="#stap1" role="button" tabindex="-1" class="button">Vorige</a>
-                <a href="#stap3" role="button" tabindex="-1" class="button">Volgende</a>
+                <a href="#stap1" role="button" tabindex="-1" class="button2">Vorige</a>
+                <a href="#stap3" role="button" tabindex="-1" class="button btn-volgende">Volgende</a>
             </div>
         </fieldset>
 
@@ -42,12 +54,12 @@
             <label for="reis-beschrijving">Beschrijf jouw reis. Wat wil je doen, wat zijn de plannen?</label><br>
             <textarea id="reis-beschrijving" name="reis_beschrijving" placeholder="Typ hier een beschrijving"></textarea><br>
 
-            <label for="reis-samenvatting">Geef een samenvatting van jouw reis</label>
-            <input type="text" id="reis-samenvatting" name="reis_samenvatting" placeholder="Typ hier een beschrijving" maxlength="50" required>
+            <label for="reis-samenvatting">Geef een samenvatting van jouw reis*</label>
+            <input type="text" id="reis-samenvatting" name="reis_samenvatting" placeholder="Typ hier een beschrijving" maxlength="50" required oninvalid="this.setCustomValidity('Geef je reis nog een korte samenvatting!')" oninput="this.setCustomValidity('')">
 
             <div class="formNav">
-                <a href="#stap2" role="button" tabindex="-1" class="button">Vorige</a>
-                <a href="#stap4" role="button" tabindex="-1" class="button">Volgende</a>
+                <a href="#stap2" role="button" tabindex="-1" class="button2">Vorige</a>
+                <a href="#stap4" role="button" tabindex="-1" class="button btn-volgende">Volgende</a>
             </div>
         </fieldset>
         
@@ -74,21 +86,21 @@
             <div class="chipToggle"><input type="checkbox" id="anders" name="geslacht" value="anders"><label for="anders">Anders</label></div>
 
             <div class="formNav">
-                <a href="#stap3" role="button" tabindex="-1" class="button">Vorige</a>
-                <a href="#stap5" role="button" tabindex="-1" class="button">Volgende</a>
+                <a href="#stap3" role="button" tabindex="-1" class="button2">Vorige</a>
+                <a href="#stap5" role="button" tabindex="-1" class="button btn-volgende">Volgende</a>
             </div>
         </fieldset>
 
         <fieldset id="stap5">
             <legend>Waar gaat jouw reis naar toe?</legend>
-            <p>Voeg een locatie, stad of gebied toe door op de plus knop te klikken.</p>
+            <p>Voeg een locatie, stad of gebied toe door op de plus knop te klikken*</p>
 
-            <input aria-required="true" type="text" id="locatie-zoeken" placeholder="Zoek een bestemming" autocomplete="off">
+            <input type="text" id="locatie-zoeken" placeholder="Zoek een bestemming" autocomplete="off">
             <div><ul id="gekozen-locaties-container"></ul><ul id="suggestie-lijst"></ul></div>
             
             <div class="formNav">
-                <a href="#stap4" role="button" tabindex="-1" class="button">Vorige</a>
-                <a href="#stap6" role="button" tabindex="-1" class="button">Volgende</a>
+                <a href="#stap4" role="button" tabindex="-1" class="button2">Vorige</a>
+                <a href="#stap6" role="button" tabindex="-1" class="button btn-volgende">Volgende</a>
             </div>
         </fieldset>
 
@@ -103,8 +115,8 @@
             <div class="chipRadio"><input type="radio" id="bedrag6" name="bedragen" value="bedrag6"><label for="bedrag6">Meer dan €5K</label></div>
 
             <div class="formNav">
-                <a href="#stap5" role="button" tabindex="-1" class="button">Vorige</a>
-                <a href="#stap7" role="button" tabindex="-1" class="button">Volgende</a>
+                <a href="#stap5" role="button" tabindex="-1" class="button2">Vorige</a>
+                <a href="#stap7" role="button" tabindex="-1" class="button btn-volgende">Volgende</a>
             </div>
         </fieldset>
 
@@ -120,8 +132,8 @@
             <div class="chipToggle"><input type="checkbox" id="ontdekken" name="activiteit" value="ontdekken"><label for="ontdekken">Ontdekken</label></div>
 
             <div class="formNav">
-                <a href="#stap6" role="button" tabindex="-1" class="button">Vorige</a>
-                <a href="#stap8" role="button" tabindex="-1" class="button">Volgende</a>
+                <a href="#stap6" role="button" tabindex="-1" class="button2">Vorige</a>
+                <a href="#stap8" role="button" tabindex="-1" class="button btn-volgende">Volgende</a>
             </div>
         </fieldset>
 
@@ -137,8 +149,8 @@
             <div class="chipRadio"><input type="radio" id="reis-optie6" name="reizen" value="reis-optie6"><label for="reis-optie6">Safari</label></div>
 
             <div class="formNav">
-                <a href="#stap7" role="button" tabindex="-1" class="button">Vorige</a>
-                <a href="#stap9" role="button" tabindex="-1" class="button">Volgende</a>
+                <a href="#stap7" role="button" tabindex="-1" class="button2">Vorige</a>
+                <a href="#stap9" role="button" tabindex="-1" class="button btn-volgende">Volgende</a>
             </div>
         </fieldset>
 
@@ -153,10 +165,12 @@
             <div class="chipToggle"><input type="checkbox" id="tent" name="verblijf" value="tent"><label for="tent">Tent</label></div>
 
             <div class="formNav">
-                <a href="#stap8" role="button" tabindex="-1" class="button">Vorige</a>
-                <input type="submit" value="Afronden" class="button">
+                <a href="#stap8" role="button" tabindex="-1" class="button2">Vorige</a>
+                <input type="submit" value="Afronden" class="button btn-volgende">
             </div>
         </fieldset>
     </form>
 </main>
 <script src="/js/locatie-zoeker.js"></script>
+<script src="/js/foutmeldingen.js"></script>
+<script src="/js/upload-preview.js"></script>
