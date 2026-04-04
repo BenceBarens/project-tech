@@ -45,6 +45,7 @@
 .registreren form legend,
 .reisAanmaken form legend{
     font-size: larger;
+    padding: 0 0.5em;
 }
 
 .registreren form div{

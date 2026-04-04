@@ -46,6 +46,7 @@
 .home form legend{
     font-weight: bold;
     margin-bottom: 0.2em;
+    text-align: left;
 }
 
 .home form fieldset div{
