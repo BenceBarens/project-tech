@@ -6,12 +6,9 @@ const bcryptjs = require('bcryptjs');
 router.get('/registreren', (req, res) => {
     if (req.session.gebruiker) {
         return res.redirect('/profiel')
-    }
-    else{
+    } else {
         res.render('paginas/registreren', { 
-            data: { 
-                pagina: { titel: 'Registreren' }
-            } 
+            data: { pagina: { titel: 'Registreren' } }
         });
     }
 });
@@ -24,7 +21,7 @@ module.exports = router;
 
 async function verwerkRegistratie(req, res) {
     try {
-        const db = req.app.get('db'); 
+        const db = req.app.get('db');
         if (!db) {
             throw new Error("Database verbinding niet gevonden op req.app");
         }
@@ -38,11 +35,27 @@ async function verwerkRegistratie(req, res) {
 
         const bestaat = await collectie.findOne({ email: gebruiker.email });
         if (bestaat) {
-            return res.send("Dit emailadres is al in gebruik.");
+            return res.render('paginas/registreren', {
+                data: { pagina: { titel: 'Registreren' } },
+                error: "Dit emailadres is al in gebruik.",
+                formData: gebruiker
+            });
         }
 
+        // ✅ Wachtwoord validatie
         if (gebruiker.wachtwoord) {
-            gebruiker.wachtwoord = await bcryptjs.hash(gebruiker.wachtwoord, 10);
+            const wachtwoord = gebruiker.wachtwoord;
+            const wachtwoordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
+
+            if (!wachtwoordRegex.test(wachtwoord)) {
+                return res.render('paginas/registreren', {
+                    data: { pagina: { titel: 'Registreren' } },
+                    error: "Wachtwoord moet minimaal 8 karakters bevatten, met minstens 1 cijfer en 1 speciaal teken.",
+                    formData: gebruiker
+                });
+            }
+
+            gebruiker.wachtwoord = await bcryptjs.hash(wachtwoord, 10);
         }
 
         if (req.file) {
@@ -54,7 +67,7 @@ async function verwerkRegistratie(req, res) {
         }
 
         const resultaat = await collectie.insertOne(gebruiker);
-        
+
         req.session.gebruiker = {
             id: resultaat.insertedId,
             email: gebruiker.email,
@@ -68,4 +81,3 @@ async function verwerkRegistratie(req, res) {
         res.status(500).send("Er is iets misgegaan bij het verwerken van de gegevens.");
     }
 }
-
