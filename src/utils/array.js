@@ -11,6 +11,7 @@ function normaliseerFilters(query) {
     return {
         bedragen: maakArray(query.bedragen),
         verblijf: maakArray(query.verblijf),
+        reizen: maakArray(query.reizen),
         reizigersMin: query.reizigersMin || '',
         reizigersMax: query.reizigersMax || ''
     }

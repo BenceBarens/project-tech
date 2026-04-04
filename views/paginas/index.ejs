@@ -31,6 +31,16 @@
                 <label class="chipToggle"><input type="checkbox" id="verblijf5" value="tent" name="verblijf" <%= data.filters.verblijf.includes('tent') ? 'checked' : '' %>> Tent</label>
             </fieldset>
 
+             <fieldset>
+                <legend>Type reis</legend>
+                <div class="chipToggle"><input type="checkbox" id="reis1" value="reis-optie1" name="reizen" <%= data.filters.reizen.includes('reis-optie1') ? 'checked' : '' %>> <label for="reis1">Rondreis</label></div>
+                <div class="chipToggle"><input type="checkbox" id="reis2" value="reis-optie2" name="reizen" <%= data.filters.reizen.includes('reis-optie2') ? 'checked' : '' %>> <label for="reis2">Resort</label></div>
+                <div class="chipToggle"><input type="checkbox" id="reis3" value="reis-optie3" name="reizen" <%= data.filters.reizen.includes('reis-optie3') ? 'checked' : '' %>> <label for="reis3">Wintersport</label></div>
+                <div class="chipToggle"><input type="checkbox" id="reis4" value="reis-optie4" name="reizen" <%= data.filters.reizen.includes('reis-optie4') ? 'checked' : '' %>> <label for="reis4">Camping</label></div>
+                <div class="chipToggle"><input type="checkbox" id="reis5" value="reis-optie5" name="reizen" <%= data.filters.reizen.includes('reis-optie5') ? 'checked' : '' %>> <label for="reis5">City trip</label></div>
+                 <div class="chipToggle"><input type="checkbox" id="reis6" value="reis-optie6" name="reizen" <%= data.filters.reizen.includes('reis-optie6') ? 'checked' : '' %>> <label for="reis6">Safari</label></div>
+            </fieldset>
+
             <fieldset>
                 <legend>Aantal reizigers</legend>
                 <label for="reizigersMin">Minimum</label>

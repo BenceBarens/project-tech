@@ -90,7 +90,7 @@ router.get('/', async (req, res) => {
             data: {
                 pagina: { titel: 'Home' },
                 reizen: resultaat,
-                filters: normaliseerFilters(req.query) // Filter van collega toegevoegd
+                filters: normaliseerFilters(req.query)
             }
         });
     } catch (err) {
@@ -99,7 +99,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Extra kaarten ophalen (AJAX/Prefetch)
+// Extra kaarten ophalen (Prefetch)
 router.get('/meer', async (req, res) => {
     try {
         const reizen = await haalReizenVoorRequest(req, 5)
