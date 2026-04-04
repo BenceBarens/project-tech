@@ -50,6 +50,12 @@ h1, h2, h3, h4, h5, h6, header{
     margin: 0;
 }
 
+@media only screen and (max-width: 769px){
+    h1, main > p, legend{
+        text-align: center;
+    }
+}
+
 a{
     color: inherit;
 }
@@ -59,6 +65,9 @@ a{
     color: var(--color-text-3);
 }
 
+.hidden{
+    display: none;
+}
 
 /*****************************/
 /* Chips */
@@ -209,6 +218,7 @@ input[type=text], input[type=email], input[type=password], input[type=number], i
     margin: 0.5em 0 1em 0;
     border: 0.1em solid var(--color-surface-4);
     background-color: var(--color-surface-2);
+    color: var(--color-text-1);
     border-radius: 0.5em;
     font-size: 1em;
     box-sizing: border-box;
@@ -228,4 +238,31 @@ textarea{
 
 input[type=number]{
     width: 5em;
+}
+
+#togglePassword {
+    position: absolute;
+    padding: 1em;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+}
+
+#togglePassword svg{
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.password-container{
+    margin: 0.5em 0 1em 0;
+    position: relative;
+    width: 100%;
+}
+
+.password-container input[type=text], .password-container input[type=password]{
+    margin: 0;
 }

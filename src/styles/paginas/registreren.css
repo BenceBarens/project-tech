@@ -1,3 +1,10 @@
+.registreren{
+    height: fit-content;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-bottom: 6em;
+}
+
 .registreren h1, .registreren p{
     text-align: center;
 }

@@ -52,8 +52,4 @@
     .profielBewerken fieldset:first-of-type div div:first-of-type{
         grid-template: auto auto auto auto / auto;
     }
-
-    .profielBewerken legend{
-        text-align: center;
-    }
 }
