@@ -12,7 +12,6 @@
             <label for="reisTitel">Geef jouw reis een naam*</label>
             <input type="text" id="reisTitel" name="reisTitel" placeholder="Stedentrip door Zuid-Europa" required oninvalid="this.setCustomValidity('Geef je reis een titel')" oninput="this.setCustomValidity('')">
 
-            <!-- Reis foto met een live preview -->
             <label for="reisFoto" class="dropzone" id="dropzone">
                 <input type="file" id="reisFoto" name="reisFoto" accept="image/*" required oninvalid="this.setCustomValidity('Kies een coverfoto voor je reis')" oninput="this.setCustomValidity('')">
             
@@ -79,12 +78,12 @@
         <fieldset id="stap5">
             <legend>Wat wordt het budget voor de reis? (5/8)</legend>
 
-            <div class="chipRadio"><input type="radio" id="bedrag1" name="bedragen" value="bedrag1"><label for="bedrag1">€0 tot €500</label></div>
-            <div class="chipRadio"><input type="radio" id="bedrag2" name="bedragen" value="bedrag2"><label for="bedrag2">€500 tot €1K</label></div>
-            <div class="chipRadio"><input type="radio" id="bedrag3" name="bedragen" value="bedrag3"><label for="bedrag3">€1K tot €1.5K</label></div>
-            <div class="chipRadio"><input type="radio" id="bedrag4" name="bedragen" value="bedrag4"><label for="bedrag4">€1.5K tot €2.5K</label></div>
-            <div class="chipRadio"><input type="radio" id="bedrag5" name="bedragen" value="bedrag5"><label for="bedrag5">€2.5K tot €5K</label></div>
-            <div class="chipRadio"><input type="radio" id="bedrag6" name="bedragen" value="bedrag6"><label for="bedrag6">Meer dan €5K</label></div>
+            <label class="chipRadio"><input type="radio" id="bedrag1" name="bedragen" value="bedrag1">€0 tot €500</label>
+            <label class="chipRadio"><input type="radio" id="bedrag2" name="bedragen" value="bedrag2">€500 tot €1K</label>
+            <label class="chipRadio"><input type="radio" id="bedrag3" name="bedragen" value="bedrag3">€1K tot €1.5K</label>
+            <label class="chipRadio"><input type="radio" id="bedrag4" name="bedragen" value="bedrag4">€1.5K tot €2.5K</label>
+            <label class="chipRadio"><input type="radio" id="bedrag5" name="bedragen" value="bedrag5">€2.5K tot €5K</label>
+            <label class="chipRadio"><input type="radio" id="bedrag6" name="bedragen" value="bedrag6">Meer dan €5K</label>
 
             <div class="formNav">
                 <a href="#stap4" role="button" tabindex="-1" class="button2">Vorige</a>
@@ -110,9 +109,9 @@
             <input type="number" id="maxLeeftijd" name="maxLeeftijd" min="19">
 
             <p>Geslacht medereizigers (meerdere opties mogelijk)</p>
-            <div class="chipToggle"><input type="checkbox" id="vrouwen" name="geslacht" value="vrouwen"><label for="vrouwen">Vrouwen</label></div>
-            <div class="chipToggle"><input type="checkbox" id="mannen" name="geslacht" value="mannen"><label for="mannen">Mannen</label></div>
-            <div class="chipToggle"><input type="checkbox" id="anders" name="geslacht" value="anders"><label for="anders">Anders</label></div>
+            <label class="chipToggle"><input type="checkbox" id="vrouwen" name="geslacht" value="vrouwen">Vrouwen</label>
+            <label class="chipToggle"><input type="checkbox" id="mannen" name="geslacht" value="mannen">Mannen</label>
+            <label class="chipToggle"><input type="checkbox" id="anders" name="geslacht" value="anders">Anders</label>
 
             <div class="formNav">
                 <a href="#stap5" role="button" tabindex="-1" class="button2">Vorige</a>
@@ -125,37 +124,36 @@
 
             <p>Wat voor soort reis gaat het worden?*</p>
 
-            <div class="chipRadio"><input type="radio" id="reis-optie1" name="reizen" value="reis-optie1"><label for="reis-optie1">Rondreis (en overig)</label></div>
-            <div class="chipRadio"><input type="radio" id="reis-optie2" name="reizen" value="reis-optie2"><label for="reis-optie2">Resort</label></div>
-            <div class="chipRadio"><input type="radio" id="reis-optie3" name="reizen" value="reis-optie3"><label for="reis-optie3">Wintersport</label></div>
-            <div class="chipRadio"><input type="radio" id="reis-optie4" name="reizen" value="reis-optie4"><label for="reis-optie4">Camping</label></div>
-            <div class="chipRadio"><input type="radio" id="reis-optie5" name="reizen" value="reis-optie5"><label for="reis-optie5">City trip</label></div>
-            <div class="chipRadio"><input type="radio" id="reis-optie6" name="reizen" value="reis-optie6"><label for="reis-optie6">Safari</label></div>
+            <label class="chipRadio"><input type="radio" id="reis-optie1" name="reizen" value="reis-optie1" required oninvalid="this.setCustomValidity('Kies een van de opties voor het type reis.')" oninput="this.setCustomValidity('')">Rondreis (en overig)</label>
+            <label class="chipRadio"><input type="radio" id="reis-optie2" name="reizen" value="reis-optie2">Resort</label>
+            <label class="chipRadio"><input type="radio" id="reis-optie3" name="reizen" value="reis-optie3">Wintersport</label>
+            <label class="chipRadio"><input type="radio" id="reis-optie4" name="reizen" value="reis-optie4">Camping</label>
+            <label class="chipRadio"><input type="radio" id="reis-optie5" name="reizen" value="reis-optie5">City trip</label>
+            <label class="chipRadio"><input type="radio" id="reis-optie6" name="reizen" value="reis-optie6">Safari</label>
 
             <p>Wat lijkt jou leuk om te doen tijdens de reis? (Meerdere opties mogelijk)</p>
 
-            <div class="chipToggle"><input type="checkbox" id="wandelen" name="activiteit" value="wandelen"><label for="wandelen">Wandelen</label></div>
-            <div class="chipToggle"><input type="checkbox" id="fietsen" name="activiteit" value="fietsen"><label for="fietsen">Fietsen</label></div>
-            <div class="chipToggle"><input type="checkbox" id="zwemmen" name="activiteit" value="zwemmen"><label for="zwemmen">Zwemmen</label></div>
-            <div class="chipToggle"><input type="checkbox" id="museau-bezoeken" name="activiteit" value="musea bezoeken"><label for="museau-bezoeken">Musea bezoeken</label></div>
-            <div class="chipToggle"><input type="checkbox" id="ontdekken" name="activiteit" value="ontdekken"><label for="ontdekken">Ontdekken</label></div>
+            <label class="chipToggle"><input type="checkbox" id="wandelen" name="activiteit" value="wandelen">Wandelen</label>
+            <label class="chipToggle"><input type="checkbox" id="fietsen" name="activiteit" value="fietsen">Fietsen</label>
+            <label class="chipToggle"><input type="checkbox" id="zwemmen" name="activiteit" value="zwemmen">Zwemmen</label>
+            <label class="chipToggle"><input type="checkbox" id="museau-bezoeken" name="activiteit" value="musea bezoeken">Musea bezoeken</label>
+            <label class="chipToggle"><input type="checkbox" id="ontdekken" name="activiteit" value="ontdekken">Ontdekken</label>
 
             <div class="formNav">
                 <a href="#stap6" role="button" tabindex="-1" class="button2">Vorige</a>
                 <a href="#stap8" role="button" tabindex="-1" class="button btn-volgende">Volgende</a>
             </div>
         </fieldset>
-        </fieldset>
 
         <fieldset id="stap8">
             <legend>Waar wil je overnachten? (8/8)</legend>
             <p>Laat mede reizigers weten wat jouw voorkeur van verblijf is (meerdere opties mogelijk)</p>
 
-            <div class="chipToggle"><input type="checkbox" id="hotel" name="verblijf" value="hotel"><label for="hotel">Hotel</label></div>
-            <div class="chipToggle"><input type="checkbox" id="motel" name="verblijf" value="motel"><label for="motel">Motel</label></div>
-            <div class="chipToggle"><input type="checkbox" id="caravan/camper" name="verblijf" value="caravan/camper"><label for="caravan/camper">Caravan/camper</label></div>
-            <div class="chipToggle"><input type="checkbox" id="b&b" name="verblijf" value="b&b"><label for="b&b">Bed & breakfast B&B</label></div>
-            <div class="chipToggle"><input type="checkbox" id="tent" name="verblijf" value="tent"><label for="tent">Tent</label></div>
+            <label class="chipToggle"><input type="checkbox" id="hotel" name="verblijf" value="hotel">Hotel</label>
+            <label class="chipToggle"><input type="checkbox" id="motel" name="verblijf" value="motel">Motel</label>
+            <label class="chipToggle"><input type="checkbox" id="caravan/camper" name="verblijf" value="caravan/camper">Caravan/camper</label>
+            <label class="chipToggle"><input type="checkbox" id="b&b" name="verblijf" value="b&b">Bed & breakfast B&B</label>
+            <label class="chipToggle"><input type="checkbox" id="tent" name="verblijf" value="tent">Tent</label>
 
             <div class="formNav">
                 <a href="#stap7" role="button" tabindex="-1" class="button2">Vorige</a>
