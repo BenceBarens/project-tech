@@ -26,8 +26,16 @@
         <div>
             <label for="wachtwoord">Wachtwoord</label>
             <input type="password" placeholder="Wachtwoord" id="wachtwoord" name="wachtwoord" required>
+
+            <% if (typeof error !== 'undefined') { %>
+            <small class="error"><%= error %></small>
+            <% } %>
+        </div>
+        
+        <div>
             <input type="checkbox" onclick="wachtwoordTonen()">Wachtwoord tonen
         </div>
+
         <div class="formNav">
             <a href="#stap2" role="button" tabindex="-1" class="button">Volgende</a>
         </div>
@@ -88,23 +96,23 @@
         <legend>Persoonlijke eigenschappen (4/4)</legend>
 
         <div>
-            <label for="eigenschap1">Voorzichtig - Avontuurlijk</label>
+            <label for="eigenschap1">Bedachtzaam - Ontdekkend</label>
             <input type="range" min="0" max="100" id="eigenschap1" name="eigenschap1">
         </div>
         <div>
-            <label for="eigenschap2">Gepland gedrag - Spontaan</label>
+            <label for="eigenschap2">Doelgericht - Spontaan</label>
             <input type="range" min="0" max="100" id="eigenschap2" name="eigenschap2">
         </div>
         <div>
-            <label for="eigenschap3">Inactief - Actief</label>
+            <label for="eigenschap3">Rustig - Energiek</label>
             <input type="range" min="0" max="100" id="eigenschap3" name="eigenschap3">
         </div>
         <div>
-            <label for="eigenshap4">Geen culturele interesses - Interesses</label>
+            <label for="eigenshap4">Cultuurbarbaar - Cultureel nieuwsgierig</label>
             <input type="range" min="0" max="100" id="eigenschap4" name="eigenschap4">
         </div>
         <div>
-            <label for="eigenschap5">Niet prikkelbaar - Prikkelbaar</label>
+            <label for="eigenschap5">Beheerst - Gevoelig</label>
             <input type="range" min="0" max="100" id="eigenschap5" name="eigenschap5">
         </div>
         <div class="formNav">
