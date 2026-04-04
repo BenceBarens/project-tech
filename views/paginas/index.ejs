@@ -1,6 +1,6 @@
 <% layout('layouts/boilerplate') %>
 <div class="homeDiv">
-    <label for="filtersUitklappen">
+    <label for="filtersUitklappen" class="button2">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
             <path d="M22 3H2L10 12.46V19L14 21V12.46L22 3Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
@@ -33,12 +33,12 @@
 
              <fieldset>
                 <legend>Type reis</legend>
-                <div class="chipToggle"><input type="checkbox" id="reis1" value="reis-optie1" name="reizen" <%= data.filters.reizen.includes('reis-optie1') ? 'checked' : '' %>> <label for="reis1">Rondreis</label></div>
-                <div class="chipToggle"><input type="checkbox" id="reis2" value="reis-optie2" name="reizen" <%= data.filters.reizen.includes('reis-optie2') ? 'checked' : '' %>> <label for="reis2">Resort</label></div>
-                <div class="chipToggle"><input type="checkbox" id="reis3" value="reis-optie3" name="reizen" <%= data.filters.reizen.includes('reis-optie3') ? 'checked' : '' %>> <label for="reis3">Wintersport</label></div>
-                <div class="chipToggle"><input type="checkbox" id="reis4" value="reis-optie4" name="reizen" <%= data.filters.reizen.includes('reis-optie4') ? 'checked' : '' %>> <label for="reis4">Camping</label></div>
-                <div class="chipToggle"><input type="checkbox" id="reis5" value="reis-optie5" name="reizen" <%= data.filters.reizen.includes('reis-optie5') ? 'checked' : '' %>> <label for="reis5">City trip</label></div>
-                 <div class="chipToggle"><input type="checkbox" id="reis6" value="reis-optie6" name="reizen" <%= data.filters.reizen.includes('reis-optie6') ? 'checked' : '' %>> <label for="reis6">Safari</label></div>
+                <label class="chipToggle"><input type="checkbox" id="reis1" value="reis-optie1" name="reizen" <%= data.filters.reizen.includes('reis-optie1') ? 'checked' : '' %>>Rondreis</label>
+                <label class="chipToggle"><input type="checkbox" id="reis2" value="reis-optie2" name="reizen" <%= data.filters.reizen.includes('reis-optie2') ? 'checked' : '' %>>Resort</label>
+                <label class="chipToggle"><input type="checkbox" id="reis3" value="reis-optie3" name="reizen" <%= data.filters.reizen.includes('reis-optie3') ? 'checked' : '' %>>Wintersport</label>
+                <label class="chipToggle"><input type="checkbox" id="reis4" value="reis-optie4" name="reizen" <%= data.filters.reizen.includes('reis-optie4') ? 'checked' : '' %>>Camping</label>
+                <label class="chipToggle"><input type="checkbox" id="reis5" value="reis-optie5" name="reizen" <%= data.filters.reizen.includes('reis-optie5') ? 'checked' : '' %>>City trip</label>
+                <label class="chipToggle"><input type="checkbox" id="reis6" value="reis-optie6" name="reizen" <%= data.filters.reizen.includes('reis-optie6') ? 'checked' : '' %>>Safari</label>
             </fieldset>
 
             <fieldset>
