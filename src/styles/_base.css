@@ -1,9 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Protest+Riot&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
 
-*{
-    scroll-behavior: smooth;
-}
-
 :root{
     --color-surface-1: #fffcf2;
     --color-surface-2: #f4f2e7;
@@ -30,6 +26,7 @@
 
 *{
     color: var(--color-text-1);
+    scroll-behavior: smooth;
 }
 
 html, body{

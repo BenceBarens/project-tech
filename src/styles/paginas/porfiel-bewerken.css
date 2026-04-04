@@ -38,6 +38,10 @@
     grid-template: auto auto / auto auto;
 }
 
+.profielBewerken input{
+    max-width: 30em;
+}
+
 @media only screen and (max-width: 768px){
     .profielBewerken fieldset:first-of-type{
         grid-template: auto / auto;
