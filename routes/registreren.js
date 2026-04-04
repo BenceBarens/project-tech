@@ -42,7 +42,7 @@ async function verwerkRegistratie(req, res) {
             });
         }
 
-        // ✅ Wachtwoord validatie
+        //Wachtwoord validatie
         if (gebruiker.wachtwoord) {
             const wachtwoord = gebruiker.wachtwoord;
             const wachtwoordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
