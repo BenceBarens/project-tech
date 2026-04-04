@@ -48,7 +48,7 @@
     padding: 0 0.5em;
 }
 
-.registreren form div{
+.registreren form fieldset > div{
     width: min(20em, 100%);
     display: flex;
     flex-direction: column;

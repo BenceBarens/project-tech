@@ -36,10 +36,6 @@
               <small class="error"><%= error %></small>
             <% } %>
         </div>
-        
-        <div>
-            <input type="checkbox" onclick="wachtwoordTonen()">Wachtwoord tonen
-        </div>
 
         <div class="formNav">
             <a href="#stap2" role="button" tabindex="-1" class="button btn-volgende">Volgende</a>
@@ -82,8 +78,13 @@
         <legend>Vul je profiel aan (3/4)</legend>
 
         <div>
-            <label for="profielfoto">Profielfoto</label>
-            <input type="file" accept="image/*" id="profielfoto" name="profielfoto">
+            <label>
+                Profielfoto (Klik om te uploaden)
+                <div id="preview-wrapper">
+                    <img id="image-preview" src="/images/default-avatar.svg" alt="Preview">
+                </div>
+                <input type="file" accept="image/*" id="profielfoto" name="profielfoto">
+            </label>
         </div>
 
         <div>
@@ -131,3 +132,4 @@
 
 <script src="/js/tonen.js"></script>
 <script src="/js/foutmeldingen.js"></script>
+<script src="/js/profielfoto-preview.js"></script>

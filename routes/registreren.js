@@ -21,13 +21,14 @@ module.exports = router;
 
 async function verwerkRegistratie(req, res) {
     try {
-        const db = req.app.get('db');
-        if (!db) {
-            throw new Error("Database verbinding niet gevonden op req.app");
-        }
+        console.log("Bestand ontvangen:", req.file); 
+        console.log("Body ontvangen:", req.body);
 
+        const db = req.app.get('db');
         const collectie = db.collection('gebruikers');
-        const gebruiker = { ...req.body };
+
+        const { profielfoto, ...restData } = req.body;
+        const gebruiker = { ...restData };
 
         if (gebruiker.email) {
             gebruiker.email = gebruiker.email.toLowerCase().trim();

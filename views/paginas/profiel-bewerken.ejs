@@ -8,10 +8,13 @@
     <form action="/profiel/bewerken" method="POST" enctype="multipart/form-data">
         <fieldset>
             <legend>Persoonlijke info</legend>
-            <div>
-                <img src="<%= data.gebruiker.profielfoto %>" alt="Profielfoto van <%= data.gebruiker.voornaam %>">
-                <input type="file" name="profielfoto">
-            </div>
+            <label>
+                Profielfoto (Klik om te uploaden)
+                <div id="preview-wrapper">
+                    <img id="image-preview" src="<%= data.gebruiker.profielfoto %>" alt="Profielfoto van <%= data.gebruiker.voornaam %>">
+                </div>
+                <input type="file" accept="image/*" id="profielfoto" name="profielfoto">
+            </label>
             <div>
                 <div>
                     <label for="voornaam">Voornaam</label>
@@ -66,3 +69,5 @@
         <button type="submit" class="button">Wijzigingen opslaan</button> <a href="/profiel" class="button2">Annuleren</a>
     </form>
 </main>
+
+<script src="/js/profielfoto-preview.js"></script>
