@@ -1,0 +1,133 @@
+<% layout('layouts/boilerplate') %>
+
+<main>
+    <h1>Reis bewerken</h1>
+
+    <form method="POST">
+
+        <!-- STAP 1 -->
+        <fieldset>
+            <legend>Basisinformatie</legend>
+
+            <label for="reisTitel">Reistitel</label>
+            <input type="text" id="reisTitel" name="reisTitel" value="<%= data.reis.reisTitel %>" required>
+
+        </fieldset>
+
+        <!-- STAP 2 -->
+        <fieldset>
+            <legend>Duur van de reis</legend>
+
+            <label for="startDatum">Startdatum</label>
+            <input type="date" id="startDatum" name="startDatum" value="<%= data.reis.startDatum %>" required>
+
+            <label for="eindDatum">Einddatum</label>
+            <input type="date" id="eindDatum" name="eindDatum" value="<%= data.reis.eindDatum %>" required>
+
+            <label for="aantalDagen">Aantal dagen</label>
+            <input type="number" id="aantalDagen" name="aantalDagen" value="<%= data.reis.aantalDagen %>" required>
+
+        </fieldset>
+
+        <!-- STAP 3 -->
+        <fieldset>
+            <legend>Beschrijving</legend>
+
+            <label for="reis_samenvatting">Samenvatting</label>
+            <input type="text" id="reis_samenvatting" name="reis_samenvatting" value="<%= data.reis.reis_samenvatting %>" required>
+
+            <label for="reis_beschrijving">Beschrijving</label>
+            <textarea id="reis_beschrijving" name="reis_beschrijving"><%= data.reis.reis_beschrijving %></textarea>
+
+        </fieldset>
+
+        <!-- STAP 4 -->
+        <fieldset>
+            <legend>Medereizigers</legend>
+
+            <label for="minReizigers">Minimum aantal reizigers</label>
+            <input type="number" id="minReizigers" name="minReizigers" value="<%= data.reis.minReizigers %>">
+
+            <label for="maxReizigers">Maximum aantal reizigers</label>
+            <input type="number" id="maxReizigers" name="maxReizigers" value="<%= data.reis.maxReizigers %>">
+
+            <label for="minLeeftijd">Minimum leeftijd</label>
+            <input type="number" id="minLeeftijd" name="minLeeftijd" value="<%= data.reis.minLeeftijd %>">
+
+            <label for="maxLeeftijd">Maximum leeftijd</label>
+            <input type="number" id="maxLeeftijd" name="maxLeeftijd" value="<%= data.reis.maxLeeftijd %>">
+
+            <!-- DROPDOWN -->
+            <label for="geslacht">Voorkeur geslacht</label>
+            <select name="geslacht" id="geslacht">
+                <option value="vrouwen" <%= data.reis.geslacht?.includes('vrouwen') ? 'selected' : '' %>>Vrouwen</option>
+                <option value="mannen" <%= data.reis.geslacht?.includes('mannen') ? 'selected' : '' %>>Mannen</option>
+                <option value="anders" <%= data.reis.geslacht?.includes('anders') ? 'selected' : '' %>>Anders</option>
+            </select>
+
+        </fieldset>
+
+        <!-- STAP 5 -->
+        <fieldset>
+            <legend>Bestemmingen</legend>
+
+            <label for="bestemmingen">Bestemmingen (komma gescheiden)</label>
+            <input type="text" id="bestemmingen" name="bestemmingen" 
+                value="<%= Array.isArray(data.reis.bestemmingen) ? data.reis.bestemmingen.join(', ') : data.reis.bestemmingen %>">
+
+        </fieldset>
+
+        <!-- STAP 6 -->
+        <fieldset>
+            <legend>Budget</legend>
+
+            <label><input type="radio" name="bedragen" value="bedrag1" <%= data.reis.bedragen === 'bedrag1' ? 'checked' : '' %>> €0 - €500</label>
+            <label><input type="radio" name="bedragen" value="bedrag2" <%= data.reis.bedragen === 'bedrag2' ? 'checked' : '' %>> €500 - €1K</label>
+            <label><input type="radio" name="bedragen" value="bedrag3" <%= data.reis.bedragen === 'bedrag3' ? 'checked' : '' %>> €1K - €1.5K</label>
+            <label><input type="radio" name="bedragen" value="bedrag4" <%= data.reis.bedragen === 'bedrag4' ? 'checked' : '' %>> €1.5K - €2.5K</label>
+            <label><input type="radio" name="bedragen" value="bedrag5" <%= data.reis.bedragen === 'bedrag5' ? 'checked' : '' %>> €2.5K - €5K</label>
+            <label><input type="radio" name="bedragen" value="bedrag6" <%= data.reis.bedragen === 'bedrag6' ? 'checked' : '' %>> Meer dan €5K</label>
+
+        </fieldset>
+
+        <!-- STAP 7 -->
+        <fieldset>
+            <legend>Activiteiten</legend>
+
+            <label><input type="checkbox" name="activiteit" value="wandelen" <%= data.reis.activiteit?.includes('wandelen') ? 'checked' : '' %>> Wandelen</label>
+            <label><input type="checkbox" name="activiteit" value="fietsen" <%= data.reis.activiteit?.includes('fietsen') ? 'checked' : '' %>> Fietsen</label>
+            <label><input type="checkbox" name="activiteit" value="zwemmen" <%= data.reis.activiteit?.includes('zwemmen') ? 'checked' : '' %>> Zwemmen</label>
+            <label><input type="checkbox" name="activiteit" value="museau-bezoeken" <%= data.reis.activiteit?.includes('museau-bezoeken') ? 'checked' : '' %>> Museum bezoeken</label>
+            <label><input type="checkbox" name="activiteit" value="ontdekken" <%= data.reis.activiteit?.includes('ontdekken') ? 'checked' : '' %>> Ontdekken</label>
+
+        </fieldset>
+
+        <!-- STAP 8 -->
+        <fieldset>
+            <legend>Type reis</legend>
+
+            <label><input type="radio" name="reizen" value="reis-optie1" <%= data.reis.reizen === 'reis-optie1' ? 'checked' : '' %>> Rondreis</label>
+            <label><input type="radio" name="reizen" value="reis-optie2" <%= data.reis.reizen === 'reis-optie2' ? 'checked' : '' %>> Resort</label>
+            <label><input type="radio" name="reizen" value="reis-optie3" <%= data.reis.reizen === 'reis-optie3' ? 'checked' : '' %>> Wintersport</label>
+            <label><input type="radio" name="reizen" value="reis-optie4" <%= data.reis.reizen === 'reis-optie4' ? 'checked' : '' %>> Camping</label>
+            <label><input type="radio" name="reizen" value="reis-optie5" <%= data.reis.reizen === 'reis-optie5' ? 'checked' : '' %>> Citytrip</label>
+            <label><input type="radio" name="reizen" value="reis-optie6" <%= data.reis.reizen === 'reis-optie6' ? 'checked' : '' %>> Safari</label>
+
+        </fieldset>
+
+        <!-- STAP 9 -->
+        <fieldset>
+            <legend>Verblijf</legend>
+
+            <label><input type="checkbox" name="verblijf" value="hotel" <%= data.reis.verblijf?.includes('hotel') ? 'checked' : '' %>> Hotel</label>
+            <label><input type="checkbox" name="verblijf" value="motel" <%= data.reis.verblijf?.includes('motel') ? 'checked' : '' %>> Motel</label>
+            <label><input type="checkbox" name="verblijf" value="caravan/camper" <%= data.reis.verblijf?.includes('caravan/camper') ? 'checked' : '' %>> Caravan/camper</label>
+            <label><input type="checkbox" name="verblijf" value="b&b" <%= data.reis.verblijf?.includes('b&b') ? 'checked' : '' %>> B&B</label>
+            <label><input type="checkbox" name="verblijf" value="tent" <%= data.reis.verblijf?.includes('tent') ? 'checked' : '' %>> Tent</label>
+
+        </fieldset>
+
+        <button type="submit">Opslaan</button>
+
+    </form>
+</main>

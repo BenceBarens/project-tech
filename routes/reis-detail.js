@@ -31,6 +31,11 @@ router.get('/reis/:id', async (req, res) => {
             ).toArray();
         }
 
+        let isEigenaar = false;
+        if (req.session.gebruiker && reis.gebruikerId) {
+            isEigenaar = reis.gebruikerId.toString() === req.session.gebruiker.id.toString();
+        }
+
         const volledigeReisData = {
             ...reis,
             organisator: organisatorData || { voornaam: "Onbekende", achternaam: "Reiziger", profielfoto: null },
@@ -42,9 +47,12 @@ router.get('/reis/:id', async (req, res) => {
         res.render('paginas/reis-detail', { 
             data: { 
                 reis: geformatteerdeReis,
+                isEigenaar: isEigenaar,
+                gebruiker: req.session.gebruiker,
                 pagina: { titel: geformatteerdeReis.reisTitel } 
             } 
         });
+
     } catch (err) {
         console.error("Detailpagina fout:", err);
         res.status(500).send("Er is iets misgegaan bij het ophalen van de reis.");
