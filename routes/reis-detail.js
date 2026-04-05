@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { ObjectId } = require('mongodb');
+const { formatteerGroteReizen } = require('../src/utils/reiskaartGrootFormat');
 
 router.get('/reis/:id', async (req, res) => {
     const db = req.app.get('db');
@@ -13,14 +14,39 @@ router.get('/reis/:id', async (req, res) => {
             return res.status(404).render('404');
         }
 
+        let organisatorData = null;
+        if (reis.gebruikerId && ObjectId.isValid(reis.gebruikerId)) {
+            organisatorData = await db.collection('gebruikers').findOne(
+                { _id: new ObjectId(reis.gebruikerId) },
+                { projection: { voornaam: 1, achternaam: 1, profielfoto: 1 } }
+            );
+        }
+
+        let deelnemersData = [];
+        if (reis.gebruikers && Array.isArray(reis.gebruikers) && reis.gebruikers.length > 0) {
+            const deelnemerIds = reis.gebruikers.map(uid => new ObjectId(uid));
+            deelnemersData = await db.collection('gebruikers').find(
+                { _id: { $in: deelnemerIds } },
+                { projection: { voornaam: 1, achternaam: 1, profielfoto: 1 } }
+            ).toArray();
+        }
+
+        const volledigeReisData = {
+            ...reis,
+            organisator: organisatorData || { voornaam: "Onbekende", achternaam: "Reiziger", profielfoto: null },
+            deelnemersLijst: deelnemersData
+        };
+
+        const geformatteerdeReis = formatteerGroteReizen([volledigeReisData])[0];
+
         res.render('paginas/reis-detail', { 
             data: { 
-                reis: reis,
-                pagina: { titel: reis.reisTitel } 
+                reis: geformatteerdeReis,
+                pagina: { titel: geformatteerdeReis.reisTitel } 
             } 
         });
     } catch (err) {
-        console.error(err);
+        console.error("Detailpagina fout:", err);
         res.status(500).send("Er is iets misgegaan bij het ophalen van de reis.");
     }
 });

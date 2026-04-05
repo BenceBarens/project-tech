@@ -1,12 +1,19 @@
 <% layout('layouts/boilerplate') %>
-<div></div>
+
 <main id="main" class="reisDetail">
-    <img src="../uploads/coverfoto/<%= data.reis.fotoPad %>" alt="Foto van <%= data.reis.titel %>">
+    <img src="../uploads/coverfoto/<%= data.reis.fotoPad %>" alt="Foto van <%= data.reis.reisTitel %>">
     <div class="reiskaartInhoud">
         <h1><%= data.reis.reisTitel %></h1>
+        
         <ul class="chipsInfo">
-            <li>€<%= data.reis.bedragen %></li>
-            <li><%= data.reis.minLeeftijd %> tot <%= data.reis.maxLeeftijd %> jaar oud</li>
+            <li><%= data.reis.bedragen %></li>
+            <% if (data.reis.minLeeftijd && data.reis.maxLeeftijd) { %>
+                <li><%= data.reis.minLeeftijd %> tot <%= data.reis.maxLeeftijd %> jaar oud</li>
+            <% } else if (data.reis.minLeeftijd) { %>
+                <li>Vanaf <%= data.reis.minLeeftijd %> jaar oud</li>
+            <% } else if (data.reis.maxLeeftijd) { %>
+                <li>Tot <%= data.reis.maxLeeftijd %> jaar oud</li>
+            <% } %>
         </ul>
         
         <p>
@@ -18,7 +25,7 @@
             <b><time datetime="<%= data.reis.eindDatum %>">
                 <%= new Date(data.reis.eindDatum).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' }) %>
             </time></b>
-            voor een periode van <b><%= data.reis.aantalDagen %></b> dagen.
+            voor een periode van ongeveer <b><%= data.reis.aantalDagen %></b> dagen.
         </p>
         
         <p><%= data.reis.reis_samenvatting %></p>
@@ -70,19 +77,30 @@
 
         <h3>Reizigers</h3>
         <p>Capaciteit: <%= data.reis.minReizigers %> - <%= data.reis.maxReizigers %> personen</p>
-        <% if (data.reis.reizigers) { %>
-            <ul>
-                <% if (Array.isArray(data.reis.reizigers)) { %>
-                    <% data.reis.reizigers.forEach(function(reiziger) { %>
-                        <li><%= reiziger %></li>
-                    <% }) %>
-                <% } else { %>
-                    <li><%= data.reis.reizigers %></li>
-                <% } %>
-            </ul>
-        <% } %>
+        
+        <ul id="deelnemers">
+            <% if (data.reis.organisator) { %>
+                <%- include('../partials/reiziger', { 
+                    data: { 
+                        gebruiker: data.reis.organisator,
+                        status: "Organisator" 
+                    } 
+                }) %>
+            <% } %>
+
+            <% if (data.reis.deelnemersLijst && data.reis.deelnemersLijst.length > 0) { %>
+                <% data.reis.deelnemersLijst.forEach(function(deelnemer) { %>
+                    <%- include('../partials/reiziger', { 
+                        data: { 
+                            gebruiker: deelnemer,
+                            status: "Aangevraagd"
+                        } 
+                    }) %>
+                <% }) %>
+            <% } %>
+        </ul>
 
         <h3>Beschrijving</h3>
-        <p style="white-space: pre-line;"><%= data.reis.reis_beschrijving %></p>
+        <p><%= data.reis.reis_beschrijving %></p>
     </div>
 </main>
