@@ -17,13 +17,13 @@
                     <%- include("../partials/reiskaartKlein", { reis: reis }) %>
                 <% }) %>
             <% } else { %>
-                <p>Deze reiziger heeft nog geen reizen geplaatst.</p>
+                <p><%= data.gebruiker.voornaam %> heeft nog geen reizen aangemaakt.</p>
             <% } %>
         </ul>
     </section>
 
     <section>
 		<h2>Deelnemende reizen</h2>
-		<p>Je neemt nog niet deel aan reizen.</p>
+		<p><%= data.gebruiker.voornaam %> neemt nog geen deel aan reizen.</p>
 	</section>
 </main>

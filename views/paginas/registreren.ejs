@@ -25,19 +25,20 @@
         </div>
         <div>
             <label for="wachtwoord">Wachtwoord</label>
-            <input type="password" placeholder="Wachtwoord" id="wachtwoord" name="wachtwoord" required>
-
+            <div class="password-container">
+                <input type="password" id="wachtwoord" name="wachtwoord" placeholder="Wachtwoord" required minlength="8">
+                <button type="button" id="togglePassword" aria-label="Wachtwoord tonen">
+                    <svg id="eye-open" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    <svg id="eye-closed" class="hidden" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                </button>
+            </div>
             <% if (typeof error !== 'undefined') { %>
-            <small class="error"><%= error %></small>
+              <small class="error"><%= error %></small>
             <% } %>
-        </div>
-        
-        <div>
-            <input type="checkbox" onclick="wachtwoordTonen()">Wachtwoord tonen
         </div>
 
         <div class="formNav">
-            <a href="#stap2" role="button" tabindex="-1" class="button">Volgende</a>
+            <a href="#stap2" role="button" tabindex="-1" class="button btn-volgende">Volgende</a>
         </div>
 </fieldset>
 
@@ -45,14 +46,14 @@
         <legend>Persoonlijke info (2/4)</legend>
         <div>
             <label for="geboorteDatum">Geboortedatum</label>
-            <input type="date" id="geboorteDatum" name="geboorteDatum">
+            <input type="date" id="geboorteDatum" name="geboorteDatum" required oninvalid="this.setCustomValidity('Geef je geboortedatum op.')" oninput="this.setCustomValidity('')">
         </div>
 
         <div>
             <label for="geslacht">Geslacht</label>
             <select id="geslacht" name="geslacht" required>
-                <option>Man</option>
                 <option>Vrouw</option>
+                <option>Man</option>
                 <option>Anders</option>
             </select>
         </div>
@@ -68,8 +69,8 @@
         </div>
 
         <div class="formNav">
-            <a href="#stap1" role="button" tabindex="-1" class="button">Vorige</a>
-            <a href="#stap3" role="button" tabindex="-1" class="button">Volgende</a>
+            <a href="#stap1" role="button" tabindex="-1" class="button2">Vorige</a>
+            <a href="#stap3" role="button" tabindex="-1" class="button btn-volgende">Volgende</a>
         </div>
     </fieldset>
 
@@ -77,8 +78,13 @@
         <legend>Vul je profiel aan (3/4)</legend>
 
         <div>
-            <label for="profielfoto">Profielfoto</label>
-            <input type="file" accept="image/*" id="profielfoto" name="profielfoto">
+            <label>
+                Profielfoto (Klik om te uploaden)
+                <div id="preview-wrapper">
+                    <img id="image-preview" src="/images/default-avatar.svg" alt="Preview">
+                </div>
+                <input type="file" accept="image/*" id="profielfoto" name="profielfoto">
+            </label>
         </div>
 
         <div>
@@ -87,8 +93,8 @@
         </div>
 
         <div class="formNav">
-            <a href="#stap2" role="button" tabindex="-1" class="button">Vorige</a>
-            <a href="#stap4" role="button" tabindex="-1" class="button">Volgende</a>
+            <a href="#stap2" role="button" tabindex="-1" class="button2">Vorige</a>
+            <a href="#stap4" role="button" tabindex="-1" class="button btn-volgende">Volgende</a>
         </div>
     </fieldset>
 
@@ -116,8 +122,8 @@
             <input type="range" min="0" max="100" id="eigenschap5" name="eigenschap5">
         </div>
         <div class="formNav">
-            <a href="#stap3" role="button" tabindex="-1" class="button">Vorige</a>
-            <button type="submit" class="button">Afronden</button>
+            <a href="#stap3" role="button" tabindex="-1" class="button2">Vorige</a>
+            <button type="submit" class="button btn-volgende">Afronden</button>
         </div>
     </fieldset>
 
@@ -125,3 +131,5 @@
 </main>
 
 <script src="/js/tonen.js"></script>
+<script src="/js/foutmeldingen.js"></script>
+<script src="/js/profielfoto-preview.js"></script>

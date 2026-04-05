@@ -3,24 +3,23 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 80vh;
     text-align: center;
+    padding: 1em;
+    max-width: 40%;
+    margin: auto;
 }
 
 .error svg {
-    width: 10em;
+    color: var(--color-text-2);
+    width: 8em;
     height: auto;
     padding: 0;
-    margin-bottom: 2rem;
-    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+    margin-bottom: 2em;
     animation: opEnNeer 3s ease-in-out infinite;
 }
 
 .error h1 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    max-width: 600px;
-    font-weight: 800;
+    font-size: 2em;
 }
 
 .error p {
@@ -28,25 +27,6 @@
     margin-bottom: 2.5rem;
     max-width: 500px;
     line-height: 1.6;
-}
-
-.error a {
-    display: inline-block;
-    padding: 12px 28px;
-    background-color: var(--color-accent-1);
-    text-decoration: none;
-    border: 2px solid transparent;
-    border-radius: 50px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-.error a:hover {
-    border-color: var(--color-surface-3);
-    background-color: var(--color-accent-3);
-    transform: translateY(-3px);
-    box-shadow: 0 6px 18px rgba(255, 90, 95, 0.3);
 }
 
 @keyframes opEnNeer {

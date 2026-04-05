@@ -73,6 +73,7 @@ body > nav ul a{
     justify-content: center;
     text-decoration: none;
     padding: 1.5em 1em;
+    color: var(--color-text-2);
 }
 
 body > nav ul svg{
