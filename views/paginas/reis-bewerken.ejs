@@ -1,0 +1,39 @@
+<% layout('layouts/boilerplate') %>
+
+<main>
+    <h1>Reis bewerken</h1>
+
+    <form method="POST">
+        <label>Titel</label>
+        <input type="text" name="reisTitel" value="<%= data.reis.reisTitel %>" required>
+
+        <label>Startdatum</label>
+        <input type="date" name="startDatum" value="<%= data.reis.startDatum %>" required>
+
+        <label>Einddatum</label>
+        <input type="date" name="eindDatum" value="<%= data.reis.eindDatum %>" required>
+
+        <label>Aantal dagen</label>
+        <input type="number" name="aantalDagen" value="<%= data.reis.aantalDagen %>" required>
+
+        <label>Samenvatting</label>
+        <textarea name="reis_samenvatting"><%= data.reis.reis_samenvatting %></textarea>
+
+        <label>Beschrijving</label>
+        <textarea name="reis_beschrijving"><%= data.reis.reis_beschrijving %></textarea>
+
+        <label>Min reizigers</label>
+        <input type="number" name="minReizigers" value="<%= data.reis.minReizigers %>">
+
+        <label>Max reizigers</label>
+        <input type="number" name="maxReizigers" value="<%= data.reis.maxReizigers %>">
+
+        <label>Min leeftijd</label>
+        <input type="number" name="minLeeftijd" value="<%= data.reis.minLeeftijd %>">
+
+        <label>Max leeftijd</label>
+        <input type="number" name="maxLeeftijd" value="<%= data.reis.maxLeeftijd %>">
+
+        <button type="submit">Opslaan</button>
+    </form>
+</main>
