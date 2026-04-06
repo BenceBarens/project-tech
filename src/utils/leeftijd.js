@@ -14,5 +14,3 @@ function berekenLeeftijd(geboortedatum) {
     return leeftijd
 }
 module.exports = { berekenLeeftijd }
-
-

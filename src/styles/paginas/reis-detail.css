@@ -37,3 +37,7 @@
 .reisDetail p:last-of-type{
     white-space: pre-line;
 }
+
+#bewerkReis svg{
+    height: 1em;
+}

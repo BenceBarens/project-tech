@@ -18,9 +18,9 @@
             <div>
                 <div>
                     <label for="voornaam">Voornaam</label>
-                    <input type="text" id="voornaam" name="voornaam" value="<%= data.gebruiker.voornaam %>" required oninvalid="this.setCustomValidity('Vul je voornaam in.')">
+                    <input type="text" id="voornaam" name="voornaam" value="<%= data.gebruiker.voornaam %>" required>
                     <label for="achternaam">Achternaam</label>
-                    <input type="text" id="achternaam" name="achternaam" value="<%= data.gebruiker.achternaam %>" required oninvalid="this.setCustomValidity('Vul je achternaam in.')">
+                    <input type="text" id="achternaam" name="achternaam" value="<%= data.gebruiker.achternaam %>" required>
                 </div>
                 <div>
                     <label for="bio">Over mij (bio)</label><br>
@@ -33,7 +33,7 @@
             <legend>Gegevens</legend>
             <div>
                 <label for="email">Email</label><br>
-                <input type="email" id="email" name="email" value="<%= data.gebruiker.email %>" required oninvalid="this.setCustomValidity('Vul je e-mailadres in.')">
+                <input type="email" id="email" name="email" value="<%= data.gebruiker.email %>" required>
             </div>
 
             <div>
@@ -46,8 +46,20 @@
             </div>
 
             <div>
-                <label for="woonplaats">Woonplaats</label><br>
-                <input type="text" id="woonplaats" name="woonplaats" value="<%= data.gebruiker.woonplaats || '' %>">
+                <label for="locatie-zoeken">Woonplaats</label><br>
+                <input type="text" id="locatie-zoeken" placeholder="Zoek je stad of dorp..." autocomplete="off"><br>
+                <ul id="suggestie-lijst"></ul>
+                
+                <div id="gekozen-locaties-container" data-input-name="woonplaats" data-max="1">
+                    <% if (data.gebruiker.woonplaats) { %>
+                        <div class="gekozen-locatie-tag" onclick="this.remove()">
+                            <div class="chipVerwijderbaar">
+                                <input type="checkbox" name="woonplaats" value="<%= data.gebruiker.woonplaats %>" checked style="display:none;">
+                                <label><%= data.gebruiker.woonplaats %></label>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
             </div>
 
         </fieldset>
@@ -71,3 +83,4 @@
 </main>
 
 <script src="/js/profielfoto-preview.js"></script>
+<script src="/js/locatie-zoeker.js"></script>
