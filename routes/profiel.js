@@ -8,6 +8,40 @@ const { formatteerReizen } = require('../src/utils/reiskaartKleinFormat')
 // Route waar profielfoto's worden opgeslagen
 const upload = multer({ dest: 'public/uploads/profielfoto' })
 
+async function verrijkReizenMetGebruikers (db, reizen) {
+    return Promise.all(reizen.map(async (reis) => {
+        let aanvragenData = []
+        if (reis.gebruikers && Array.isArray(reis.gebruikers) && reis.gebruikers.length > 0) {
+            const aanvraagIds = reis.gebruikers.map(id =>
+                typeof id === 'string' ? new ObjectId(id) : id
+            )
+
+            aanvragenData = await db.collection('gebruikers').find(
+                { _id: { $in: aanvraagIds } },
+                { projection: { voornaam: 1, achternaam: 1, profielfoto: 1 } }
+            ).toArray()
+        }
+
+        let deelnemersData = []
+        if (reis.deelnemers && Array.isArray(reis.deelnemers) && reis.deelnemers.length > 0) {
+            const deelnemerIds = reis.deelnemers.map(id =>
+                typeof id === 'string' ? new ObjectId(id) : id
+            )
+
+        deelnemersData = await db.collection('gebruikers').find(
+                { _id: { $in: deelnemerIds } },
+                { projection: { voornaam: 1, achternaam: 1, profielfoto: 1 } }
+            ).toArray()
+        }
+
+        return {
+            ...reis,
+            aanvragenLijst: aanvragenData,
+            deelnemersLijst: deelnemersData
+        }
+    }))
+}
+
 router.get('/profiel', async function(req, res) {
     try {
         const db = req.app.get('db')
@@ -22,19 +56,45 @@ router.get('/profiel', async function(req, res) {
             _id: new ObjectId(req.session.gebruiker.id) 
         })
 
+        console.log('PROFIEL ROUTE BEREIKT')
+        console.log('ingelogde gebruiker:', req.session.gebruiker.id)
+        console.log('gebruikerData.deelnemendeReizen:', gebruikerData.deelnemendeReizen)
+
+
         if (!gebruikerData) {
             return res.send("Gebruiker niet gevonden")
         }
 
         let deReizen = []
         if (gebruikerData.reizen && gebruikerData.reizen.length > 0) {
+            const reisIds = gebruikerData.reizen.map(id =>
+                typeof id === 'string' ? new ObjectId(id) : id
+            )
+            
+            // Reizen ophalen
             const opgehaaldeReizen = await db.collection('reizen').find({
-                _id: { $in: gebruikerData.reizen }
+                _id: { $in: reisIds }
             }).toArray()
 
+            // Reizen verrijken met aanvraagdata
+            const verrijkteReizen = await verrijkReizenMetGebruikers(db, opgehaaldeReizen)
+
             // Formatteer de reizen voor eigen profiel
-            deReizen = formatteerReizen(opgehaaldeReizen);
+            deReizen = formatteerReizen(verrijkteReizen);
         }
+
+        let deelnemendeReizen = []
+if (gebruikerData.deelnemendeReizen && gebruikerData.deelnemendeReizen.length > 0) {
+    const deelnemendeReisIds = gebruikerData.deelnemendeReizen.map(id =>
+        typeof id === 'string' ? new ObjectId(id) : id
+    )
+
+    const opgehaaldeDeelnemendeReizen = await db.collection('reizen').find({
+        _id: { $in: deelnemendeReisIds }
+    }).toArray()
+
+    deelnemendeReizen = formatteerReizen(opgehaaldeDeelnemendeReizen)
+}
 
         res.render('paginas/profiel', {
             data: {
@@ -46,7 +106,8 @@ router.get('/profiel', async function(req, res) {
                     woonplaats: gebruikerData.woonplaats || "Onbekend",
                     land: gebruikerData.land || "Onbekend",
                     profielfoto: gebruikerData.profielfoto ? '/uploads/profielfoto/' + gebruikerData.profielfoto : '/images/default-avatar.svg',              
-                    reizen: deReizen
+                    reizen: deReizen,
+                    deelnemendeReizen: deelnemendeReizen
                 }
             } 
         })
@@ -84,6 +145,19 @@ router.get('/profiel/:id', async (req, res) => {
             deReizen = formatteerReizen(opgehaaldeReizen);
         }
 
+          let deelnemendeReizen = []
+        if (bekijkReiziger.deelnemendeReizen && bekijkReiziger.deelnemendeReizen.length > 0) {
+            const opgehaaldeDeelnemendeReizen = await db.collection('reizen').find({
+                _id: { $in: bekijkReiziger.deelnemendeReizen }
+            }).toArray()
+
+            console.log('ruwe deelnemende reizen uit DB:', opgehaaldeDeelnemendeReizen)
+
+            deelnemendeReizen = formatteerReizen(opgehaaldeDeelnemendeReizen);
+
+            console.log('geformatteerde deelnemende reizen:', deelnemendeReizen)
+        }
+
         res.render('paginas/bezoek-profiel', {
             data: {
                 pagina: { titel: "Profiel van " + bekijkReiziger.voornaam },
@@ -92,7 +166,8 @@ router.get('/profiel/:id', async (req, res) => {
                     achternaam: bekijkReiziger.achternaam,
                     bio: bekijkReiziger.bio || "Deze reiziger heeft nog geen bio.",
                     profielfoto: bekijkReiziger.profielfoto ? '/uploads/profielfoto/' + bekijkReiziger.profielfoto : '/images/default-avatar.svg',
-                    reizen: deReizen
+                    reizen: deReizen,
+                    deelnemendeReizen: deelnemendeReizen
                 }
             }
         })

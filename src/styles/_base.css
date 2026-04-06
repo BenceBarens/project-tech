@@ -229,3 +229,72 @@ textarea{
 input[type=number]{
     width: 5em;
 }
+/* Aanvraag tot deelnemer op organisatorsprofiel */
+.aanvragen-container {
+    list-style: none;
+    width: 100%;
+    margin-bottom: 1.5rem;
+} 
+
+.aanvragen-container > p {
+    font-family: "Protest Riot", sans-serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--color-text-2);
+    margin-bottom: 0.55rem;
+}
+
+.aanvragen-lijst  {
+    display: flex;
+    gap: 1rem;
+    flex-direction: row;
+    flex-wrap: nowrap !important;
+  
+
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory; 
+    scroll-behavior: smooth;
+
+}
+
+.aanvragen-lijst::-webkit-scrollbar {
+    display: none;
+    padding-left: 0.25rem;
+}
+
+.aanvraag-item  {
+     flex: 0 0 220px;
+    display: flex;
+    flex-direction: column;
+      align-items: center;
+    gap: 0.5rem;
+
+    padding: 0.9rem;
+    border-radius: 12px;
+    background: var(--color-surface-2);
+   scroll-snap-align: start;
+} 
+
+.aanvraag-item p {
+ margin: 0;
+ font-size: 0.90rem;
+ font-weight: 500;
+} 
+
+.aanvraag-item .button,
+.aanvraag-item .button2 {
+    width: 80%;
+    font-size: 0.85rem;
+    padding: 0.35em 0.7em;
+}
+
+.geen-aanvragen p {
+    margin: 0;
+    font-style: italic;
+    color: var(--color-text-2);
+}

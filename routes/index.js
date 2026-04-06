@@ -37,8 +37,8 @@ async function haalReizenVoorRequest(req, limiet) {
 
             // Haal de data van alle deelnemers uit de 'gebruikers' array op
             let deelnemersData = [];
-            if (reis.gebruikers && Array.isArray(reis.gebruikers) && reis.gebruikers.length > 0) {
-                const deelnemerIds = reis.gebruikers.map(id => new ObjectId(id));
+            if (reis.deelnemers && Array.isArray(reis.deelnemers) && reis.deelnemers.length > 0) {
+                const deelnemerIds = reis.deelnemers.map(id => new ObjectId(id));
                 deelnemersData = await db.collection('gebruikers').find(
                     { _id: { $in: deelnemerIds } },
                     { projection: { voornaam: 1, achternaam: 1, profielfoto: 1 } }
