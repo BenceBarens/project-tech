@@ -31,8 +31,14 @@
                 <% } %>
                 
                 <!--voorkomen dat er "tot jaar oud" komt te staan-->
-                <% if (data.reis.minLeeftijd || data.reis.maxLeeftijd) { %>
-                <li><%= data.reis.minLeeftijd %> tot <%= data.reis.maxLeeftijd %> jaar oud</li>
+                <% if (data.reis.minLeeftijd && data.reis.maxLeeftijd) { %>
+                    <li><%= data.reis.minLeeftijd %> tot <%= data.reis.maxLeeftijd %> jaar oud</li>
+
+                <% } else if (data.reis.minLeeftijd) { %>
+                    <li>Vanaf <%= data.reis.minLeeftijd %> jaar oud</li>
+
+                <% } else if (data.reis.maxLeeftijd) { %>
+                    <li>Tot <%= data.reis.maxLeeftijd %> jaar oud</li>
                 <% } %>
               
                 <!-- toevoegen van , en spatie bij Array--> 

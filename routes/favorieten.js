@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { ObjectId } = require('mongodb');
-// IMPORTEREN: Haal de normaliseer functie op uit je matching.js
 const { normaliseer } = require('./matching'); 
+const { formatteerReizen } = require('../src/utils/reiskaartKleinFormat');
 
 async function haalFavorietenOp(db, gebruikerId) {
     try {
@@ -20,8 +20,9 @@ async function haalFavorietenOp(db, gebruikerId) {
             _id: { $in: geaccepteerdeIds.map(id => new ObjectId(id)) }
         }).toArray();
 
-        // Dit werkt nu omdat we normaliseer hierboven hebben ge-require
-        return normaliseer(favorieteReizen);
+        const genormaliseerdeReizen = normaliseer(favorieteReizen);
+        return formatteerReizen(genormaliseerdeReizen);
+
     } catch (err) {
         console.error("Fout in haalFavorietenOp:", err);
         return [];
@@ -47,12 +48,11 @@ router.get('/favorieten', async (req, res) => {
     }
 });
 
-// SLECHTS ÉÉN POST ROUTE HIER:
 router.post('/reis-accepteren', async (req, res) => {
     try {
         const db = req.app.get('db');
         const { reisId } = req.body; 
-        const gebruikerId = req.session.gebruiker.id;
+        const gebruikerId = req.session.gebruiker?.id;
 
         if (!gebruikerId) return res.status(401).json({ error: 'Niet ingelogd' });
 

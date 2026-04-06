@@ -61,3 +61,7 @@
 .reiskaartGroot #deelnemers::-webkit-scrollbar{
     display: none;
 }
+
+.reiskaartGroot p:last-of-type{
+    white-space: pre-line;
+}
