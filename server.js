@@ -43,6 +43,7 @@ const reisBewerken = require("./routes/reis-bewerken") // NIEUW
 const login = require("./routes/inloggen")
 const register = require("./routes/registreren")
 const reisAfhandelingDB = require('./routes/reisAfhandelingDB')
+const deelnameAfhandeling = require('./routes/deelnameAfhandeling')
 const logout = require("./routes/uitloggen")
 const error404 = require("./routes/404")
 
@@ -52,8 +53,10 @@ app.use('/', reisAanmaken)
 app.use('/', aanvragen)
 app.use('/', profiel)
 app.use('/', reisDetail)
-app.use('/', reisBewerken) // NIEUW
+app.use('/', reisBewerken)
 app.use('/', reisAfhandelingDB)
+app.use('/', deelnameAfhandeling)
+
 app.use('/', login)
 app.use('/', register)
 app.use('/', logout)
