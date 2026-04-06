@@ -12,56 +12,54 @@ const { formatteerGroteReizen } = require('../src/utils/reiskaartGrootFormat')
  */
 async function haalReizenVoorRequest(req, limiet) {
     try {
-        const db = req.app.get('db')
-        const gebruikerId = req.session?.gebruiker?.id || null
+        const db = req.app.get('db');
+        const { ObjectId } = require('mongodb');
+        const gebruikerId = req.session?.gebruiker?.id || null;
 
-        // 1. Haal de basis reizen op via de matching module
-        const resultaat = await haalMatchesOp(
-            db,
-            gebruikerId,
-            req.query,
-            limiet
-        )
+        const resultaat = await haalMatchesOp(db, gebruikerId, req.query, limiet);
 
-        // 2. Verrijk elke reis met data van de organisator EN de deelnemers
         const reizenVerrijkt = await Promise.all(resultaat.map(async (reis) => {
-            
-            // Haal de data van de organisator op
+            // A. Organisator
             let organisatorData = null;
-            if (reis.gebruikerId && ObjectId.isValid(reis.gebruikerId)) {
+            if (reis.gebruikerId) {
                 organisatorData = await db.collection('gebruikers').findOne(
                     { _id: new ObjectId(reis.gebruikerId) },
                     { projection: { voornaam: 1, achternaam: 1, profielfoto: 1 } }
                 );
             }
 
-            // Haal de data van alle deelnemers uit de 'gebruikers' array op
+            // B. Deelnemers
             let deelnemersData = [];
             if (reis.deelnemers && Array.isArray(reis.deelnemers) && reis.deelnemers.length > 0) {
-                const deelnemerIds = reis.deelnemers.map(id => new ObjectId(id));
+                const dIds = reis.deelnemers.map(id => new ObjectId(id));
                 deelnemersData = await db.collection('gebruikers').find(
-                    { _id: { $in: deelnemerIds } },
+                    { _id: { $in: dIds } },
+                    { projection: { voornaam: 1, achternaam: 1, profielfoto: 1 } }
+                ).toArray();
+            }
+
+            // C. Aanvragers
+            let aanvragenData = [];
+            if (reis.gebruikers && Array.isArray(reis.gebruikers) && reis.gebruikers.length > 0) {
+                const aIds = reis.gebruikers.map(id => new ObjectId(id));
+                aanvragenData = await db.collection('gebruikers').find(
+                    { _id: { $in: aIds } },
                     { projection: { voornaam: 1, achternaam: 1, profielfoto: 1 } }
                 ).toArray();
             }
 
             return {
                 ...reis,
-                organisator: organisatorData || { 
-                    voornaam: "Onbekende", 
-                    achternaam: "Reiziger", 
-                    profielfoto: null 
-                },
-                deelnemersLijst: deelnemersData
+                organisator: organisatorData,
+                deelnemersLijst: deelnemersData,
+                aanvragenLijst: aanvragenData
             };
         }));
 
-        // 3. Formatteer de verrijkte reizen via de helper
         return formatteerGroteReizen(reizenVerrijkt);
-        
     } catch (err) {
         console.error("Fout in haalReizenVoorRequest:", err);
-        throw err; 
+        return []; 
     }
 }
 

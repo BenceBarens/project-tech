@@ -78,6 +78,17 @@
                         }) %>
                     <% }) %>
                 <% } %>
+
+                <% if (data.reis.aanvragenLijst && data.reis.aanvragenLijst.length > 0) { %>
+                    <% data.reis.aanvragenLijst.forEach(function(aanvrager) { %>
+                        <%- include('reiziger', { 
+                            data: { 
+                                gebruiker: aanvrager,
+                                status: "Aangevraagd" 
+                            } 
+                        }) %>
+                    <% }) %>
+                <% } %>
             </ul>
 
             <div>
