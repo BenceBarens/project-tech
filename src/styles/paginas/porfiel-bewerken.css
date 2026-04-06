@@ -38,22 +38,28 @@
     grid-template: auto auto / auto auto;
 }
 
+.profielBewerken input{
+    max-width: 30em;
+}
+
 @media only screen and (max-width: 768px){
     .profielBewerken fieldset:first-of-type{
         grid-template: auto / auto;
     }
 
-    .profielBewerken fieldset:first-of-type > div:first-of-type{
-        margin: auto;
-        width: min-content;
-        padding-bottom: 1em;
+    .profielBewerken fieldset:first-of-type > label{
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        margin-bottom: 1em;
+        text-align: center;
     }
 
     .profielBewerken fieldset:first-of-type div div:first-of-type{
         grid-template: auto auto auto auto / auto;
     }
 
-    .profielBewerken legend{
-        text-align: center;
+    .profielBewerken textarea{
+        height: 6em;
     }
 }

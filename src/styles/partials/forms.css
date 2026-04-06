@@ -32,6 +32,11 @@
     gap: 1em;
 }
 
+.reisAanmaken form fieldset{
+    position: relative;
+    padding-bottom: 4em;
+}
+
 .registreren form::-webkit-scrollbar,
 .reisAanmaken form::-webkit-scrollbar{
     display: none;
@@ -40,9 +45,10 @@
 .registreren form legend,
 .reisAanmaken form legend{
     font-size: larger;
+    padding: 0 0.5em;
 }
 
-.registreren form div{
+.registreren form fieldset > div{
     width: min(20em, 100%);
     display: flex;
     flex-direction: column;
@@ -50,14 +56,28 @@
 
 .registreren form .formNav,
 .reisAanmaken form .formNav{
-    width: 100%;
-    margin-top: auto;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
+.registreren form .formNav{
+    width: 100%;
+    margin-top: auto;
+}
+
+.reisAanmaken form .formNav{
+    bottom: 1em;
+    left: 1em;
+    right: 1em;
+    position: absolute;
+}
+
 .registreren form .formNav a:last-child,
 .reisAanmaken form .formNav a:last-child{
     margin-left: auto;
+}
+
+form .input-error {
+    border-color: red;
 }

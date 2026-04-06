@@ -17,7 +17,7 @@
                     <%- include("../partials/reiskaartKlein", { reis: reis }) %>
                 <% }) %>
             <% } else { %>
-                <p>Deze reiziger heeft nog geen reizen geplaatst.</p>
+                <p><%= data.gebruiker.voornaam %> heeft nog geen reizen aangemaakt.</p>
             <% } %>
         </ul>
     </section>
@@ -30,7 +30,7 @@
 						<%- include("../partials/reiskaartKlein", { reis: reis }) %>
 				<% }) %>
 			<% } else { %>
-				<p>Deze reiziger neemt nog niet deel aan reizen.</p>
+				<p><%= data.gebruiker.voornaam %> neemt nog niet deel aan reizen.</p>
 			<% } %>
 		</ul>
 	</section>

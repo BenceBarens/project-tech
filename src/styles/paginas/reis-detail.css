@@ -3,6 +3,10 @@
     margin: auto;
 }
 
+.reisDetail h1{
+    margin-bottom: 0.5em;
+}
+
 .reisDetail > img{
     width: 100%;
     height: 15em;
@@ -12,4 +16,28 @@
 
 .reisDetail h1{
     font-size: 3em;
+}
+
+.reisDetail #deelnemers{
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    gap: 0.5em;
+    flex-wrap: wrap;
+    max-width: 100%;
+    margin-bottom: 1em;
+}
+
+.reisDetail #deelnemers a{
+    background-color: var(--color-surface-2);
+    padding: 0.5em 1.5em 0.5em 0.5em;
+    border-radius: 0.5em;
+}
+
+.reisDetail p:last-of-type{
+    white-space: pre-line;
+}
+
+#bewerkReis svg{
+    height: 1em;
 }

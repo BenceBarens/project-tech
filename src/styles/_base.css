@@ -1,9 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Protest+Riot&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
 
-*{
-    scroll-behavior: smooth;
-}
-
 :root{
     --color-surface-1: #fffcf2;
     --color-surface-2: #f4f2e7;
@@ -30,6 +26,7 @@
 
 *{
     color: var(--color-text-1);
+    scroll-behavior: smooth;
 }
 
 html, body{
@@ -50,7 +47,13 @@ h1, h2, h3, h4, h5, h6, header{
     margin: 0;
 }
 
-a{
+@media only screen and (max-width: 769px){
+    h1, main > p, legend{
+        text-align: center;
+    }
+}
+
+a, p, svg, svg *{
     color: inherit;
 }
 
@@ -59,51 +62,56 @@ a{
     color: var(--color-text-3);
 }
 
+.hidden{
+    display: none;
+}
 
 /*****************************/
 /* Chips */
 /*****************************/
 
-.chipToggle, .chipRadio{
+.chipToggle, .chipRadio, .chipsInfo li{
     display: inline-block;
     border: 0.1em solid var(--color-surface-3);
     border-radius: 50em;
+    padding: 0.2em 0.6em;
     transition: all 200ms ease;
+    margin: 0 0.2em 0.5em 0;
+}
+
+.chipsInfo li{
+    border: 0.1em solid var(--color-surface-4);
 }
 
 .chipToggle:hover, .chipRadio:hover, .chipVerwijderbaar:hover{
     background-color: var(--color-surface-2);
 }
 
-.chipToggle label, .chipRadio label{
-    padding: 0.6em;
-    line-height: 1.5;
-}
-
 .chipToggle:has(input:checked), .chipRadio:has(input:checked){
     background-color: var(--color-surface-3);
-}
-
-.chipToggle:has(input:checked) label, .chipRadio:has(input:checked) label{
     color: var(--color-text-3);
 }
 
 .chipToggle input, .chipRadio input, .chipVerwijderbaar input{
-    display: none;
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
 }
 
-.chipToggle label::after {
-    content: '✖';
+.chipToggle::after {
+    content: '✕';
+    font-weight: bold;
     display: inline-block;
     opacity: 0;
     max-width: 0;
     margin-left: 0;
+    margin-top: -0.3em;
     transition: all 200ms ease;
     overflow: hidden;
     vertical-align: middle;
 }
 
-.chipToggle:has(input:checked) label::after {
+.chipToggle:has(input:checked)::after {
     opacity: 1;
     max-width: 1.5em;
     margin-left: 0.4em;
@@ -145,17 +153,8 @@ a{
     list-style-type: none;
     padding: 0;
     display: flex;
-    gap: 0.5em;
     flex-wrap: wrap;
     margin: 0.5em 0;
-}
-
-.chipsInfo li{
-    display: inline-block;
-    border: 0.1em solid var(--color-surface-4);
-    border-radius: 50em;
-    transition: all 200ms ease;
-    padding: 0.2em 0.6em;
 }
 
 /*****************************/
@@ -200,7 +199,7 @@ a{
 /* Inputs and forms */
 /*****************************/
 
-button, .button, .button2, .chipToggle label, .chipRadio label, .chipSuggestie, .chipVerwijderbaar label, .chipVerwijderbaar{
+button, .button, .button2, .chipToggle, .chipRadio, .chipSuggestie, .chipVerwijderbaar label, .chipVerwijderbaar{
     cursor: pointer;
 }
 
@@ -209,6 +208,7 @@ input[type=text], input[type=email], input[type=password], input[type=number], i
     margin: 0.5em 0 1em 0;
     border: 0.1em solid var(--color-surface-4);
     background-color: var(--color-surface-2);
+    color: var(--color-text-1);
     border-radius: 0.5em;
     font-size: 1em;
     box-sizing: border-box;
@@ -224,11 +224,42 @@ input[type=text], input[type=email], input[type=password], textarea{
 
 textarea{
     resize: vertical;
+    min-height: 2.5em;
+    max-height: 15em;
 }
 
 input[type=number]{
     width: 5em;
 }
+
+#togglePassword {
+    position: absolute;
+    color: var(--color-text-2);
+    padding: 1em;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+}
+
+#togglePassword svg{
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.password-container{
+    margin: 0.5em 0 1em 0;
+    position: relative;
+    width: 100%;
+}
+
+.password-container input[type=text], .password-container input[type=password]{
+    margin: 0;
+}
+
 /* Aanvraag tot deelnemer op organisatorsprofiel */
 .aanvragen-container {
     list-style: none;
@@ -297,4 +328,4 @@ input[type=number]{
     margin: 0;
     font-style: italic;
     color: var(--color-text-2);
-}
+
