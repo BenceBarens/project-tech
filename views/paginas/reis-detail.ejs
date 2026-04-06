@@ -40,18 +40,21 @@
         
         <p><%= data.reis.reis_samenvatting %></p>
 
-        <% if (data.isEigenaar && data.reis.deelnemersLijst && data.reis.deelnemersLijst.length > 0) { %>
-            <h3>Aanvragen</h3>
-            <ul class="deelnemersLijst">
-                <% data.reis.aanvragenLijst.forEach(function(aanvrager) { %>
-                    <%- include('../partials/reiziger', { 
-                        data: { 
-                            gebruiker: aanvrager,
-                            status: "Aangevraagd"
-                        } 
-                    }) %>
-                <% }) %>
-            </ul>
+        <% if (data.isEigenaar && data.reis.aanvragenLijst && data.reis.aanvragenLijst.length > 0) { %>
+            <div id="aanvragen-sectie">
+                <h3>Binnengekomen aanvragen</h3>
+                <ul class="deelnemersLijst aanvragen-lijst-js">
+                    <% data.reis.aanvragenLijst.forEach(function(aanvrager) { %>
+                            <%- include('../partials/reiziger', { 
+                                data: { 
+                                    gebruiker: aanvrager, 
+                                    status: "Aangevraagd",
+                                    reisId: data.reis._id
+                                } 
+                            }) %>
+                    <% }) %>
+                </ul>
+            </div>
         <% } %>
 
         <h3>Bestemming(en)</h3>
@@ -123,11 +126,13 @@
                 <% }) %>
             <% } %>
         </ul>
-        <% if (!data.isEigenaar && data.reis.deelnemersLijst && data.reis.deelnemersLijst.length > 0) { %>
-                <p><%= data.reis.deelnemersLijst.length %> lopende aanvragen</p>
+        <% if (!data.isEigenaar && data.reis.aanvragenLijst && data.reis.aanvragenLijst.length > 0) { %>
+            <p><%= data.reis.aanvragenLijst.length %> lopende aanvragen</p>
         <% } %>
 
         <h3>Beschrijving</h3>
         <p><%= data.reis.reis_beschrijving %></p>
     </div>
 </main>
+
+<% if (data.isEigenaar) { %><script src="/js/aanvragen.js"></script><% } %>

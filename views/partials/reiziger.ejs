@@ -2,8 +2,19 @@
     <a href="/profiel/<%= data.gebruiker._id %>">
         <img src="<%= data.gebruiker.profielfoto %>" alt="Profielfoto van <%= data.gebruiker.voornaam %>">
         <div>
-            <p><%= data.gebruiker.voornaam %> <%= data.gebruiker.achternaam %></p>
+            <p><strong><%= data.gebruiker.voornaam %> <%= data.gebruiker.achternaam %></strong></p>
             <p><%= data.status %></p>
         </div>
     </a>
+
+    <% if (data.status === "Aangevraagd") { %>
+        <div>
+            <button type="button" class="button aanvraag-accepteren" data-reis-id="<%= data.reisId %>" data-gebruiker-id="<%= data.gebruiker._id %>">
+                Accepteren
+            </button>
+            <button type="button" class="button2 aanvraag-weigeren" data-reis-id="<%= data.reisId %>" data-gebruiker-id="<%= data.gebruiker._id %>">
+                Weigeren
+            </button>
+        </div>
+    <% } %>
 </li>

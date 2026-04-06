@@ -28,12 +28,6 @@
     margin-bottom: 1em;
 }
 
-.reisDetail .deelnemersLijst a{
-    background-color: var(--color-surface-2);
-    padding: 0.5em 1.5em 0.5em 0.5em;
-    border-radius: 0.5em;
-}
-
 .reisDetail p:last-of-type{
     white-space: pre-line;
 }

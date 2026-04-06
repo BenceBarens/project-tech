@@ -1,5 +1,11 @@
+.reizigersKaart{
+    background-color: var(--color-surface-2);
+    border-radius: 0.5em;
+}
+
 .reizigersKaart a{
     display: flex;
+    padding: 0.5em 1.5em 0.5em 0.5em;
     gap: 1em;
     text-decoration: none;
 }
@@ -14,4 +20,8 @@
 .reizigersKaart p{
     margin: 0;
     width: max-content;
+}
+
+.reizigersKaart > div{
+    padding: 0.5em;
 }

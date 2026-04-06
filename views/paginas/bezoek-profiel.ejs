@@ -24,14 +24,14 @@
 
     <section>
 		<h2>Deelnemende reizen</h2>
-		<ul>
-			<% if (data.gebruiker.deelnemendeReizen && data.gebruiker.deelnemendeReizen.length > 0) { %>
-				<% data.gebruiker.deelenemendeReizen.forEach(function (reis) { %>
-						<%- include("../partials/reiskaartKlein", { reis: reis }) %>
-				<% }) %>
-			<% } else { %>
-				<p><%= data.gebruiker.voornaam %> neemt nog niet deel aan reizen.</p>
-			<% } %>
-		</ul>
+        <ul>
+            <% if (data.gebruiker.deelnemendeReizen && data.gebruiker.deelnemendeReizen.length > 0) { %>
+                <% data.gebruiker.deelnemendeReizen.forEach(function (reis) { %>
+                    <%- include("../partials/reiskaartKlein", { reis: reis }) %>
+                <% }) %>
+            <% } else { %>
+                <p>Deze reiziger neemt momenteel niet deel aan andere reizen.</p>
+            <% } %>
+        </ul>
 	</section>
 </main>
