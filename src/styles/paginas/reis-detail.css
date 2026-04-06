@@ -13,3 +13,7 @@
 .reisDetail h1{
     font-size: 3em;
 }
+
+#bewerkReis svg{
+    height: 1em;
+}
