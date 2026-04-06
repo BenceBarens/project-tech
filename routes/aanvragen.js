@@ -29,14 +29,14 @@ async function haalFavorietenOp(db, gebruikerId) {
     }
 }
 
-router.get('/favorieten', async (req, res) => {
+router.get('/aanvragen', async (req, res) => {
     try {
         const db = req.app.get('db');
         if (!req.session.gebruiker) return res.redirect('/inloggen');
 
         const mijnFavorieten = await haalFavorietenOp(db, req.session.gebruiker.id);
 
-        res.render('paginas/favorieten', {
+        res.render('paginas/aanvragen', {
             data: {
                 pagina: { titel: 'Mijn Favorieten' },
                 reizen: mijnFavorieten
