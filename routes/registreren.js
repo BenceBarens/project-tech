@@ -3,6 +3,7 @@ const router = express.Router()
 const multer = require('multer')
 const bcryptjs = require('bcryptjs')
 const xss = require('xss')
+const { maakArray } = require('../src/utils/array')
 
 const upload = multer({ dest: 'public/uploads/profielfoto' })
 
@@ -23,15 +24,21 @@ async function verwerkRegistratie(req, res) {
         const db = req.app.get('db')
         const collectie = db.collection('gebruikers')
 
+        // 1. Verwerk de woonplaats uit de API-zoeker
+        const woonplaatsArray = maakArray(req.body.woonplaats)
+        const geselecteerdeWoonplaats = woonplaatsArray[0] || ""
+
+        // 2. Bouw het nieuwe gebruikersobject op (zonder persoonlijkheden, mét telefoonnummer)
         const gebruiker = {
             voornaam: xss(req.body.voornaam),
             achternaam: xss(req.body.achternaam),
             email: xss(req.body.email).toLowerCase().trim(),
-            woonplaats: xss(req.body.woonplaats),
-            land: xss(req.body.land),
+            woonplaats: xss(geselecteerdeWoonplaats),
             geslacht: xss(req.body.geslacht),
+            telefoonNummer: xss(req.body.telefoonNummer),
             geboorteDatum: req.body.geboorteDatum ? xss(req.body.geboorteDatum).split('T')[0] : null,
-            wachtwoord: req.body.wachtwoord
+            bio: xss(req.body.bio || ""),
+            wachtwoord: req.body.wachtwoord // Wordt hieronder gehasht
         }
 
         // Check of email al bestaat
@@ -63,6 +70,7 @@ async function verwerkRegistratie(req, res) {
 
         const resultaat = await collectie.insertOne(gebruiker)
 
+        // Sessie vullen
         req.session.gebruiker = {
             id: resultaat.insertedId,
             email: gebruiker.email,

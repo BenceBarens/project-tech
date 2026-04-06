@@ -5,72 +5,68 @@ const zoekVeld = document.getElementById('locatie-zoeken');
 const suggestieLijst = document.getElementById('suggestie-lijst');
 const container = document.getElementById('gekozen-locaties-container');
 
-// 1. Luister naar input in het zoekveld
+const inputNaam = container.getAttribute('data-input-name') || 'bestemmingen';
+const maxLocaties = parseInt(container.getAttribute('data-max')) || 999;
+
 zoekVeld.addEventListener('input', async (e) => {
-    const waarde = e.target.value.trim()
+    const waarde = e.target.value.trim();
     
-    // Alleen zoeken als er minimaal 3 letters getypt zijn
     if (waarde.length < 3) {
-        suggestieLijst.innerHTML = ''
-        return
+        suggestieLijst.innerHTML = '';
+        return;
     }
 
     try {
-        const res = await fetch(`/zoek-locatie?q=${encodeURIComponent(waarde)}`)
-        const data = await res.json()
+        const res = await fetch(`/zoek-locatie?q=${encodeURIComponent(waarde)}`);
+        const data = await res.json();
         
-        suggestieLijst.innerHTML = ''
+        suggestieLijst.innerHTML = '';
         
         if (Array.isArray(data)) {
             data.forEach(plek => {
-                const li = document.createElement('li')
-                li.classList.add('chipSuggestie')
-                li.textContent = plek.display_name
+                const li = document.createElement('li');
+                li.classList.add('chipSuggestie');
+                li.textContent = plek.display_name;
                 
                 li.onclick = () => {
-                    voegLocatieToe(plek.display_name)
-                    zoekVeld.value = ''
-                    suggestieLijst.innerHTML = ''
-
-                    const locatieError = document.getElementById('locatie-error');
-                    if (locatieError) locatieError.style.display = 'none';
-                    zoekVeld.classList.remove('input-error');
-                }
+                    voegLocatieToe(plek.display_name);
+                    zoekVeld.value = '';
+                    suggestieLijst.innerHTML = '';
+                };
                 
-                suggestieLijst.appendChild(li)
-            })
+                suggestieLijst.appendChild(li);
+            });
         }
     } catch (err) {
-        console.error("Zoekfout:", err)
+        console.error("Zoekfout:", err);
     }
-})
+});
 
-// 2. Voeg een klikbare tag toe
 function voegLocatieToe(naam) {
-    // Check of de tag al bestaat (voorkomt dubbelen)
-    const bestaandeTags = Array.from(container.querySelectorAll('input')).map(i => i.value)
-    if (bestaandeTags.includes(naam)) return
-
-    const div = document.createElement('div')
-    div.className = 'gekozen-locatie-tag'
+    const huidigeTags = container.querySelectorAll('.gekozen-locatie-tag');
     
-    // De checkbox is onzichtbaar maar stuurt de data wel mee naar de server
+    if (maxLocaties === 1 && huidigeTags.length > 0) {
+        container.innerHTML = '';
+    } 
+    else {
+        const bestaandeTags = Array.from(container.querySelectorAll('input')).map(i => i.value);
+        if (bestaandeTags.includes(naam)) return;
+    }
+
+    const div = document.createElement('div');
+    div.className = 'gekozen-locatie-tag';
+
     div.innerHTML = `
         <div class="chipVerwijderbaar">
-            <input type="checkbox" name="bestemmingen" value="${naam}" checked > 
+            <input type="checkbox" name="${inputNaam}" value="${naam}" checked style="display:none;"> 
             <label>${naam}</label>
         </div>
-    `
+    `;
 
-    // Verwijder de tag als je erop klikt
-    div.onclick = () => div.remove()
-
-    container.appendChild(div)
+    div.onclick = () => div.remove();
+    container.appendChild(div);
 }
 
-// 3. Sluit de lijst als je ergens anders klikt
 document.addEventListener('click', (e) => {
-    if (e.target !== zoekVeld) {
-        suggestieLijst.innerHTML = ''
-    }
-})
+    if (e.target !== zoekVeld) suggestieLijst.innerHTML = '';
+});

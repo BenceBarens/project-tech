@@ -5,20 +5,20 @@ const multer = require('multer')
 const bcryptjs = require('bcryptjs')
 const xss = require('xss')
 const { formatteerReizen } = require('../src/utils/reiskaartKleinFormat')
+const { maakArray } = require('../src/utils/array')
 
-// Route waar profielfoto's worden opgeslagen
+// Configuratie voor het uploaden van profielfoto's
 const upload = multer({ dest: 'public/uploads/profielfoto' })
 
+// 1. EIGEN PROFIEL BEKIJKEN
 router.get('/profiel', async function(req, res) {
     try {
         const db = req.app.get('db')
 
-        // 1. Check of er iemand is ingelogd
         if (!req.session.gebruiker) {
             return res.redirect('/inloggen') 
         }
 
-        // 2. Haal de volledige gebruikerData echt op uit de database
         const gebruikerData = await db.collection('gebruikers').findOne({ 
             _id: new ObjectId(req.session.gebruiker.id) 
         })
@@ -33,7 +33,6 @@ router.get('/profiel', async function(req, res) {
                 _id: { $in: gebruikerData.reizen }
             }).toArray()
 
-            // Formatteer de reizen voor eigen profiel
             deReizen = formatteerReizen(opgehaaldeReizen);
         }
 
@@ -45,7 +44,6 @@ router.get('/profiel', async function(req, res) {
                     achternaam: gebruikerData.achternaam,
                     bio: gebruikerData.bio || "Nog geen bio toegevoegd.",
                     woonplaats: gebruikerData.woonplaats || "Onbekend",
-                    land: gebruikerData.land || "Onbekend",
                     profielfoto: gebruikerData.profielfoto ? '/uploads/profielfoto/' + gebruikerData.profielfoto : '/images/default-avatar.svg',              
                     reizen: deReizen
                 }
@@ -57,13 +55,12 @@ router.get('/profiel', async function(req, res) {
     }
 })
 
-// Bekijk andermans profiel
+// 2. ANDERMANS PROFIEL BEKIJKEN
 router.get('/profiel/:id', async (req, res) => {
     try {
         const db = req.app.get('db')
         const profielId = req.params.id
 
-        // Als de gebruiker ID hetzelfde is als jouw ingelogde ID, stuur mij naar eigen profiel
         if (req.session.gebruiker && req.session.gebruiker.id === profielId) {
             return res.redirect('/profiel')
         }
@@ -103,6 +100,7 @@ router.get('/profiel/:id', async (req, res) => {
     }
 })
 
+// 3. PROFIEL BEWERKEN PAGINA (GET)
 router.get('/profiel-bewerken', async (req, res) => {
     try {
         const db = req.app.get('db')
@@ -129,17 +127,20 @@ router.get('/profiel-bewerken', async (req, res) => {
     }
 })
 
-// Wijzigingen opslaan (POST)
+// 4. WIJZIGINGEN OPSLAAN (POST)
 router.post('/profiel/bewerken', upload.single('profielfoto'), async (req, res) => {
     try {
         const db = req.app.get('db')
         
+        // Verwerk de woonplaats (checkbox data van de API zoeker)
+        const woonplaatsArray = maakArray(req.body.woonplaats)
+        const gesaneerdeWoonplaats = xss(woonplaatsArray[0] || "")
+
+        // Saneer alle overige tekstvelden
         const voornaam = xss(req.body.voornaam)
         const achternaam = xss(req.body.achternaam)
         const email = xss(req.body.email)
         const geslacht = xss(req.body.geslacht)
-        const woonplaats = xss(req.body.woonplaats)
-        const land = xss(req.body.land)
         const bio = xss(req.body.bio)
         
         const { huidigWachtwoord, nieuwWachtwoord } = req.body
@@ -148,12 +149,22 @@ router.post('/profiel/bewerken', upload.single('profielfoto'), async (req, res) 
             _id: new ObjectId(req.session.gebruiker.id)
         })
 
-        const updateData = { voornaam, achternaam, email, geslacht, woonplaats, land, bio }
+        // Bereid de update voor
+        const updateData = { 
+            voornaam, 
+            achternaam, 
+            email, 
+            geslacht, 
+            woonplaats: gesaneerdeWoonplaats, 
+            bio 
+        }
 
+        // Als er een nieuwe foto is geüpload
         if (req.file) { 
             updateData.profielfoto = req.file.filename 
         }
 
+        // Wachtwoord wijzigen logica
         if (nieuwWachtwoord && nieuwWachtwoord.trim() !== "") {
             const match = await bcryptjs.compare(huidigWachtwoord, gebruiker.wachtwoord)
             if (!match) {
@@ -162,11 +173,13 @@ router.post('/profiel/bewerken', upload.single('profielfoto'), async (req, res) 
             updateData.wachtwoord = await bcryptjs.hash(nieuwWachtwoord, 10)
         }
 
+        // Update de database
         await db.collection('gebruikers').updateOne(
             { _id: new ObjectId(req.session.gebruiker.id) },
             { $set: updateData }
         )
 
+        // Sessie bijwerken
         req.session.gebruiker.voornaam = voornaam
 
         res.redirect('/profiel')

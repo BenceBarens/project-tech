@@ -70,11 +70,23 @@
         <!-- STAP 5 -->
         <fieldset>
             <legend>Bestemmingen</legend>
+            <p>Zoek en voeg bestemmingen toe of verwijder bestaande door erop te klikken.</p>
+            
+            <input type="text" id="locatie-zoeken" placeholder="Zoek een bestemming..." autocomplete="off">
+            <ul id="suggestie-lijst"></ul>
 
-            <label for="bestemmingen">Bestemmingen (komma gescheiden)</label>
-            <input type="text" id="bestemmingen" name="bestemmingen" 
-                value="<%= Array.isArray(data.reis.bestemmingen) ? data.reis.bestemmingen.join(', ') : data.reis.bestemmingen %>">
-
+            <div id="gekozen-locaties-container" data-input-name="bestemmingen">
+                <% if (data.reis.bestemmingen && Array.isArray(data.reis.bestemmingen)) { %>
+                    <% data.reis.bestemmingen.forEach(function(locatie) { %>
+                        <div class="gekozen-locatie-tag" onclick="this.remove()">
+                            <div class="chipVerwijderbaar">
+                                <input type="checkbox" name="bestemmingen" value="<%= locatie %>" checked style="display:none;">
+                                <label><%= locatie %></label>
+                            </div>
+                        </div>
+                    <% }) %>
+                <% } %>
+            </div>
         </fieldset>
 
         <!-- STAP 6 -->
@@ -131,3 +143,5 @@
 
     </form>
 </main>
+
+<script src="/js/locatie-zoeker.js"></script>

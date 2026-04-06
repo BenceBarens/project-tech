@@ -1,7 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const { ObjectId } = require('mongodb')
-const xss = require('xss') // Cruciaal voor beveiliging
+const xss = require('xss')
+const { maakArray } = require('../src/utils/array') // Belangrijk voor de checkbox-verwerking
 
 // PAGINA TONEN (GET)
 router.get('/reis-bewerken/:id', async (req, res) => {
@@ -13,6 +14,7 @@ router.get('/reis-bewerken/:id', async (req, res) => {
 
         if (!reis) return res.status(404).render('404')
 
+        // Beveiliging: alleen de eigenaar mag bewerken
         if (!req.session.gebruiker || reis.gebruikerId.toString() !== req.session.gebruiker.id.toString()) {
             return res.redirect('/reis/' + id)
         }
@@ -40,28 +42,15 @@ router.post('/reis-bewerken/:id', async (req, res) => {
 
         if (!reis) return res.status(404).render('404')
 
+        // 🔒 Eigenaar-check
         if (!req.session.gebruiker || reis.gebruikerId.toString() !== req.session.gebruiker.id.toString()) {
             return res.redirect('/reis/' + id)
         }
 
+        // Helper om input (string of array) altijd als veilige array terug te geven
         const toArrayEnSaneer = (value) => {
-            if (!value) return []
-            const arr = Array.isArray(value) ? value : [value]
-            return arr.map(item => xss(item)) // Elk item in de array saniteren
-        }
-
-        // Bestemmingen (komt vaak als comma-separated string uit de front-end)
-        let geformatteerdeBestemmingen = []
-        if (req.body.bestemmingen) {
-            geformatteerdeBestemmingen = req.body.bestemmingen
-                .split(',')
-                .map(b => xss(b.trim()))
-                .filter(b => b.length > 0)
-        }
-
-        let geslachtArray = []
-        if (req.body.geslacht) {
-            geslachtArray = [xss(req.body.geslacht)]
+            const arr = maakArray(value)
+            return arr.map(item => xss(item))
         }
 
         // ==============================
@@ -71,31 +60,34 @@ router.post('/reis-bewerken/:id', async (req, res) => {
             { _id: new ObjectId(id) },
             {
                 $set: {
+                    // Tekstvelden
                     reisTitel: xss(req.body.reisTitel),
                     startDatum: xss(req.body.startDatum),
                     eindDatum: xss(req.body.eindDatum),
                     aantalDagen: xss(req.body.aantalDagen),
-
                     reis_beschrijving: xss(req.body.reis_beschrijving),
                     reis_samenvatting: xss(req.body.reis_samenvatting),
-
+                    
+                    // Numerieke velden (als tekst opgeslagen)
                     minReizigers: xss(req.body.minReizigers),
                     maxReizigers: xss(req.body.maxReizigers),
                     minLeeftijd: xss(req.body.minLeeftijd),
                     maxLeeftijd: xss(req.body.maxLeeftijd),
 
-                    geslacht: geslachtArray,
-                    bestemmingen: geformatteerdeBestemmingen,
-
+                    // Keuzemenu's en Radio's
+                    geslacht: toArrayEnSaneer(req.body.geslacht),
                     bedragen: xss(req.body.bedragen),
                     reizen: xss(req.body.reizen),
 
+                    // Checkbox groepen (gebruiken de helper)
+                    bestemmingen: toArrayEnSaneer(req.body.bestemmingen),
                     activiteit: toArrayEnSaneer(req.body.activiteit),
                     verblijf: toArrayEnSaneer(req.body.verblijf)
                 }
             }
         )
 
+        // Terug naar de detailpagina
         res.redirect('/reis/' + id)
 
     } catch (err) {
