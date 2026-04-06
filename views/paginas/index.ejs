@@ -53,13 +53,11 @@
         </form>
     </section>
     <section class="matching-container">
-        <div class="knop-boven">
-            <% if (data.reizen && data.reizen.length > 0) { %>
-                <button type="button" id="btn-accepteren" class="button button-save" data-id="<%= data.reizen[0]._id %>">
-                    Accepteren
-                </button>
-            <% } %>
-        </div>
+        <% if (data.reizen && data.reizen.length > 0) { %>
+            <button type="button" id="btn-afwijzen" class="button button-skip" data-id="<%= data.reizen[0]._id %>">
+                Afwijzen
+            </button>
+        <% } %>
     
         <ul class="reisKaartContainer">
            <% if (data.reizen && data.reizen.length > 0) { %>
@@ -70,14 +68,12 @@
                <li>Er is op dit moment geen reis beschikbaar.</li>
            <% } %>
         </ul>
-            
-        <div class="knop-onder">
-            <% if (data.reizen && data.reizen.length > 0) { %>
-                <button type="button" id="btn-afwijzen" class="button button-skip" data-id="<%= data.reizen[0]._id %>">
-                    Afwijzen
-                </button>
-            <% } %>
-        </div>
+
+        <% if (data.reizen && data.reizen.length > 0) { %>
+            <button type="button" id="btn-accepteren" class="button button-save" data-id="<%= data.reizen[0]._id %>">
+                Accepteren
+            </button>
+        <% } %>
     </section>
 </main>
 

@@ -1,6 +1,4 @@
 .reiskaartGroot{
-    min-width: 100%;
-    padding: 0 1em;
     box-sizing: border-box;
     height: fit-content;
 }
@@ -42,15 +40,11 @@
     border-radius: 1em 1em 2em 2em;
 }
 
-.home:has(#reisUitklappen:checked) section:last-of-type button{
-    display: none;
-}
-
 .reiskaartGroot #deelnemers{
     list-style-type: none;
     padding: 0;
     display: flex;
-    gap: 2em;
+    gap: 1em;
     max-width: 100%;
     margin-bottom: 1em;
     overflow: auto;

@@ -1,135 +1,134 @@
-console.log('script geladen')
+console.log('script geladen met CSS animaties')
 
 document.addEventListener('DOMContentLoaded', () => {
 
-const container = document.querySelector('.reisKaartContainer')
-const knopAccepteren = document.getElementById('btn-accepteren')
-const knopAfwijzen = document.getElementById('btn-afwijzen')
+    const container = document.querySelector('.reisKaartContainer')
+    const knopAccepteren = document.getElementById('btn-accepteren')
+    const knopAfwijzen = document.getElementById('btn-afwijzen')
 
-let buffer = []
-let isFetching = false 
-let geladenIds = new Set()
+    if (!container) return // Safety check
 
-//nieuwe kaarten ophalen (partial)
-async function fetchNieuweKaarten() {
-if (isFetching) return
-isFetching = true
+    let buffer = []
+    let isFetching = false 
+    let geladenIds = new Set()
 
-try {
-    const exclude = Array.from(geladenIds).join(',')
+    //nieuwe kaarten ophalen (partial)
+    async function fetchNieuweKaarten() {
+        if (isFetching) return
+        isFetching = true
 
-    const params = new URLSearchParams(window.location.search)
-    params.set('excludeIds', exclude)
+        try {
+            const exclude = Array.from(geladenIds).join(',')
+            const params = new URLSearchParams(window.location.search)
+            params.set('excludeIds', exclude)
 
-    const response = await fetch(`/meer?${params.toString()}`)
+            const response = await fetch(`/meer?${params.toString()}`)
 
-    if (!response.ok) {
-       throw new Error(`Serverfout: ${response.status}`)
+            if (!response.ok) {
+                throw new Error(`Serverfout: ${response.status}`)
+            }
+
+            const html = await response.text()
+            const temp = document.createElement('div')
+            temp.innerHTML = html 
+
+            const nieuweKaarten = temp.querySelectorAll('.reiskaartGroot')
+
+            nieuweKaarten.forEach(kaart => {
+                const id = kaart.getAttribute('data-reis-id')
+                if (id) geladenIds.add(id)
+            })
+
+            buffer.push(...nieuweKaarten)
+        } catch (err) {
+            console.error('Fout bij het ophalen van de kaarten', err)
+        } finally {
+            isFetching = false
+        }
     }
 
-    const html = await response.text()
+    // 1 kaart toevoegen aan DOM
+    function voegKaartToe() {
+        if (buffer.length === 0) return
+        const kaart = buffer.shift()
+        container.appendChild(kaart)
+    }
 
-    const temp = document.createElement('div')
-    temp.innerHTML  = html 
+    // zorg dat er altijd 3 kaarten zijn
+    async function vulAan() {
+        const aantal = container.querySelectorAll('.reiskaartGroot').length
 
-    const nieuweKaarten = temp.querySelectorAll('.reiskaartGroot')
-
-    nieuweKaarten.forEach(kaart => {
-        const id = kaart.getAttribute('data-reis-id')
-        if (id) geladenIds.add(id)
-    })
-
-    buffer.push(...nieuweKaarten)
-} catch (err) {
-    console.error('Fout bij het ophalen van de kaarten', err)
-} finally {
-    isFetching = false
-}
-}
-
-// 1 kaart toevoegen aan DOM
-function voegKaartToe() {
-    if (buffer.length === 0) return
-
-    const kaart = buffer.shift()
-    container.appendChild(kaart)
-}
-
-// zorg dat er altijd 3 kaarten zijn
-async function vulAan() {
-    const aantal = container.querySelectorAll('.reiskaartGroot').length
-
-    if (aantal < 3) {
-        if (buffer.length === 0) {
-           await fetchNieuweKaarten()
+        if (aantal < 3) {
+            if (buffer.length === 0) {
+                await fetchNieuweKaarten()
+            }
+            voegKaartToe()
         }
         
-        voegKaartToe()
-    }
-    
-// buffer bijna leeg > alvast nieuwe halen
-if (buffer.length < 2) {
-    fetchNieuweKaarten()
-  }
-}
-
-async function verwerkMatch(actie) {
-    const eersteKaart = container.querySelector('.reiskaartGroot')
-
-    if (!eersteKaart) {
-        alert('Geen reizen meer beschikbaar!')
-        return
+        // buffer bijna leeg > alvast nieuwe halen
+        if (buffer.length < 2) {
+            fetchNieuweKaarten()
+        }
     }
 
-    const reisId = eersteKaart.getAttribute('data-reis-id')
+    // --- AANGEPASTE FUNCTIE ---
+    async function verwerkMatch(actie) {
+        const eersteKaart = container.querySelector('.reiskaartGroot')
 
-    try {
-        const response = await fetch(`/reizen/${reisId}/verwerk`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ keuze: actie })
-        })
-
-        console.log('response:', response.status) //debug
-
-        if (response.ok) {
-            eersteKaart.style.transition = '0.3s'
-            eersteKaart.style.transform =
-                actie === 'accepteren'
-                    ? 'translateX(200px)'
-                    : 'translateX(-200px)'
-            eersteKaart.style.opacity = '0'
-
-            setTimeout(async () => {
-                eersteKaart.remove()
-                await vulAan()
-            }, 300)
-
-        } else if (response.status === 401) {
-            window.location.href = '/inloggen'
+        if (!eersteKaart) {
+            alert('Geen reizen meer beschikbaar!')
+            return
         }
 
-    } catch (err) {
-        console.error('Match kon niet worden verwerkt:', err)
+        const reisId = eersteKaart.getAttribute('data-reis-id')
+
+        try {
+            const response = await fetch(`/reizen/${reisId}/verwerk`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ keuze: actie })
+            })
+
+            if (response.ok) {
+                if (actie === 'accepteren') {
+                    eersteKaart.classList.add('swipe-rechts')
+                } else {
+                    eersteKaart.classList.add('swipe-links')
+                }
+
+                setTimeout(async () => {
+                    eersteKaart.remove()
+                    await vulAan()
+                }, 500)
+
+            } else if (response.status === 401) {
+                window.location.href = '/inloggen'
+            } else {
+                const data = await response.json()
+                alert('Fout: ' + (data.error || 'Kon keuze niet verwerken'))
+                eersteKaart.classList.remove('swipe-rechts', 'swipe-links')
+            }
+
+        } catch (err) {
+            console.error('Match kon niet worden verwerkt:', err)
+            eersteKaart.classList.remove('swipe-rechts', 'swipe-links')
+        }
     }
-}
 
-// init
-if (knopAccepteren && knopAfwijzen && container) {
-    const bestaandeKaarten = container.querySelectorAll('.reiskaartGroot')
+    // init
+    if (knopAccepteren && knopAfwijzen && container) {
+        const bestaandeKaarten = container.querySelectorAll('.reiskaartGroot')
 
-    bestaandeKaarten.forEach(kaart => {
-        const id = kaart.getAttribute('data-reis-id')
-        if(id) geladenIds.add(id)
-    })
+        bestaandeKaarten.forEach(kaart => {
+            const id = kaart.getAttribute('data-reis-id')
+            if(id) geladenIds.add(id)
+        })
 
-    knopAccepteren.addEventListener('click', () => verwerkMatch('accepteren'))
-    knopAfwijzen.addEventListener('click', () => verwerkMatch('afwijzen'))
+        knopAccepteren.addEventListener('click', () => verwerkMatch('accepteren'))
+        knopAfwijzen.addEventListener('click', () => verwerkMatch('afwijzen'))
 
-   // meteen buffer vullen bij start
-   fetchNieuweKaarten()
-
-}
+        fetchNieuweKaarten()
+    }
 })

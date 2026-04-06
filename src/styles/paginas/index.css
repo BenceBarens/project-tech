@@ -10,6 +10,14 @@
     width: 1em;
 }
 
+body:has(.home) {
+    max-height: 100vh;
+}
+
+body:has(.home) nav {
+    box-shadow: none;
+}
+
 /*****************************/
 /* Filters */
 /*****************************/
@@ -17,20 +25,26 @@
 .home{
     display: flex;
     flex-direction: column;
+    height: 100%; /* Veranderd naar vh voor stabiele layout */
+    overflow: hidden;
 }
 
 .home > section:first-of-type{
-    transition: all 500ms ease;
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 500ms ease, padding 500ms ease;
     overflow: hidden;
     padding: 0 1em;
-}
-
-.home > section:first-of-type:has(#filtersUitklappen:not(:checked)){
-    max-height: 0;
+    flex-shrink: 0;
 }
 
 .home > section:first-of-type:has(#filtersUitklappen:checked){
-    max-height: 80vh;
+    grid-template-rows: 1fr;
+    padding: 1em 1em 2em 1em;
+}
+
+.home > section:first-of-type > form{
+    min-height: 0;
 }
 
 .home #filtersUitklappen{
@@ -61,28 +75,32 @@
 /* Reis cards */
 /*****************************/
 
-.home > section:last-of-type{
+.home > .matching-container{
     background-color: var(--color-surface-2);
     border-radius: 2em;
-    overflow: hidden;
-    box-shadow: inset 0 0 1em -0.5em black;
-    flex-grow: 1;
     max-width: 100%;
-    overflow-y: auto;
-    text-align: center;
-    padding: 2em 0;
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    flex-shrink: 1;
+    gap: 1em;
+    box-shadow: inset 0 0 1em -0.5em black;
     opacity: 1;
     transition: all 300ms ease;
+    overflow: visible;
 }
 
 /* desktop */
 @media only screen and (min-width: 769px){
-    .home > section:last-of-type{
+    .home > .matching-container {
         margin: 0 1em 1em 1em;
+        padding: 0 1em;
     }
 }
 
-.home:has(#filtersUitklappen:checked) section:last-of-type{
+.home:has(#filtersUitklappen:checked) .matching-container{
     opacity: 0.4;
     pointer-events: none;
 }
@@ -92,14 +110,72 @@
     transition: all 300ms ease;
 }
 
-.home:has(#filtersUitklappen:checked) section:last-of-type *{
+.home:has(#filtersUitklappen:checked) .matching-container *{
     filter: blur(0.5em);
 }
 
 .home .reisKaartContainer{
-    text-align: left;
+    width: 100%;
+    height: 100%;
     list-style-type: none;
-    padding: 1em;
+    padding: 0;
     display: flex;
-    gap: 1em;
+    flex-direction: column;
+    max-height: fit-content;
+    overflow-x: visible;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    position: relative;
+}
+
+.home .reisKaartContainer::-webkit-scrollbar{
+    display: none;
+}
+
+.home .reisKaartContainer .reiskaartGroot{
+    transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+}
+
+.home .reisKaartContainer .reiskaartGroot:not(:first-child){
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(4em);
+}
+
+/**********************/
+/* Swiping Animaties  */
+/**********************/
+
+.reiskaartGroot.swipe-rechts {
+    animation: swipeRechtsAnim 400ms forwards ease-in;
+    pointer-events: none;
+}
+
+.reiskaartGroot.swipe-links {
+    animation: swipeLinksAnim 400ms forwards ease-in;
+    pointer-events: none;
+}
+
+@keyframes swipeRechtsAnim {
+    0% {
+        transform: translateX(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(200%) rotate(15deg); 
+        opacity: 0;
+    }
+}
+
+@keyframes swipeLinksAnim {
+    0% {
+        transform: translateX(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(-200%) rotate(-15deg);
+        opacity: 0;
+    }
 }
