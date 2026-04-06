@@ -36,7 +36,7 @@ app.use((req, res, next) => {
 // --- ROUTE HANDLERS IMPORTEREN ---
 const home = require("./routes/index")
 const reisAanmaken = require("./routes/reis-aanmaken")
-const favorieten = require("./routes/favorieten")
+const aanvragen = require("./routes/aanvragen")
 const profiel = require("./routes/profiel")
 const reisDetail = require("./routes/reis-detail")
 const reisBewerken = require("./routes/reis-bewerken") // NIEUW
@@ -49,7 +49,7 @@ const error404 = require("./routes/404")
 // --- ROUTE HANDLERS KOPPELEN ---
 app.use('/', home)
 app.use('/', reisAanmaken)
-app.use('/', favorieten)
+app.use('/', aanvragen)
 app.use('/', profiel)
 app.use('/', reisDetail)
 app.use('/', reisBewerken) // NIEUW
