@@ -54,8 +54,11 @@
     </section>
     <section class="matching-container">
         <% if (data.reizen && data.reizen.length > 0) { %>
-            <button type="button" id="btn-afwijzen" class="button button-skip" data-id="<%= data.reizen[0]._id %>">
-                Afwijzen
+            <button type="button" id="btn-afwijzen" class="button button-skip" data-id="<%= data.reizen[0]._id %>" aria-label="Reis afwijzen">
+                <svg xmlns="http://www.w3.org/2000/svg" width="39" height="39" viewBox="0 0 39 39" fill="none">
+                    <path d="M10.4 30.875L8.125 28.6L17.225 19.5L8.125 10.4L10.4 8.125L19.5 17.225L28.6 8.125L30.875 10.4L21.775 19.5L30.875 28.6L28.6 30.875L19.5 21.775L10.4 30.875Z" fill="currentColor"/>
+                </svg>
+                <span>Afwijzen</span>
             </button>
         <% } %>
     
@@ -70,8 +73,11 @@
         </ul>
 
         <% if (data.reizen && data.reizen.length > 0) { %>
-            <button type="button" id="btn-accepteren" class="button button-save" data-id="<%= data.reizen[0]._id %>">
-                Accepteren
+            <button type="button" id="btn-accepteren" class="button button-save" data-id="<%= data.reizen[0]._id %>" aria-label="Deelname aan reis aanvragen">
+                <svg xmlns="http://www.w3.org/2000/svg" width="39" height="39" viewBox="0 0 39 39" fill="none">
+                    <path d="M15.5187 29.25L6.25623 19.9875L8.57185 17.6719L15.5187 24.6187L30.4281 9.70937L32.7437 12.025L15.5187 29.25Z" fill="currentColor"/>
+                </svg>
+                <span>Meedoen</span>
             </button>
         <% } %>
     </section>

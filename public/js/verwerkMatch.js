@@ -85,18 +85,13 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const response = await fetch(`/reizen/${reisId}/verwerk`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ keuze: actie })
             })
 
             if (response.ok) {
-                if (actie === 'accepteren') {
-                    eersteKaart.classList.add('swipe-rechts')
-                } else {
-                    eersteKaart.classList.add('swipe-links')
-                }
+                const animatieClass = actie === 'accepteren' ? 'swipe-rechts' : 'swipe-links'
+                eersteKaart.classList.add(animatieClass)
 
                 setTimeout(async () => {
                     eersteKaart.remove()
@@ -105,15 +100,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             } else if (response.status === 401) {
                 window.location.href = '/inloggen'
-            } else {
-                const data = await response.json()
-                alert('Fout: ' + (data.error || 'Kon keuze niet verwerken'))
-                eersteKaart.classList.remove('swipe-rechts', 'swipe-links')
             }
-
         } catch (err) {
-            console.error('Match kon niet worden verwerkt:', err)
-            eersteKaart.classList.remove('swipe-rechts', 'swipe-links')
+            console.error('Match error:', err)
         }
     }
 

@@ -1,6 +1,8 @@
 .reiskaartGroot{
     box-sizing: border-box;
     height: fit-content;
+    transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+    overflow: visible;
 }
 
 .reiskaartGroot article{

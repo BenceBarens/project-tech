@@ -10,11 +10,11 @@
     width: 1em;
 }
 
-body:has(.home) {
+body:has(.home){
     max-height: 100vh;
 }
 
-body:has(.home) nav {
+body:has(.home) nav{
     box-shadow: none;
 }
 
@@ -25,7 +25,7 @@ body:has(.home) nav {
 .home{
     display: flex;
     flex-direction: column;
-    height: 100%; /* Veranderd naar vh voor stabiele layout */
+    height: 100%;
     overflow: hidden;
 }
 
@@ -89,12 +89,13 @@ body:has(.home) nav {
     box-shadow: inset 0 0 1em -0.5em black;
     opacity: 1;
     transition: all 300ms ease;
-    overflow: visible;
+    overflow: hidden;
+    position: relative;
 }
 
 /* desktop */
 @media only screen and (min-width: 769px){
-    .home > .matching-container {
+    .home > .matching-container{
         margin: 0 1em 1em 1em;
         padding: 0 1em;
     }
@@ -115,26 +116,26 @@ body:has(.home) nav {
 }
 
 .home .reisKaartContainer{
-    width: 100%;
+    max-width: 100%;
     height: 100%;
     list-style-type: none;
     padding: 0;
     display: flex;
     flex-direction: column;
     max-height: fit-content;
-    overflow-x: visible;
     overflow-y: auto;
+    overflow-x: hidden;
     -ms-overflow-style: none;
     scrollbar-width: none;
     position: relative;
 }
 
-.home .reisKaartContainer::-webkit-scrollbar{
-    display: none;
+.home:has(.swipe-rechts, .swipe-links) .reisKaartContainer{
+    overflow: visible;
 }
 
-.home .reisKaartContainer .reiskaartGroot{
-    transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+.home .reisKaartContainer::-webkit-scrollbar{
+    display: none;
 }
 
 .home .reisKaartContainer .reiskaartGroot:not(:first-child){
@@ -144,38 +145,81 @@ body:has(.home) nav {
     transform: translateY(4em);
 }
 
+.home .matching-container button{
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    margin: auto;
+    z-index: 2;
+}
+
+.home .matching-container span{
+    color: inherit;
+}
+
+.home .matching-container svg{
+    width: 2em;
+}
+
+/* Mobiel */
+@media only screen and (max-width: 769px){
+    .home .matching-container button{
+        height: 5em;
+        width: 2.5em;
+        padding: 0;
+        border-radius: 50em;
+    }
+
+    .home .matching-container button:first-of-type{
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        padding-right: 0.5em;
+        justify-content: right;
+    }
+
+    .home .matching-container button:last-of-type{
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        padding-left: 0.5em;
+    }
+
+    .home .matching-container span{
+        display: none;
+    }
+}
+
 /**********************/
 /* Swiping Animaties  */
 /**********************/
 
-.reiskaartGroot.swipe-rechts {
+.reiskaartGroot.swipe-rechts{
     animation: swipeRechtsAnim 400ms forwards ease-in;
     pointer-events: none;
 }
 
-.reiskaartGroot.swipe-links {
+.reiskaartGroot.swipe-links{
     animation: swipeLinksAnim 400ms forwards ease-in;
     pointer-events: none;
 }
 
-@keyframes swipeRechtsAnim {
-    0% {
+@keyframes swipeRechtsAnim{
+    0%{
         transform: translateX(0) rotate(0deg);
         opacity: 1;
     }
-    100% {
-        transform: translateX(200%) rotate(15deg); 
+    100%{
+        transform: translateX(150%) rotate(15deg); 
         opacity: 0;
     }
 }
 
-@keyframes swipeLinksAnim {
-    0% {
+@keyframes swipeLinksAnim{
+    0%{
         transform: translateX(0) rotate(0deg);
         opacity: 1;
     }
-    100% {
-        transform: translateX(-200%) rotate(-15deg);
+    100%{
+        transform: translateX(-150%) rotate(-15deg);
         opacity: 0;
     }
 }
