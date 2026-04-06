@@ -23,7 +23,8 @@
     padding: 0;
 }
 
-.aanvragen p{
+.aanvragen section > p{
     text-align: center;
     font-size: larger;
+    margin: 1em;
 }

@@ -5,6 +5,10 @@
     overflow: visible;
 }
 
+.reiskaartGroot:first-of-type{
+    margin: 1em 0;
+}
+
 .reiskaartGroot article{
     max-width: 50em;
     margin: auto;

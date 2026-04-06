@@ -16,3 +16,9 @@
 .inloggen form .button{
     margin: 1em auto;
 }
+
+.inloggen ul{
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+}

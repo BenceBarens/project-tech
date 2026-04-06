@@ -62,16 +62,16 @@
             </button>
         <% } %>
     
-        <ul class="reisKaartContainer">
-           <% if (data.reizen && data.reizen.length > 0) { %>
-               <% data.reizen.forEach(function (reis) { %>
-                   <%- include("../partials/reiskaartGroot", { data: { reis: reis } }) %>
-               <% }) %>
-           <% } else { %>
-               <li>Er is op dit moment geen reis beschikbaar.</li>
-           <% } %>
-        </ul>
-
+        <% if (data.reizen && data.reizen.length > 0) { %>
+            <ul class="reisKaartContainer">
+            <% data.reizen.forEach(function (reis) { %>
+                <%- include("../partials/reiskaartGroot", { data: { reis: reis } }) %>
+            <% }) %>
+            </ul>
+        <% } else { %>
+            <p>Er zijn op dit moment niet meer reizen beschikbaar. Probeer minder zoekfilters te gebruiken of kom later nog eens terug.</p>
+        <% } %>
+        
         <% if (data.reizen && data.reizen.length > 0) { %>
             <button type="button" id="btn-accepteren" class="button button-save" data-id="<%= data.reizen[0]._id %>" aria-label="Deelname aan reis aanvragen">
                 <svg xmlns="http://www.w3.org/2000/svg" width="39" height="39" viewBox="0 0 39 39" fill="none">

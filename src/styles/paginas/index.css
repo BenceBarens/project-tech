@@ -101,6 +101,12 @@ body:has(.home) nav{
     }
 }
 
+.home .matching-container > p{
+    font-size: 1.2em;
+    text-align: center;
+    margin: 1em;
+}
+
 .home:has(#filtersUitklappen:checked) .matching-container{
     opacity: 0.4;
     pointer-events: none;
