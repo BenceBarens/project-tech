@@ -10,7 +10,7 @@
 	<section>
 		<img src="<%= data.gebruiker.profielfoto %>" alt="Profielfoto van <%= data.gebruiker.voornaam %>">
 		<div>
-			<h1><%= data.gebruiker.voornaam %> <span class="last-name"><%= data.gebruiker.achternaam %></span></h1>&nbsp;&nbsp;
+			<h1><%= data.gebruiker.voornaam %> <%= data.gebruiker.achternaam %></h1>&nbsp;&nbsp;
 			<a href="/profiel-bewerken" class="profiel-bewerken" aria-label="Bewerk je profiel">  
 				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
 					<path d="M7 7H6C5.46957 7 4.96086 7.21071 4.58579 7.58579C4.21071 7.96086 4 8.46957 4 9V18C4 18.5304 4.21071 19.0391 4.58579 19.4142C4.96086 19.7893 5.46957 20 6 20H15C15.5304 20 16.0391 19.7893 16.4142 19.4142C16.7893 19.0391 17 18.5304 17 18V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -23,19 +23,61 @@
 
 	<section>
 		<h2>Mijn reizen</h2>
-		<ul>
+		<ul class="mijn-reizen-lijst">
 			<% if (data.gebruiker.reizen.length > 0) { %>
 				<% data.gebruiker.reizen.forEach(function (reis) { %>
 						<%- include("../partials/reiskaartKlein", { reis: reis }) %>
-				<% }) %>
-			<% } else { %>
-				<p>Hier komen al jouw reizen te staan. <a href="/nieuwe-reis">Klik hier om er een aan te maken!</a></p>
-			<% } %>
-		</ul>
-	</section>
+
+						<% if (reis.aanvragenLijst && reis.aanvragenLijst.length > 0) { %>
+						<li class="aanvragen-container">
+							<p>Aanvragen</p>
+							<ul class="aanvragen-lijst">
+								<% reis.aanvragenLijst.forEach(function (aanvrager) { %>
+								   <li class="aanvraag-item">
+									<p><%= aanvrager.voornaam %> <%= aanvrager.achternaam %></p>
+									<button
+									type="button"
+								    class="button aanvraag-accepteren"
+									data-reis-id="<%= reis._id %>" 
+									data-gebruiker-id="<%= aanvrager._id %>"
+									>
+									    Accepteren
+								    </button>
+									<button
+									type="button"
+								    class="button2 aanvraag-weigeren"
+									data-reis-id="<%= reis._id %>" 
+									data-gebruiker-id="<%= aanvrager._id %>"
+									>
+									    Weigeren
+									</button>
+								</li> 
+						    <% }) %>
+						</ul>
+					</li> 
+				<% } %>
+
+			<% }) %>
+		  <% } else { %>
+			<li class="aanvragen-container geen-aanvragen" >
+			<p>Momenteel zijn er geen aanvragen</p>
+			</li>
+		  <% } %>
+	    </ul>
+    </section>
 
 	<section>
 		<h2>Deelnemende reizen</h2>
-		<p>Je neemt nog niet deel aan reizen.</p>
+		<ul>
+			<% if (data.gebruiker.deelnemendeReizen && data.gebruiker.deelnemendeReizen.length > 0) { %>
+				<% data.gebruiker.deelnemendeReizen.forEach(function (reis) { %>
+						<%- include("../partials/reiskaartKlein", { reis: reis }) %>
+				<% }) %>
+			<% } else { %>
+				<p>Je neemt nog niet deel aan een reis. Bekijk <a href="/aanvragen">hier jouw lopende aanvragen</a> of <a href="/">zoek een nieuwe reis om aan deel te nemen</a>.</p>
+			<% } %>
+		</ul>
 	</section>
 </main>
+
+<script src="/js/aanvragen.js"></script>

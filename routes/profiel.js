@@ -10,6 +10,44 @@ const { maakArray } = require('../src/utils/array')
 // Configuratie voor het uploaden van profielfoto's
 const upload = multer({ dest: 'public/uploads/profielfoto' })
 
+/**
+ * Hulpfunctie: Haalt profielgegevens (naam, foto) op voor gebruikers en deelnemers 
+ * die aan een reis gekoppeld zijn.
+ */
+async function verrijkReizenMetGebruikers (db, reizen) {
+    return Promise.all(reizen.map(async (reis) => {
+        let aanvragenData = []
+        if (reis.gebruikers && Array.isArray(reis.gebruikers) && reis.gebruikers.length > 0) {
+            const aanvraagIds = reis.gebruikers.map(id =>
+                typeof id === 'string' ? new ObjectId(id) : id
+            )
+
+            aanvragenData = await db.collection('gebruikers').find(
+                { _id: { $in: aanvraagIds } },
+                { projection: { voornaam: 1, achternaam: 1, profielfoto: 1 } }
+            ).toArray()
+        }
+
+        let deelnemersData = []
+        if (reis.deelnemers && Array.isArray(reis.deelnemers) && reis.deelnemers.length > 0) {
+            const deelnemerIds = reis.deelnemers.map(id =>
+                typeof id === 'string' ? new ObjectId(id) : id
+            )
+
+            deelnemersData = await db.collection('gebruikers').find(
+                { _id: { $in: deelnemerIds } },
+                { projection: { voornaam: 1, achternaam: 1, profielfoto: 1 } }
+            ).toArray()
+        }
+
+        return {
+            ...reis,
+            aanvragenLijst: aanvragenData,
+            deelnemersLijst: deelnemersData
+        }
+    }))
+}
+
 // 1. EIGEN PROFIEL BEKIJKEN
 router.get('/profiel', async function(req, res) {
     try {
@@ -27,13 +65,34 @@ router.get('/profiel', async function(req, res) {
             return res.send("Gebruiker niet gevonden")
         }
 
+        // Aangemaakte reizen ophalen en verrijken met aanvragers/deelnemers
         let deReizen = []
         if (gebruikerData.reizen && gebruikerData.reizen.length > 0) {
+            const reisIds = gebruikerData.reizen.map(id =>
+                typeof id === 'string' ? new ObjectId(id) : id
+            )
+            
             const opgehaaldeReizen = await db.collection('reizen').find({
-                _id: { $in: gebruikerData.reizen }
+                _id: { $in: reisIds }
             }).toArray()
 
-            deReizen = formatteerReizen(opgehaaldeReizen);
+            // Hier passen we de verrijking toe uit de 'deelnemers' branch
+            const verrijkteReizen = await verrijkReizenMetGebruikers(db, opgehaaldeReizen)
+            deReizen = formatteerReizen(verrijkteReizen);
+        }
+
+        // Reizen waaraan deze gebruiker zelf deelneemt ophalen
+        let deelnemendeReizen = []
+        if (gebruikerData.deelnemendeReizen && gebruikerData.deelnemendeReizen.length > 0) {
+            const deelnemendeReisIds = gebruikerData.deelnemendeReizen.map(id =>
+                typeof id === 'string' ? new ObjectId(id) : id
+            )
+
+            const opgehaaldeDeelnemendeReizen = await db.collection('reizen').find({
+                _id: { $in: deelnemendeReisIds }
+            }).toArray()
+
+            deelnemendeReizen = formatteerReizen(opgehaaldeDeelnemendeReizen)
         }
 
         res.render('paginas/profiel', {
@@ -45,7 +104,8 @@ router.get('/profiel', async function(req, res) {
                     bio: gebruikerData.bio || "Nog geen bio toegevoegd.",
                     woonplaats: gebruikerData.woonplaats || "Onbekend",
                     profielfoto: gebruikerData.profielfoto ? '/uploads/profielfoto/' + gebruikerData.profielfoto : '/images/default-avatar.svg',              
-                    reizen: deReizen
+                    reizen: deReizen,
+                    deelnemendeReizen: deelnemendeReizen
                 }
             } 
         })
@@ -82,6 +142,15 @@ router.get('/profiel/:id', async (req, res) => {
             deReizen = formatteerReizen(opgehaaldeReizen);
         }
 
+        let deelnemendeReizen = []
+        if (bekijkReiziger.deelnemendeReizen && bekijkReiziger.deelnemendeReizen.length > 0) {
+            const opgehaaldeDeelnemendeReizen = await db.collection('reizen').find({
+                _id: { $in: bekijkReiziger.deelnemendeReizen }
+            }).toArray()
+
+            deelnemendeReizen = formatteerReizen(opgehaaldeDeelnemendeReizen);
+        }
+
         res.render('paginas/bezoek-profiel', {
             data: {
                 pagina: { titel: (bekijkReiziger.voornaam ?? "") + " " + (bekijkReiziger.achternaam ?? "") },
@@ -90,7 +159,8 @@ router.get('/profiel/:id', async (req, res) => {
                     achternaam: bekijkReiziger.achternaam,
                     bio: bekijkReiziger.bio || (bekijkReiziger.voornaam + " heeft nog geen bio."),
                     profielfoto: bekijkReiziger.profielfoto ? '/uploads/profielfoto/' + bekijkReiziger.profielfoto : '/images/default-avatar.svg',
-                    reizen: deReizen
+                    reizen: deReizen,
+                    deelnemendeReizen: deelnemendeReizen
                 }
             }
         })
@@ -132,11 +202,9 @@ router.post('/profiel/bewerken', upload.single('profielfoto'), async (req, res) 
     try {
         const db = req.app.get('db')
         
-        // Verwerk de woonplaats (checkbox data van de API zoeker)
         const woonplaatsArray = maakArray(req.body.woonplaats)
         const gesaneerdeWoonplaats = xss(woonplaatsArray[0] || "")
 
-        // Saneer alle overige tekstvelden
         const voornaam = xss(req.body.voornaam)
         const achternaam = xss(req.body.achternaam)
         const email = xss(req.body.email)
@@ -149,7 +217,6 @@ router.post('/profiel/bewerken', upload.single('profielfoto'), async (req, res) 
             _id: new ObjectId(req.session.gebruiker.id)
         })
 
-        // Bereid de update voor
         const updateData = { 
             voornaam, 
             achternaam, 
@@ -159,12 +226,10 @@ router.post('/profiel/bewerken', upload.single('profielfoto'), async (req, res) 
             bio 
         }
 
-        // Als er een nieuwe foto is geüpload
         if (req.file) { 
             updateData.profielfoto = req.file.filename 
         }
 
-        // Wachtwoord wijzigen logica
         if (nieuwWachtwoord && nieuwWachtwoord.trim() !== "") {
             const match = await bcryptjs.compare(huidigWachtwoord, gebruiker.wachtwoord)
             if (!match) {
@@ -173,15 +238,12 @@ router.post('/profiel/bewerken', upload.single('profielfoto'), async (req, res) 
             updateData.wachtwoord = await bcryptjs.hash(nieuwWachtwoord, 10)
         }
 
-        // Update de database
         await db.collection('gebruikers').updateOne(
             { _id: new ObjectId(req.session.gebruiker.id) },
             { $set: updateData }
         )
 
-        // Sessie bijwerken
         req.session.gebruiker.voornaam = voornaam
-
         res.redirect('/profiel')
 
     } catch (err) {

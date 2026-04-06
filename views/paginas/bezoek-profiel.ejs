@@ -24,6 +24,14 @@
 
     <section>
 		<h2>Deelnemende reizen</h2>
-		<p><%= data.gebruiker.voornaam %> neemt nog geen deel aan reizen.</p>
+		<ul>
+			<% if (data.gebruiker.deelnemendeReizen && data.gebruiker.deelnemendeReizen.length > 0) { %>
+				<% data.gebruiker.deelenemendeReizen.forEach(function (reis) { %>
+						<%- include("../partials/reiskaartKlein", { reis: reis }) %>
+				<% }) %>
+			<% } else { %>
+				<p><%= data.gebruiker.voornaam %> neemt nog niet deel aan reizen.</p>
+			<% } %>
+		</ul>
 	</section>
 </main>
