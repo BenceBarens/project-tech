@@ -12,7 +12,7 @@ function normaliseer(reizen) {
 
 //DB inconsistentie recht trekken
 function normaliseerGeslacht(waarde) {
-    if(!waarde) return null
+    if (!waarde) return null
 
     const woord = String(waarde).trim().toLowerCase()
 
@@ -32,16 +32,16 @@ function reisPastBijGebruiker(reis, gebruiker) {
         ? berekenLeeftijd(gebruiker.geboorteDatum)
         : null
 
-   let reisGeslacht = []
+    let reisGeslacht = []
 
-   // altijd een array maken van "geslacht", want soms is het 1 string of undefined
-   if (Array.isArray(reis.geslacht)) {
-    reisGeslacht = reis.geslacht.map(normaliseerGeslacht)
-   } else if (reis.geslacht) {
-    reisGeslacht = [normaliseerGeslacht(reis.geslacht)]
-   } else {
-    reisGeslacht = []
-   }
+    // altijd een array maken van "geslacht", want soms is het 1 string of undefined
+    if (Array.isArray(reis.geslacht)) {
+        reisGeslacht = reis.geslacht.map(normaliseerGeslacht)
+    } else if (reis.geslacht) {
+        reisGeslacht = [normaliseerGeslacht(reis.geslacht)]
+    } else {
+        reisGeslacht = []
+    }
 
     // geslacht check
     if (reis.geslacht?.length > 0 && gebruikerGeslacht) {
@@ -60,7 +60,7 @@ function reisPastBijGebruiker(reis, gebruiker) {
             return false
         }
     }
-    
+
     return true
 }
 
@@ -122,7 +122,7 @@ async function haalMatchesOp(db, gebruikerId, query, limiet = 10) {
     let gebruiker = null
 
     if (gebruikerId) {
-        const gebruiker = await db.collection('gebruikers').findOne({
+        gebruiker = await db.collection('gebruikers').findOne({
             _id: new ObjectId(gebruikerId)
         })
 
