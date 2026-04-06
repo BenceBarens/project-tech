@@ -23,60 +23,37 @@
 
 	<section>
 		<h2>Mijn reizen</h2>
-		<ul class="mijn-reizen-lijst">
+		
 			<% if (data.gebruiker.reizen.length > 0) { %>
-				<% data.gebruiker.reizen.forEach(function (reis) { %>
-						<%- include("../partials/reiskaartKlein", { reis: reis }) %>
+				<ul class="mijn-reizen-lijst">
+					<% data.gebruiker.reizen.forEach(function (reis) { %>
+							<%- include("../partials/reiskaartKlein", { reis: reis }) %>
 
-						<% if (reis.aanvragenLijst && reis.aanvragenLijst.length > 0) { %>
-						<li class="aanvragen-container">
-							<p>Aanvragen</p>
-							<ul class="aanvragen-lijst">
-								<% reis.aanvragenLijst.forEach(function (aanvrager) { %>
-								   <li class="aanvraag-item">
-									<p><%= aanvrager.voornaam %> <%= aanvrager.achternaam %></p>
-									<button
-									type="button"
-								    class="button aanvraag-accepteren"
-									data-reis-id="<%= reis._id %>" 
-									data-gebruiker-id="<%= aanvrager._id %>"
-									>
-									    Accepteren
-								    </button>
-									<button
-									type="button"
-								    class="button2 aanvraag-weigeren"
-									data-reis-id="<%= reis._id %>" 
-									data-gebruiker-id="<%= aanvrager._id %>"
-									>
-									    Weigeren
-									</button>
-								</li> 
-						    <% }) %>
-						</ul>
-					</li> 
-				<% } %>
+							<% if (reis.aanvragenLijst && reis.aanvragenLijst.length > 0) { %>
+								Er zijn aanvragen man
+							<% } %>
+					<% }) %>
+				</ul>
+		  	<% }
 
-			<% }) %>
-		  <% } else { %>
-			<li class="aanvragen-container geen-aanvragen" >
-			<p>Momenteel zijn er geen aanvragen</p>
-			</li>
+		  else { %>
+			<p>Je hebt nog geen reizen aangemaakt. <a href="/nieuwe-reis">Klik hier om een nieuwe reis te starten</a> of neem deel aan een bestaande reis.</p>
 		  <% } %>
-	    </ul>
+
     </section>
 
 	<section>
 		<h2>Deelnemende reizen</h2>
-		<ul>
-			<% if (data.gebruiker.deelnemendeReizen && data.gebruiker.deelnemendeReizen.length > 0) { %>
+		<% if (data.gebruiker.deelnemendeReizen && data.gebruiker.deelnemendeReizen.length > 0) { %>
+			<ul>
 				<% data.gebruiker.deelnemendeReizen.forEach(function (reis) { %>
 						<%- include("../partials/reiskaartKlein", { reis: reis }) %>
 				<% }) %>
-			<% } else { %>
-				<p>Je neemt nog niet deel aan een reis. Bekijk <a href="/aanvragen">hier jouw lopende aanvragen</a> of <a href="/">zoek een nieuwe reis om aan deel te nemen</a>.</p>
-			<% } %>
-		</ul>
+			</ul>
+		<% } else { %>
+			<p>Je neemt nog niet deel aan een reis. Bekijk <a href="/aanvragen">hier jouw lopende aanvragen</a> of <a href="/">zoek een nieuwe reis om aan deel te nemen</a>.</p>
+		<% } %>
+		
 	</section>
 </main>
 

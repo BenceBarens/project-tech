@@ -116,7 +116,13 @@ function filter(reizen, query) {
 }
 
 async function haalMatchesOp(db, gebruikerId, query, limiet = 10) {
-    const alleReizen = await db.collection('reizen').find().toArray()
+   let queryMongo = {}
+
+   if (gebruikerId) {
+    queryMongo.gebruikerId = { $ne: new ObjectId(gebruikerId) }
+   }
+
+   const alleReizen = await db.collection('reizen').find(queryMongo).toArray()
 
     let reizenOmTeTonen = alleReizen
     let gebruiker = null

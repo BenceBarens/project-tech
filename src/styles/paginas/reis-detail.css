@@ -18,7 +18,7 @@
     font-size: 3em;
 }
 
-.reisDetail #deelnemers{
+.reisDetail .deelnemersLijst{
     list-style-type: none;
     padding: 0;
     display: flex;
@@ -26,12 +26,6 @@
     flex-wrap: wrap;
     max-width: 100%;
     margin-bottom: 1em;
-}
-
-.reisDetail #deelnemers a{
-    background-color: var(--color-surface-2);
-    padding: 0.5em 1.5em 0.5em 0.5em;
-    border-radius: 0.5em;
 }
 
 .reisDetail p:last-of-type{
