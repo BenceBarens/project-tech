@@ -6,16 +6,14 @@ document.addEventListener('click', async (event) => {
 
     if (!accepteerBtn && !weigerBtn) return
 
-    console.log('aanvragen.js geladen')
-
     const knop = accepteerBtn || weigerBtn
     const reisId = knop.dataset.reisId
     const gebruikerId = knop.dataset.gebruikerId
-
     const isAccept = knop.classList.contains('aanvraag-accepteren')
+
     const url = isAccept
-    ? `/reizen/${reisId}/deelnemers/${gebruikerId}/accepteer`
-    : `/reizen/${reisId}/deelnemers/${gebruikerId}/weiger`
+        ? `/reizen/${reisId}/deelnemers/${gebruikerId}/accepteer`
+        : `/reizen/${reisId}/deelnemers/${gebruikerId}/weiger`
 
     try {
         const response = await fetch(url, {
@@ -25,30 +23,16 @@ document.addEventListener('click', async (event) => {
             }
         })
 
-         console.log('response status:', response.status)
-
-        const data = await response.json()
- 
-        if (!response.ok) {
-            throw new Error(data.error || 'Er ging iets mis')
-        }
-
-        // UI update
-        const aanvraagItem = knop.closest('.aanvraag-item')
-            console.log('aanvraagItem:', aanvraagItem)
-
-        if (aanvraagItem) {
-            aanvraagItem.remove()
-        }
-
-        // check of lijst leeg is > blok weglaten
-        const lijst = knop.closest('.aanvragen-container')?.querySelector('.aanvragen-lijst')
-        if (lijst && lijst.children.length === 0) {
-            lijst.closest('.aanvragen-container')?.remove()
+        if (response.ok) {
+            // De database is klaar, dus we verversen de boel
+            window.location.reload()
+        } else {
+            const data = await response.json()
+            alert('Fout: ' + (data.error || 'Kon aanvraag niet verwerken'))
         }
 
     } catch (err) {
-        console.error(err)
-        alert('Actie mislukt')
+        console.error('Fetch fout:', err)
+        alert('Er ging iets mis met de verbinding.')
     }
 })

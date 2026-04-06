@@ -4,7 +4,7 @@
     <section>
         <img src="<%= data.gebruiker.profielfoto %>" alt="Profielfoto">
         <div>
-            <h1><%= data.gebruiker.voornaam %> <span class="last-name"><%= data.gebruiker.achternaam %></span></h1>
+            <h1><%= data.gebruiker.voornaam %> <%= data.gebruiker.achternaam %></h1>
             <p><%= data.gebruiker.bio %></p>
         </div>
     </section>
@@ -24,14 +24,14 @@
 
     <section>
 		<h2>Deelnemende reizen</h2>
-		<ul>
-			<% if (data.gebruiker.deelnemendeReizen && data.gebruiker.deelnemendeReizen.length > 0) { %>
-				<% data.gebruiker.deelenemendeReizen.forEach(function (reis) { %>
-						<%- include("../partials/reiskaartKlein", { reis: reis }) %>
-				<% }) %>
-			<% } else { %>
-				<p><%= data.gebruiker.voornaam %> neemt nog niet deel aan reizen.</p>
-			<% } %>
-		</ul>
+        <ul>
+            <% if (data.gebruiker.deelnemendeReizen && data.gebruiker.deelnemendeReizen.length > 0) { %>
+                <% data.gebruiker.deelnemendeReizen.forEach(function (reis) { %>
+                    <%- include("../partials/reiskaartKlein", { reis: reis }) %>
+                <% }) %>
+            <% } else { %>
+                <p>Deze reiziger neemt momenteel niet deel aan andere reizen.</p>
+            <% } %>
+        </ul>
 	</section>
 </main>
