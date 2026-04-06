@@ -104,7 +104,9 @@ body:has(.home) nav{
 .home .matching-container > p{
     font-size: 1.2em;
     text-align: center;
-    margin: 1em;
+    padding: 1em;
+    margin: auto;
+    max-width: 30em;
 }
 
 .home:has(#filtersUitklappen:checked) .matching-container{
