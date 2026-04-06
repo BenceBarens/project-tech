@@ -16,10 +16,9 @@
             </p>
 
             <ul class="chipsInfo">
-                <li><%= data.reis.bedragen %></li>
-                <li><%= data.reis.reizen %></li>
+                <% if (data.reis.bedragen) { %><li><%= data.reis.bedragen %></li><% } %>
+                <% if (data.reis.reizen) { %><li><%= data.reis.reizen %></li><% } %>
                 
-                <!-- toevoegen van , en spatie bij Array--> 
                  <% if (data.reis.verblijf) { %>
                     <li>
                         <% if (Array.isArray(data.reis.verblijf)) { %>
@@ -30,7 +29,6 @@
                     </li>
                 <% } %>
                 
-                <!--voorkomen dat er "tot jaar oud" komt te staan-->
                 <% if (data.reis.minLeeftijd && data.reis.maxLeeftijd) { %>
                     <li><%= data.reis.minLeeftijd %> tot <%= data.reis.maxLeeftijd %> jaar oud</li>
 
