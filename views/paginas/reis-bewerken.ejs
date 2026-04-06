@@ -19,16 +19,18 @@
         <!-- STAP 2 -->
         <fieldset>
             <legend>Duur van de reis</legend>
-
-            <label for="startDatum">Startdatum</label><br>
-            <input type="date" id="startDatum" name="startDatum" value="<%= data.reis.startDatum %>" required><br>
-
-            <label for="eindDatum">Einddatum</label><br>
-            <input type="date" id="eindDatum" name="eindDatum" value="<%= data.reis.eindDatum %>" required><br>
-
-            <label for="aantalDagen">Aantal dagen</label><br>
-            <input type="number" id="aantalDagen" name="aantalDagen" value="<%= data.reis.aantalDagen %>" required>
-
+            <div>
+                <label for="startDatum">Startdatum</label><br>
+                <input type="date" id="startDatum" name="startDatum" value="<%= data.reis.startDatum %>" required>
+            </div>
+            <div>
+                <label for="eindDatum">Einddatum</label><br>
+                <input type="date" id="eindDatum" name="eindDatum" value="<%= data.reis.eindDatum %>" required>
+            </div>
+            <div>
+                <label for="aantalDagen">Aantal dagen</label><br>
+                <input type="number" id="aantalDagen" name="aantalDagen" value="<%= data.reis.aantalDagen %>" required>
+            </div>
         </fieldset>
 
         <!-- STAP 3 -->

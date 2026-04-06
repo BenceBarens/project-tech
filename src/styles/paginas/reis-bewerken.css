@@ -19,3 +19,9 @@
     font-size: larger;
     padding: 0 0.5em;
 }
+
+.reisBewerken fieldset:nth-child(2){
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+}
