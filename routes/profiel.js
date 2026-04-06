@@ -3,6 +3,7 @@ const router = express.Router()
 const { ObjectId } = require('mongodb')
 const multer = require('multer')
 const bcryptjs = require('bcryptjs')
+const xss = require('xss')
 const { formatteerReizen } = require('../src/utils/reiskaartKleinFormat')
 
 // Route waar profielfoto's worden opgeslagen
@@ -86,11 +87,11 @@ router.get('/profiel/:id', async (req, res) => {
 
         res.render('paginas/bezoek-profiel', {
             data: {
-                pagina: { titel: "Profiel van " + bekijkReiziger.voornaam },
+                pagina: { titel: (bekijkReiziger.voornaam ?? "") + " " + (bekijkReiziger.achternaam ?? "") },
                 gebruiker: {
                     voornaam: bekijkReiziger.voornaam,
                     achternaam: bekijkReiziger.achternaam,
-                    bio: bekijkReiziger.bio || "Deze reiziger heeft nog geen bio.",
+                    bio: bekijkReiziger.bio || (bekijkReiziger.voornaam + " heeft nog geen bio."),
                     profielfoto: bekijkReiziger.profielfoto ? '/uploads/profielfoto/' + bekijkReiziger.profielfoto : '/images/default-avatar.svg',
                     reizen: deReizen
                 }
@@ -132,7 +133,16 @@ router.get('/profiel-bewerken', async (req, res) => {
 router.post('/profiel/bewerken', upload.single('profielfoto'), async (req, res) => {
     try {
         const db = req.app.get('db')
-        const { huidigWachtwoord, nieuwWachtwoord, voornaam, achternaam, email, geslacht, woonplaats, land, bio } = req.body
+        
+        const voornaam = xss(req.body.voornaam)
+        const achternaam = xss(req.body.achternaam)
+        const email = xss(req.body.email)
+        const geslacht = xss(req.body.geslacht)
+        const woonplaats = xss(req.body.woonplaats)
+        const land = xss(req.body.land)
+        const bio = xss(req.body.bio)
+        
+        const { huidigWachtwoord, nieuwWachtwoord } = req.body
         
         const gebruiker = await db.collection('gebruikers').findOne({
             _id: new ObjectId(req.session.gebruiker.id)
@@ -144,22 +154,20 @@ router.post('/profiel/bewerken', upload.single('profielfoto'), async (req, res) 
             updateData.profielfoto = req.file.filename 
         }
 
-        // Alleen als de gebruiker een nieuw wachtwoord heeft ingevuld
         if (nieuwWachtwoord && nieuwWachtwoord.trim() !== "") {
             const match = await bcryptjs.compare(huidigWachtwoord, gebruiker.wachtwoord)
-
             if (!match) {
                 return res.send("Huidig wachtwoord is onjuist. Wijzigingen niet opgeslagen.")
             }
-
             updateData.wachtwoord = await bcryptjs.hash(nieuwWachtwoord, 10)
         }
 
-        // Update de database
         await db.collection('gebruikers').updateOne(
             { _id: new ObjectId(req.session.gebruiker.id) },
             { $set: updateData }
         )
+
+        req.session.gebruiker.voornaam = voornaam
 
         res.redirect('/profiel')
 

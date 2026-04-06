@@ -1,7 +1,10 @@
-const express = require('express');
-const router = express.Router();
-const multer = require('multer');
-const bcryptjs = require('bcryptjs');
+const express = require('express')
+const router = express.Router()
+const multer = require('multer')
+const bcryptjs = require('bcryptjs')
+const xss = require('xss')
+
+const upload = multer({ dest: 'public/uploads/profielfoto' })
 
 router.get('/registreren', (req, res) => {
     if (req.session.gebruiker) {
@@ -9,76 +12,69 @@ router.get('/registreren', (req, res) => {
     } else {
         res.render('paginas/registreren', { 
             data: { pagina: { titel: 'Registreren' } }
-        });
+        })
     }
-});
+})
 
-const upload = multer({ dest: 'public/uploads/profielfoto' });
-
-router.post('/registreren', upload.single('profielfoto'), verwerkRegistratie);
-
-module.exports = router;
+router.post('/registreren', upload.single('profielfoto'), verwerkRegistratie)
 
 async function verwerkRegistratie(req, res) {
     try {
-        console.log("Bestand ontvangen:", req.file); 
-        console.log("Body ontvangen:", req.body);
+        const db = req.app.get('db')
+        const collectie = db.collection('gebruikers')
 
-        const db = req.app.get('db');
-        const collectie = db.collection('gebruikers');
-
-        const { profielfoto, ...restData } = req.body;
-        const gebruiker = { ...restData };
-
-        if (gebruiker.email) {
-            gebruiker.email = gebruiker.email.toLowerCase().trim();
+        const gebruiker = {
+            voornaam: xss(req.body.voornaam),
+            achternaam: xss(req.body.achternaam),
+            email: xss(req.body.email).toLowerCase().trim(),
+            woonplaats: xss(req.body.woonplaats),
+            land: xss(req.body.land),
+            geslacht: xss(req.body.geslacht),
+            geboorteDatum: req.body.geboorteDatum ? xss(req.body.geboorteDatum).split('T')[0] : null,
+            wachtwoord: req.body.wachtwoord
         }
 
-        const bestaat = await collectie.findOne({ email: gebruiker.email });
+        // Check of email al bestaat
+        const bestaat = await collectie.findOne({ email: gebruiker.email })
         if (bestaat) {
             return res.render('paginas/registreren', {
                 data: { pagina: { titel: 'Registreren' } },
                 error: "Dit emailadres is al in gebruik.",
                 formData: gebruiker
-            });
+            })
         }
 
-        //Wachtwoord validatie
+        // Wachtwoord validatie & Hashing
         if (gebruiker.wachtwoord) {
-            const wachtwoord = gebruiker.wachtwoord;
-            const wachtwoordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
-
-            if (!wachtwoordRegex.test(wachtwoord)) {
+            const wachtwoordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/
+            if (!wachtwoordRegex.test(gebruiker.wachtwoord)) {
                 return res.render('paginas/registreren', {
                     data: { pagina: { titel: 'Registreren' } },
                     error: "Wachtwoord moet minimaal 8 karakters bevatten, met minstens 1 cijfer en 1 speciaal teken.",
                     formData: gebruiker
-                });
+                })
             }
-
-            gebruiker.wachtwoord = await bcryptjs.hash(wachtwoord, 10);
+            gebruiker.wachtwoord = await bcryptjs.hash(gebruiker.wachtwoord, 10)
         }
 
         if (req.file) {
-            gebruiker.profielfoto = req.file.filename;
+            gebruiker.profielfoto = req.file.filename
         }
 
-        if (gebruiker.geboorteDatum) {
-            gebruiker.geboorteDatum = gebruiker.geboorteDatum.split('T')[0];
-        }
-
-        const resultaat = await collectie.insertOne(gebruiker);
+        const resultaat = await collectie.insertOne(gebruiker)
 
         req.session.gebruiker = {
             id: resultaat.insertedId,
             email: gebruiker.email,
             voornaam: gebruiker.voornaam
-        };
+        }
 
-        res.redirect('/profiel');
+        res.redirect('/profiel')
 
     } catch (err) {
-        console.error("Fout bij registreren:", err);
-        res.status(500).send("Er is iets misgegaan bij het verwerken van de gegevens.");
+        console.error("Fout bij registreren:", err)
+        res.status(500).send("Er is iets misgegaan bij het verwerken van de gegevens.")
     }
 }
+
+module.exports = router

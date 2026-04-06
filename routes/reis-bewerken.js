@@ -1,20 +1,20 @@
-const express = require('express');
-const router = express.Router();
-const { ObjectId } = require('mongodb');
+const express = require('express')
+const router = express.Router()
+const { ObjectId } = require('mongodb')
+const xss = require('xss') // Cruciaal voor beveiliging
 
-// PAGINA TONEN
+// PAGINA TONEN (GET)
 router.get('/reis-bewerken/:id', async (req, res) => {
-    const db = req.app.get('db');
-    const id = req.params.id;
+    const db = req.app.get('db')
+    const id = req.params.id
 
     try {
-        const reis = await db.collection('reizen').findOne({ _id: new ObjectId(id) });
+        const reis = await db.collection('reizen').findOne({ _id: new ObjectId(id) })
 
-        if (!reis) return res.status(404).render('404');
+        if (!reis) return res.status(404).render('404')
 
-        // Beveiliging: alleen eigenaar
         if (!req.session.gebruiker || reis.gebruikerId.toString() !== req.session.gebruiker.id.toString()) {
-            return res.redirect('/reis/' + id);
+            return res.redirect('/reis/' + id)
         }
 
         res.render('paginas/reis-bewerken', {
@@ -22,52 +22,46 @@ router.get('/reis-bewerken/:id', async (req, res) => {
                 reis: reis,
                 pagina: { titel: 'Reis bewerken' }
             }
-        });
+        })
 
     } catch (err) {
-        console.error(err);
-        res.status(500).send("Fout bij laden.");
+        console.error("Fout bij laden bewerkpagina:", err)
+        res.status(500).send("Fout bij laden.")
     }
-});
+})
 
-
+// DATA OPSLAAN (POST)
 router.post('/reis-bewerken/:id', async (req, res) => {
-    const db = req.app.get('db');
-    const id = req.params.id;
+    const db = req.app.get('db')
+    const id = req.params.id
 
     try {
-        const reis = await db.collection('reizen').findOne({ _id: new ObjectId(id) });
+        const reis = await db.collection('reizen').findOne({ _id: new ObjectId(id) })
 
-        if (!reis) return res.status(404).render('404');
+        if (!reis) return res.status(404).render('404')
 
-        // 🔒 Beveiliging: alleen eigenaar
         if (!req.session.gebruiker || reis.gebruikerId.toString() !== req.session.gebruiker.id.toString()) {
-            return res.redirect('/reis/' + id);
+            return res.redirect('/reis/' + id)
         }
 
-        // ==============================
-        // 🧠 DATA VERWERKING
-        // ==============================
+        const toArrayEnSaneer = (value) => {
+            if (!value) return []
+            const arr = Array.isArray(value) ? value : [value]
+            return arr.map(item => xss(item)) // Elk item in de array saniteren
+        }
 
-        // Helper voor checkbox arrays
-        const toArray = (value) => {
-            if (!value) return [];
-            return Array.isArray(value) ? value : [value];
-        };
-
-        // Bestemmingen (string → array)
-        let bestemmingen = [];
+        // Bestemmingen (komt vaak als comma-separated string uit de front-end)
+        let geformatteerdeBestemmingen = []
         if (req.body.bestemmingen) {
-            bestemmingen = req.body.bestemmingen
+            geformatteerdeBestemmingen = req.body.bestemmingen
                 .split(',')
-                .map(b => b.trim())
-                .filter(b => b.length > 0);
+                .map(b => xss(b.trim()))
+                .filter(b => b.length > 0)
         }
 
-        // Geslacht (dropdown → array in DB)
-        let geslacht = [];
+        let geslachtArray = []
         if (req.body.geslacht) {
-            geslacht = [req.body.geslacht];
+            geslachtArray = [xss(req.body.geslacht)]
         }
 
         // ==============================
@@ -77,38 +71,37 @@ router.post('/reis-bewerken/:id', async (req, res) => {
             { _id: new ObjectId(id) },
             {
                 $set: {
-                    reisTitel: req.body.reisTitel,
-                    startDatum: req.body.startDatum,
-                    eindDatum: req.body.eindDatum,
-                    aantalDagen: req.body.aantalDagen,
+                    reisTitel: xss(req.body.reisTitel),
+                    startDatum: xss(req.body.startDatum),
+                    eindDatum: xss(req.body.eindDatum),
+                    aantalDagen: xss(req.body.aantalDagen),
 
-                    reis_beschrijving: req.body.reis_beschrijving,
-                    reis_samenvatting: req.body.reis_samenvatting,
+                    reis_beschrijving: xss(req.body.reis_beschrijving),
+                    reis_samenvatting: xss(req.body.reis_samenvatting),
 
-                    minReizigers: req.body.minReizigers,
-                    maxReizigers: req.body.maxReizigers,
-                    minLeeftijd: req.body.minLeeftijd,
-                    maxLeeftijd: req.body.maxLeeftijd,
+                    minReizigers: xss(req.body.minReizigers),
+                    maxReizigers: xss(req.body.maxReizigers),
+                    minLeeftijd: xss(req.body.minLeeftijd),
+                    maxLeeftijd: xss(req.body.maxLeeftijd),
 
-                    geslacht: geslacht,
-                    bestemmingen: bestemmingen,
+                    geslacht: geslachtArray,
+                    bestemmingen: geformatteerdeBestemmingen,
 
-                    bedragen: req.body.bedragen,
+                    bedragen: xss(req.body.bedragen),
+                    reizen: xss(req.body.reizen),
 
-                    activiteit: toArray(req.body.activiteit),
-                    reizen: req.body.reizen,
-                    verblijf: toArray(req.body.verblijf)
+                    activiteit: toArrayEnSaneer(req.body.activiteit),
+                    verblijf: toArrayEnSaneer(req.body.verblijf)
                 }
             }
-        );
+        )
 
-        // 🔁 Terug naar detailpagina
-        res.redirect('/reis/' + id);
+        res.redirect('/reis/' + id)
 
     } catch (err) {
-        console.error(err);
-        res.status(500).send("Fout bij opslaan.");
+        console.error("Update fout in reis-bewerken:", err)
+        res.status(500).send("Fout bij opslaan van de wijzigingen.")
     }
-});
+})
 
-module.exports = router;
+module.exports = router
