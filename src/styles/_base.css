@@ -76,6 +76,7 @@ a, p, svg, svg *{
     border-radius: 50em;
     padding: 0.2em 0.6em;
     transition: all 200ms ease;
+    margin: 0 0.2em 0.5em 0;
 }
 
 .chipsInfo li{
@@ -152,7 +153,6 @@ a, p, svg, svg *{
     list-style-type: none;
     padding: 0;
     display: flex;
-    gap: 0.5em;
     flex-wrap: wrap;
     margin: 0.5em 0;
 }
