@@ -110,7 +110,8 @@
                 <%- include('../partials/reiziger', { 
                     data: { 
                         gebruiker: data.reis.organisator,
-                        status: "Organisator" 
+                        status: "Organisator",
+                        toonContact: data.magContactZien
                     } 
                 }) %>
             <% } %>
@@ -120,7 +121,8 @@
                     <%- include('../partials/reiziger', { 
                         data: { 
                             gebruiker: deelnemer,
-                            status: "Deelnemer" 
+                            status: "Deelnemer" ,
+                            toonContact: data.magContactZien
                         } 
                     }) %>
                 <% }) %>
