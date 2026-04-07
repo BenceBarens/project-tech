@@ -5,12 +5,12 @@
 
 <main id="main" class="reisAanmaken">
     <h1>Start een nieuw avontuur</h1>
-    <form action="/nieuwe-reis" method="POST" enctype="multipart/form-data">
+    <form action="/nieuwe-reis" method="POST" enctype="multipart/form-data" id="reisForm">
 
         <fieldset id="stap1">
             <legend>Laten we een reis aanmaken! (1/8)</legend>
-            <label for="reisTitel">Geef jouw reis een naam*</label>
-            <input type="text" id="reisTitel" name="reisTitel" placeholder="Stedentrip door Zuid-Europa" required oninvalid="this.setCustomValidity('Geef je reis een titel')" oninput="this.setCustomValidity('')">
+            <label for="reisTitel">Geef jouw reis een naam</label>
+            <input type="text" id="reisTitel" name="reisTitel" placeholder="Stedentrip door Zuid-Europa" required minlength="5" maxlength="100" oninvalid="this.setCustomValidity('Geef je reis een titel (min. 5 tekens)')" oninput="this.setCustomValidity('')">
 
             <label for="reisFoto" class="dropzone" id="dropzone">
                 <input type="file" id="reisFoto" name="reisFoto" accept="image/*" required oninvalid="this.setCustomValidity('Kies een coverfoto voor je reis')" oninput="this.setCustomValidity('')">
@@ -20,7 +20,7 @@
                         <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
                         <circle cx="12" cy="13" r="4"></circle>
                     </svg>
-                    <p>Sleep een foto hiernaartoe of <strong>klik om te uploaden*</strong></p>
+                    <p>Sleep een foto hiernaartoe of <strong>klik om te uploaden</strong></p>
                     <small>PNG, JPG of JPEG (max. 5MB)</small>
                 </div>
                 
@@ -35,12 +35,13 @@
         <fieldset id="stap2">
             <legend>Duur van de reis (2/8)</legend>
 
-            <label for="start-datum">Vanaf wanneer wil je weg?*</label>
+            <label for="start-datum">Vanaf wanneer wil je weg?</label>
             <input type="date" id="start-datum" name="startDatum" min="2026-03-25" required oninvalid="this.setCustomValidity('Je mist nog een start datum.')" oninput="this.setCustomValidity('')"><br>
-            <label for="eind-datum">Wanneer wil je uiterlijk weer terug zijn?*</label>
-            <input type="date" id="eind" name="eindDatum" min="2026-03-25" required oninvalid="this.setCustomValidity('Je mist nog een eind datum.')" oninput="this.setCustomValidity('')"><br>
+            
+            <label for="eind-datum">Wanneer wil je uiterlijk weer terug zijn?</label>
+            <input type="date" id="eind-datum" name="eindDatum" min="2026-03-25" required oninvalid="this.setCustomValidity('Je mist nog een eind datum.')" oninput="this.setCustomValidity('')"><br>
 
-            <label for="aantalDagen">In totaal wil ik ongeveer <input type="number" id="aantalDagen" name="aantalDagen" min="2" max="365" required oninvalid="this.setCustomValidity('Geef nog aan hoe lang je weg zou willen')" oninput="this.setCustomValidity('')"> dagen weg*</label>
+            <label for="aantalDagen">In totaal wil ik ongeveer <input type="number" id="aantalDagen" name="aantalDagen" min="1" max="365" required oninvalid="this.setCustomValidity('Geef aan hoeveel dagen je weg wilt (1-365)')" oninput="this.setCustomValidity('')"> dagen weg</label>
 
             <div class="formNav">
                 <a href="#stap1" role="button" tabindex="-1" class="button2">Vorige</a>
@@ -51,10 +52,10 @@
         <fieldset id="stap3">
             <legend>Beschrijving (3/8)</legend>
             <label for="reis-beschrijving">Beschrijf jouw reis. Wat wil je doen, wat zijn de plannen?</label><br>
-            <textarea id="reis-beschrijving" name="reis_beschrijving" placeholder="Typ hier een beschrijving"></textarea><br>
+            <textarea id="reis-beschrijving" name="reis_beschrijving" placeholder="Typ hier een uitgebreide beschrijving" oninvalid="this.setCustomValidity('Vertel wat meer over de plannen!')" oninput="this.setCustomValidity('')"></textarea><br>
 
-            <label for="reis-samenvatting">Geef een samenvatting van jouw reis*</label>
-            <input type="text" id="reis-samenvatting" name="reis_samenvatting" placeholder="Typ hier een beschrijving" maxlength="50" required oninvalid="this.setCustomValidity('Geef je reis nog een korte samenvatting!')" oninput="this.setCustomValidity('')">
+            <label for="reis-samenvatting">Geef een samenvatting van jouw reis</label>
+            <input type="text" id="reis-samenvatting" name="reis_samenvatting" placeholder="Typ hier een korte krachtige zin" maxlength="50" required oninvalid="this.setCustomValidity('Geef je reis nog een korte samenvatting (max 50 tekens)!')" oninput="this.setCustomValidity('')">
 
             <div class="formNav">
                 <a href="#stap2" role="button" tabindex="-1" class="button2">Vorige</a>
@@ -67,7 +68,7 @@
             <p>Voeg de steden of landen toe die jij graag zou willen bezoeken</p>
 
             <input type="text" id="locatie-zoeken" placeholder="Zoek een bestemming" autocomplete="off">
-            <div><ul id="gekozen-locaties-container"></ul><ul id="suggestie-lijst"></ul></div>
+            <div><ul id="gekozen-locaties-container" data-input-name="gekozenLocaties"></ul><ul id="suggestie-lijst"></ul></div>
             
             <div class="formNav">
                 <a href="#stap3" role="button" tabindex="-1" class="button2">Vorige</a>
@@ -77,13 +78,13 @@
 
         <fieldset id="stap5">
             <legend>Wat wordt het budget voor de reis? (5/8)</legend>
-
-            <label class="chipRadio"><input type="radio" id="bedrag1" name="bedragen" value="bedrag1">€0 tot €500</label>
-            <label class="chipRadio"><input type="radio" id="bedrag2" name="bedragen" value="bedrag2">€500 tot €1K</label>
-            <label class="chipRadio"><input type="radio" id="bedrag3" name="bedragen" value="bedrag3">€1K tot €1.5K</label>
-            <label class="chipRadio"><input type="radio" id="bedrag4" name="bedragen" value="bedrag4">€1.5K tot €2.5K</label>
-            <label class="chipRadio"><input type="radio" id="bedrag5" name="bedragen" value="bedrag5">€2.5K tot €5K</label>
-            <label class="chipRadio"><input type="radio" id="bedrag6" name="bedragen" value="bedrag6">Meer dan €5K</label>
+            <p>Kies een prijsklasse</p>
+            <label class="chipRadio"><input type="radio" id="bedrag1" name="bedragen" value="bedrag1" required>€0 tot €500</label>
+            <label class="chipRadio"><input type="radio" id="bedrag2" name="bedragen" value="bedrag2" required>€500 tot €1K</label>
+            <label class="chipRadio"><input type="radio" id="bedrag3" name="bedragen" value="bedrag3" required>€1K tot €1.5K</label>
+            <label class="chipRadio"><input type="radio" id="bedrag4" name="bedragen" value="bedrag4" required>€1.5K tot €2.5K</label>
+            <label class="chipRadio"><input type="radio" id="bedrag5" name="bedragen" value="bedrag5" required>€2.5K tot €5K</label>
+            <label class="chipRadio"><input type="radio" id="bedrag6" name="bedragen" value="bedrag6" required>Meer dan €5K</label>
 
             <div class="formNav">
                 <a href="#stap4" role="button" tabindex="-1" class="button2">Vorige</a>
@@ -103,10 +104,10 @@
 
             <p>Welke leeftijd mogen je medereizigers zijn?</p>
             <label for="minLeeftijd">Minimum</label>
-            <input type="number" id="minLeeftijd" name="minLeeftijd" min="18">
+            <input type="number" id="minLeeftijd" name="minLeeftijd" min="18" max="99">
 
             <label for="maxLeeftijd">Maximum</label>
-            <input type="number" id="maxLeeftijd" name="maxLeeftijd" min="19">
+            <input type="number" id="maxLeeftijd" name="maxLeeftijd" min="18" max="99">
 
             <p>Geslacht medereizigers (meerdere opties mogelijk)</p>
             <label class="chipToggle"><input type="checkbox" id="vrouwen" name="geslacht" value="vrouwen">Vrouwen</label>
@@ -122,7 +123,7 @@
         <fieldset id="stap7">
             <legend>Type reis (7/8)</legend>
 
-            <p>Wat voor soort reis gaat het worden?*</p>
+            <p>Wat voor soort reis gaat het worden?</p>
 
             <label class="chipRadio"><input type="radio" id="reis-optie1" name="reizen" value="reis-optie1" required oninvalid="this.setCustomValidity('Kies een van de opties voor het type reis.')" oninput="this.setCustomValidity('')">Rondreis (en overig)</label>
             <label class="chipRadio"><input type="radio" id="reis-optie2" name="reizen" value="reis-optie2">Resort</label>

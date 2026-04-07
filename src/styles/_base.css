@@ -203,7 +203,7 @@ button, .button, .button2, .chipToggle, .chipRadio, .chipSuggestie, .chipVerwijd
     cursor: pointer;
 }
 
-input[type=text], input[type=email], input[type=password], input[type=number], input[type=date], textarea, select{
+input[type=text], input[type=email], input[type=password], input[type=number], input[type=date], input[type=tel], textarea, select{
     padding: 0.5em;
     margin: 0.5em 0 1em 0;
     border: 0.1em solid var(--color-surface-4);

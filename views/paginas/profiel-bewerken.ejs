@@ -18,13 +18,14 @@
             <div>
                 <div>
                     <label for="voornaam">Voornaam</label>
-                    <input type="text" id="voornaam" name="voornaam" value="<%= data.gebruiker.voornaam %>" placeholder="Michael" required>
+                    <input type="text" id="voornaam" name="voornaam" value="<%= data.gebruiker.voornaam %>" placeholder="Michael" required minlength="2" maxlength="50" pattern="[a-zA-Zà-ÿÀ-ß\s\-]+">
+                    
                     <label for="achternaam">Achternaam</label>
-                    <input type="text" id="achternaam" name="achternaam" value="<%= data.gebruiker.achternaam %>" placeholder="Scott" required>
+                    <input type="text" id="achternaam" name="achternaam" value="<%= data.gebruiker.achternaam %>" placeholder="Scott" required minlength="2" maxlength="50" pattern="[a-zA-Zà-ÿÀ-ß\s\-]+">
                 </div>
                 <div>
                     <label for="bio">Over mij (bio)</label><br>
-                    <textarea id="bio" name="bio"><%= data.gebruiker.bio || '' %></textarea>
+                    <textarea id="bio" name="bio" maxlength="500" placeholder="Vertel wat over jezelf..."><%= data.gebruiker.bio || '' %></textarea>
                 </div>
             </div>
         </fieldset>
@@ -38,7 +39,7 @@
 
             <div>
                 <label for="telefoonNummer">Telefoonnummer</label><br>
-                <input type="text" id="telefoonNummer" name="telefoonNummer" value="<%= data.gebruiker.telefoonNummer %>" placeholder="+31 6 12345678" required>
+                <input type="tel" id="telefoonNummer" name="telefoonNummer" value="<%= data.gebruiker.telefoonNummer %>" placeholder="+31 6 12345678" required pattern="^(\+?\d{1,3}[- ]?)?\d{10}$">
             </div>
 
             <div>
@@ -79,7 +80,7 @@
             </div>
             <div>
                 <label for="nieuwWachtwoord">Nieuw wachtwoord</label><br>
-                <input type="password" id="nieuwWachtwoord" name="nieuwWachtwoord" placeholder="Nieuwe wachtwoord" minlength="8">
+                <input type="password" id="nieuwWachtwoord" name="nieuwWachtwoord" placeholder="Nieuwe wachtwoord" minlength="8" pattern="^(?=.*[A-Za-z])(?=.*\d).{8,}$" title="Minimaal 8 tekens, waarvan tenminste één letter en één cijfer.">
             </div>
         </fieldset>
 
