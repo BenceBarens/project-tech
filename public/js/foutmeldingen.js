@@ -20,7 +20,7 @@ volgendeKnoppen.forEach(knop => {
                 }
                 
                 // Toon het wolkje voor extra verduidelijking
-                veld.reportValidity();
+                veld.reportValidity()
             } else {
                 // Reset als het veld inmiddels wel klopt
                 veld.classList.remove('input-error')

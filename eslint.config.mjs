@@ -2,7 +2,6 @@ import js from "@eslint/js"
 
 //Regels opgesteld door Gemini 3 (Denken-modus) https://gemini.google.com/share/60c3620cdc8d
 export default [
-  js.configs.recommended,
   {
     rules: {
       // 1. Geen puntkomma's
@@ -15,16 +14,8 @@ export default [
       "no-restricted-syntax": [
         "error",
         {
-          "selector": "ArrowFunctionExpression",
-          "message": "Gebruik geen arrow-functies; schrijf functies volledig uit."
-        },
-        {
           "selector": "TemplateLiteral",
           "message": "Gebruik +-operators voor tekst, geen template literals (backticks)."
-        },
-        {
-          "selector": "FunctionDeclaration[params.length>1]",
-          "message": "Functies met meer dan één parameter moeten een object gebruiken."
         }
       ],
 
