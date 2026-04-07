@@ -32,7 +32,7 @@ async function haalFavorietenOp(db, gebruikerId) {
 router.get('/aanvragen', async (req, res) => {
     try {
         const db = req.app.get('db')
-        if (!req.session.gebruiker) return res.redirect('/inloggen')
+        if (!req.session.gebruiker) return res.render('paginas/inlog-required')
 
         const mijnFavorieten = await haalFavorietenOp(db, req.session.gebruiker.id)
 
