@@ -44,6 +44,7 @@
     padding: 1em;
     background-color: var(--color-surface-1);
     border-radius: 1em 1em 2em 2em;
+    border: 0.1em solid var(--color-surface-3);
 }
 
 .reiskaartGroot #deelnemers{
