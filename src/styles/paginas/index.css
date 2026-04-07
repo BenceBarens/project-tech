@@ -10,6 +10,14 @@
     width: 1em;
 }
 
+body:has(.home){
+    max-height: 100vh;
+}
+
+body:has(.home) nav{
+    box-shadow: none;
+}
+
 /*****************************/
 /* Filters */
 /*****************************/
@@ -17,20 +25,26 @@
 .home{
     display: flex;
     flex-direction: column;
+    height: 100%;
+    overflow: hidden;
 }
 
 .home > section:first-of-type{
-    transition: all 500ms ease;
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 500ms ease, padding 500ms ease;
     overflow: hidden;
     padding: 0 1em;
-}
-
-.home > section:first-of-type:has(#filtersUitklappen:not(:checked)){
-    max-height: 0;
+    flex-shrink: 0;
 }
 
 .home > section:first-of-type:has(#filtersUitklappen:checked){
-    max-height: 80vh;
+    grid-template-rows: 1fr;
+    padding: 1em 1em 2em 1em;
+}
+
+.home > section:first-of-type > form{
+    min-height: 0;
 }
 
 .home #filtersUitklappen{
@@ -61,28 +75,41 @@
 /* Reis cards */
 /*****************************/
 
-.home > section:last-of-type{
+.home > .matching-container{
     background-color: var(--color-surface-2);
     border-radius: 2em;
-    overflow: hidden;
-    box-shadow: inset 0 0 1em -0.5em black;
-    flex-grow: 1;
     max-width: 100%;
-    overflow-y: auto;
-    text-align: center;
-    padding: 2em 0;
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    flex-shrink: 1;
+    gap: 1em;
+    box-shadow: inset 0 0 1em -0.5em black;
     opacity: 1;
     transition: all 300ms ease;
+    overflow: hidden;
+    position: relative;
 }
 
 /* desktop */
 @media only screen and (min-width: 769px){
-    .home > section:last-of-type{
+    .home > .matching-container{
         margin: 0 1em 1em 1em;
+        padding: 0 1em;
     }
 }
 
-.home:has(#filtersUitklappen:checked) section:last-of-type{
+.home .matching-container > p{
+    font-size: 1.2em;
+    text-align: center;
+    padding: 1em;
+    margin: auto;
+    max-width: 30em;
+}
+
+.home:has(#filtersUitklappen:checked) .matching-container{
     opacity: 0.4;
     pointer-events: none;
 }
@@ -92,14 +119,115 @@
     transition: all 300ms ease;
 }
 
-.home:has(#filtersUitklappen:checked) section:last-of-type *{
+.home:has(#filtersUitklappen:checked) .matching-container *{
     filter: blur(0.5em);
 }
 
 .home .reisKaartContainer{
-    text-align: left;
+    max-width: 100%;
+    height: 100%;
     list-style-type: none;
-    padding: 1em;
+    padding: 0;
     display: flex;
-    gap: 1em;
+    flex-direction: column;
+    max-height: fit-content;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    position: relative;
+}
+
+.home:has(.swipe-rechts, .swipe-links) .reisKaartContainer{
+    overflow: visible;
+}
+
+.home .reisKaartContainer::-webkit-scrollbar{
+    display: none;
+}
+
+.home .reisKaartContainer .reiskaartGroot:not(:first-child){
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(4em);
+}
+
+.home .matching-container button{
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    margin: auto;
+    z-index: 2;
+}
+
+.home .matching-container span{
+    color: inherit;
+}
+
+.home .matching-container svg{
+    width: 2em;
+}
+
+/* Mobiel */
+@media only screen and (max-width: 769px){
+    .home .matching-container button{
+        height: 5em;
+        width: 2.5em;
+        padding: 0;
+        border-radius: 50em;
+    }
+
+    .home .matching-container button:first-of-type{
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        padding-right: 0.5em;
+        justify-content: right;
+    }
+
+    .home .matching-container button:last-of-type{
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        padding-left: 0.5em;
+    }
+
+    .home .matching-container span{
+        display: none;
+    }
+}
+
+/**********************/
+/* Swiping Animaties  */
+/**********************/
+
+.reiskaartGroot.swipe-rechts{
+    animation: swipeRechtsAnim 400ms forwards ease-in;
+    pointer-events: none;
+}
+
+.reiskaartGroot.swipe-links{
+    animation: swipeLinksAnim 400ms forwards ease-in;
+    pointer-events: none;
+}
+
+@keyframes swipeRechtsAnim{
+    0%{
+        transform: translateX(0) rotate(0deg);
+        opacity: 1;
+    }
+    100%{
+        transform: translateX(150%) rotate(15deg); 
+        opacity: 0;
+    }
+}
+
+@keyframes swipeLinksAnim{
+    0%{
+        transform: translateX(0) rotate(0deg);
+        opacity: 1;
+    }
+    100%{
+        transform: translateX(-150%) rotate(-15deg);
+        opacity: 0;
+    }
 }
