@@ -208,6 +208,7 @@ router.post('/profiel/bewerken', upload.single('profielfoto'), async (req, res) 
         const voornaam = xss(req.body.voornaam)
         const achternaam = xss(req.body.achternaam)
         const email = xss(req.body.email)
+        const telefoonNummer = xss(req.body.telefoonNummer)
         const geslacht = xss(req.body.geslacht)
         const bio = xss(req.body.bio)
         
@@ -220,7 +221,8 @@ router.post('/profiel/bewerken', upload.single('profielfoto'), async (req, res) 
         const updateData = { 
             voornaam, 
             achternaam, 
-            email, 
+            email,
+            telefoonNummer, 
             geslacht, 
             woonplaats: gesaneerdeWoonplaats, 
             bio 

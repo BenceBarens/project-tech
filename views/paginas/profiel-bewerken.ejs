@@ -18,9 +18,9 @@
             <div>
                 <div>
                     <label for="voornaam">Voornaam</label>
-                    <input type="text" id="voornaam" name="voornaam" value="<%= data.gebruiker.voornaam %>" required>
+                    <input type="text" id="voornaam" name="voornaam" value="<%= data.gebruiker.voornaam %>" placeholder="Michael" required>
                     <label for="achternaam">Achternaam</label>
-                    <input type="text" id="achternaam" name="achternaam" value="<%= data.gebruiker.achternaam %>" required>
+                    <input type="text" id="achternaam" name="achternaam" value="<%= data.gebruiker.achternaam %>" placeholder="Scott" required>
                 </div>
                 <div>
                     <label for="bio">Over mij (bio)</label><br>
@@ -33,7 +33,12 @@
             <legend>Gegevens</legend>
             <div>
                 <label for="email">Email</label><br>
-                <input type="email" id="email" name="email" value="<%= data.gebruiker.email %>" required>
+                <input type="email" id="email" name="email" value="<%= data.gebruiker.email %>" placeholder="m.scott@dundermifflin.com" required>
+            </div>
+
+            <div>
+                <label for="telefoonNummer">Telefoonnummer</label><br>
+                <input type="text" id="telefoonNummer" name="telefoonNummer" value="<%= data.gebruiker.telefoonNummer %>" placeholder="+31 6 12345678" required>
             </div>
 
             <div>
