@@ -73,3 +73,7 @@
     color: var(--color-accent-1);
     font-size: 0.8rem;
 }
+
+.hidden {
+    display: none !important;
+}
