@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const bcryptjs = require('bcryptjs')
-const xss = require('xss');
+const xss = require('xss')
 
 
 
@@ -24,8 +24,8 @@ const { body, validationResult } = require('express-validator')
 
 router.post(
   '/inloggen',
-  [
-    body('email').isEmail().normalizeEmail({ gmail_remove_dots: false }).withMessage('De ingevoerde aanmeldgegevens zijn onjuist.'),
+  [ // eslint-disable-next-line
+    body('email').isEmail().normalizeEmail({ gmail_remove_dots: true }).withMessage('De ingevoerde aanmeldgegevens zijn onjuist.'),
     body('wachtwoord').notEmpty().withMessage('De ingevoerde aanmeldgegevens zijn onjuist.')
   ],
   async (req, res) => {
