@@ -5,13 +5,15 @@
 /* Pagina's */
 @import "./paginas/index.css"; 
 @import "./paginas/reis-aanmaken.css";
+@import "./paginas/aanvragen.css";
 @import "./paginas/profiel.css";
 @import "./paginas/porfiel-bewerken.css";
 @import "./paginas/inloggen.css";
 @import "./paginas/registreren.css";
 @import "./paginas/inlog-required.css";
 @import "./paginas/reis-detail.css";
-@import "./paginas/favorieten.css";
+@import "./paginas/reis-bewerken.css";
+@import "./paginas/404.css";
 
 /* Partials */
 @import "./partials/forms.css";

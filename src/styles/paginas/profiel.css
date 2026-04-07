@@ -12,7 +12,7 @@
     max-width: 30em;
 }
 
-.profiel ul{
+.profiel section > ul{
     padding: 0;
     display: flex;
     flex-wrap: wrap;

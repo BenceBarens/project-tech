@@ -3,122 +3,110 @@
     <a href="/inloggen" class="button2">Inloggen</a>
 </div>
 <main id="main" class="registreren">
-<h1>Nieuw account aanmaken</h1>
-<p>Heeft u al een account? <a href="/inloggen">Log hier in.</a></p>
+    <h1>Nieuw account aanmaken</h1>
+    <p>Heeft u al een account? <a href="/inloggen">Log hier in.</a></p>
 
-<form action="/registreren" method="POST" enctype="multipart/form-data">
+    <form action="/registreren" method="POST" enctype="multipart/form-data" id="registrationForm">
 
-<fieldset id="stap1">
-    <legend>Basisgegevens (1/4)</legend>
+        <fieldset id="stap1">
+            <legend>Basisgegevens (1/3)</legend>
 
-        <div>
-            <label for="voornaam">Voornaam</label>
-            <input type="text" placeholder="Michael" id="voornaam" name="voornaam" required>
-        </div>
-        <div>
-            <label for="achternaam">Achternaam</label>
-            <input type="text" placeholder="Scott" id="achternaam" name="achternaam" required>
-        </div>
-        <div>
-            <label for="email">Email</label>
-            <input type="email" placeholder="m.scott@dundermifflin.com" id="email" name="email" required>
-        </div>
-        <div>
-            <label for="wachtwoord">Wachtwoord</label>
-            <div class="password-container">
-                <input type="password" id="wachtwoord" name="wachtwoord" placeholder="Wachtwoord" required>
-                <button type="button" id="togglePassword" aria-label="Wachtwoord tonen">
-                    <svg id="eye-open" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                    <svg id="eye-closed" class="hidden" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
-                </button>
+            <div>
+                <label for="voornaam">Voornaam</label>
+                <input type="text" placeholder="Michael" id="voornaam" name="voornaam" 
+                       required minlength="2" maxlength="50" pattern="[a-zA-Zà-ÿÀ-ß\s\-]+">
             </div>
-        </div>
-        <div class="formNav">
-            <a href="#stap2" role="button" tabindex="-1" class="button">Volgende</a>
-        </div>
-</fieldset>
+            <div>
+                <label for="achternaam">Achternaam</label>
+                <input type="text" placeholder="Scott" id="achternaam" name="achternaam" 
+                       required minlength="2" maxlength="50" pattern="[a-zA-Zà-ÿÀ-ß\s\-]+">
+            </div>
+            <div>
+                <label for="email">Email</label>
+                <input type="email" placeholder="m.scott@dundermifflin.com" id="email" name="email" required>
+            </div>
+            <div>
+                <label for="wachtwoord">Wachtwoord</label>
+                <div class="password-container">
+                    <input type="password" id="wachtwoord" name="wachtwoord" placeholder="Wachtwoord" 
+                           required minlength="8" pattern="^(?=.*[A-Za-z])(?=.*\d).{8,}$"
+                           title="Minimaal 8 tekens, waarvan tenminste één letter en één cijfer.">
+                    <button type="button" id="togglePassword" aria-label="Wachtwoord tonen">
+                        <svg id="eye-open" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        <svg id="eye-closed" class="hidden" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                    </button>
+                </div>
+            </div>
 
-<fieldset id="stap2">
-        <legend>Persoonlijke info (2/4)</legend>
-        <div>
-            <label for="geboorteDatum">Geboortedatum</label>
-            <input type="date" id="geboorteDatum" name="geboorteDatum">
-        </div>
+            <div class="formNav">
+                <a href="#stap2" role="button" class="button btn-volgende" tabindex="-1">Volgende</a>
+            </div>
+        </fieldset>
 
-        <div>
-            <label for="geslacht">Geslacht</label>
-            <select id="geslacht" name="geslacht" required>
-                <option>Man</option>
-                <option>Vrouw</option>
-                <option>Anders</option>
-            </select>
-        </div>
+        <fieldset id="stap2">
+            <legend>Persoonlijke info (2/3)</legend>
+            <div>
+                <label for="geboorteDatum">Geboortedatum</label>
+                <input type="date" id="geboorteDatum" name="geboorteDatum" required 
+                       max="<%= new Date().toISOString().split('T')[0] %>">
+            </div>
 
-        <div>
-            <label for="woonplaats">Woonplaats</label>
-            <input type="text" placeholder="Amsterdam" id="woonplaats" name="woonplaats">
-        </div>
+            <div>
+                <label for="geslacht">Geslacht</label>
+                <select id="geslacht" name="geslacht" required>
+                    <option value="">Maak een keuze</option>
+                    <option value="Vrouw">Vrouw</option>
+                    <option value="Man">Man</option>
+                    <option value="Anders">Anders</option>
+                </select>
+            </div>
 
-        <div>
-            <label for="land">Land</label>
-            <input type="text" placeholder="Nederland" id="land" name="land" required>
-        </div>
+            <div>
+                <label for="telefoonNummer">Telefoonnummer</label>
+                <input type="tel" id="telefoonNummer" name="telefoonNummer" placeholder="+31 6 12345678" required pattern="^(\+?\d{1,3}[- ]?)?\d{10}$" oninput="this.value = this.value.replace(/[^0-9+]/g, '');">
+            </div>
 
-        <div class="formNav">
-            <a href="#stap1" role="button" tabindex="-1" class="button2">Vorige</a>
-            <a href="#stap3" role="button" tabindex="-1" class="button">Volgende</a>
-        </div>
-    </fieldset>
+            <div>
+                <label for="locatie-zoeken">Woonplaats en land</label>
+                <input type="text" id="locatie-zoeken" placeholder="Zoek je stad of dorp..." autocomplete="off">
+                <ul id="suggestie-lijst"></ul>
+                <div id="gekozen-locaties-container" data-input-name="woonplaats" data-max="1"></div>
+            </div>
 
-    <fieldset id="stap3">
-        <legend>Vul je profiel aan (3/4)</legend>
+            <div class="formNav">
+                <a href="#stap1" role="button" class="button2" tabindex="-1">Vorige</a>
+                <a href="#stap3" role="button" class="button btn-volgende" tabindex="-1">Volgende</a>
+            </div>
+        </fieldset>
 
-        <div>
-            <label for="profielfoto">Profielfoto</label>
-            <input type="file" accept="image/*" id="profielfoto" name="profielfoto">
-        </div>
+        <fieldset id="stap3">
+            <legend>Vul je profiel aan (3/3)</legend>
 
-        <div>
-            <label for="bio">Bio</label>
-            <textarea placeholder="Vertel wat leuks over jou zelf!" id="bio" name="bio"></textarea>
-        </div>
+            <div>
+                <label>
+                    Profielfoto (Klik om te uploaden)
+                    <div id="preview-wrapper">
+                        <img id="image-preview" src="/images/default-avatar.svg" alt="Preview">
+                    </div>
+                    <input type="file" accept="image/*" id="profielfoto" name="profielfoto">
+                </label>
+            </div>
 
-        <div class="formNav">
-            <a href="#stap2" role="button" tabindex="-1" class="button2">Vorige</a>
-            <a href="#stap4" role="button" tabindex="-1" class="button">Volgende</a>
-        </div>
-    </fieldset>
+            <div>
+                <label for="bio">Bio</label>
+                <textarea placeholder="Vertel wat leuks over jou zelf!" id="bio" name="bio" maxlength="500"></textarea>
+            </div>
 
-    <fieldset id="stap4">
-        <legend>Persoonlijke eigenschappen (4/4)</legend>
+            <div class="formNav">
+                <a href="#stap2" role="button" class="button2" tabindex="-1">Vorige</a>
+                <button type="submit" class="button" tabindex="-1">Afronden</button>
+            </div>
+        </fieldset>
 
-        <div>
-            <label for="eigenschap1">Voorzichtig - Avontuurlijk</label>
-            <input type="range" min="0" max="100" id="eigenschap1" name="eigenschap1">
-        </div>
-        <div>
-            <label for="eigenschap2">Gepland gedrag - Spontaan</label>
-            <input type="range" min="0" max="100" id="eigenschap2" name="eigenschap2">
-        </div>
-        <div>
-            <label for="eigenschap3">Inactief - Actief</label>
-            <input type="range" min="0" max="100" id="eigenschap3" name="eigenschap3">
-        </div>
-        <div>
-            <label for="eigenshap4">Geen culturele interesses - Interesses</label>
-            <input type="range" min="0" max="100" id="eigenschap4" name="eigenschap4">
-        </div>
-        <div>
-            <label for="eigenschap5">Niet prikkelbaar - Prikkelbaar</label>
-            <input type="range" min="0" max="100" id="eigenschap5" name="eigenschap5">
-        </div>
-        <div class="formNav">
-            <a href="#stap3" role="button" tabindex="-1" class="button2">Vorige</a>
-            <button type="submit" class="button">Afronden</button>
-        </div>
-    </fieldset>
-
-</form>
+    </form>
 </main>
 
 <script src="/js/tonen.js"></script>
+<script src="/js/foutmeldingen.js"></script>
+<script src="/js/profielfoto-preview.js"></script>
+<script src="/js/locatie-zoeker.js"></script>

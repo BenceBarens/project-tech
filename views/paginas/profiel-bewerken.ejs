@@ -3,45 +3,69 @@
     <a href="/profiel" class="button2">Annuleren</a>
 </div>
 <main id="main" class="profielBewerken">
-    <h1>Profiel aanpassen</h1>
+    <h1>Instellingen</h1>
     
     <form action="/profiel/bewerken" method="POST" enctype="multipart/form-data">
         <fieldset>
             <legend>Persoonlijke info</legend>
-            <div>
-                <img src="<%= data.gebruiker.profielfoto %>" alt="Profielfoto van <%= data.gebruiker.voornaam %>">
-                <input type="file" name="profielfoto">
-            </div>
+            <label>
+                Profielfoto (Klik om te uploaden)
+                <div id="preview-wrapper">
+                    <img id="image-preview" src="<%= data.gebruiker.profielfoto %>" alt="Profielfoto van <%= data.gebruiker.voornaam %>">
+                </div>
+                <input type="file" accept="image/*" id="profielfoto" name="profielfoto">
+            </label>
             <div>
                 <div>
                     <label for="voornaam">Voornaam</label>
-                    <input type="text" id="voornaam" name="voornaam" value="<%= data.gebruiker.voornaam %>">
+                    <input type="text" id="voornaam" name="voornaam" value="<%= data.gebruiker.voornaam %>" placeholder="Michael" required minlength="2" maxlength="50" pattern="[a-zA-Zà-ÿÀ-ß\s\-]+">
+                    
                     <label for="achternaam">Achternaam</label>
-                    <input type="text" id="achternaam" name="achternaam" value="<%= data.gebruiker.achternaam %>">
+                    <input type="text" id="achternaam" name="achternaam" value="<%= data.gebruiker.achternaam %>" placeholder="Scott" required minlength="2" maxlength="50" pattern="[a-zA-Zà-ÿÀ-ß\s\-]+">
                 </div>
                 <div>
-                    <label for="bio">Over mij (bio)</label>
-                    <textarea id="bio" name="bio"><%= data.gebruiker.bio || '' %></textarea>
+                    <label for="bio">Over mij (bio)</label><br>
+                    <textarea id="bio" name="bio" maxlength="500" placeholder="Vertel wat over jezelf..."><%= data.gebruiker.bio || '' %></textarea>
                 </div>
             </div>
         </fieldset>
 
         <fieldset>
             <legend>Gegevens</legend>
-
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" value="<%= data.gebruiker.email %>">
-
-            <label for="geslacht">Geslacht</label><br>
-            <select id="geslacht" name="geslacht" required>
-                <option value="Man" <%= data.gebruiker.geslacht === 'Man' ? 'selected' : '' %>>Man</option>
-                <option value="Vrouw" <%= data.gebruiker.geslacht === 'Vrouw' ? 'selected' : '' %>>Vrouw</option>
-                <option value="Anders" <%= data.gebruiker.geslacht === 'Anders' ? 'selected' : '' %>>Anders</option>
-            </select>
+            <div>
+                <label for="email">Email</label><br>
+                <input type="email" id="email" name="email" value="<%= data.gebruiker.email %>" placeholder="m.scott@dundermifflin.com" required>
+            </div>
 
             <div>
-                <label for="woonplaats">Woonplaats</label>
-                <input type="text" id="woonplaats" name="woonplaats" value="<%= data.gebruiker.woonplaats || '' %>">
+                <label for="telefoonNummer">Telefoonnummer</label><br>
+                <input type="tel" id="telefoonNummer" name="telefoonNummer" value="<%= data.gebruiker.telefoonNummer %>" placeholder="+31 6 12345678" required pattern="^(\+?\d{1,3}[- ]?)?\d{10}$" oninput="this.value = this.value.replace(/[^0-9+]/g, '');">
+            </div>
+
+            <div>
+                <label for="geslacht">Geslacht</label><br>
+                <select id="geslacht" name="geslacht" required>
+                    <option value="Vrouw" <%= data.gebruiker.geslacht === 'Vrouw' ? 'selected' : '' %>>Vrouw</option>
+                    <option value="Man" <%= data.gebruiker.geslacht === 'Man' ? 'selected' : '' %>>Man</option>
+                    <option value="Anders" <%= data.gebruiker.geslacht === 'Anders' ? 'selected' : '' %>>Anders</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="locatie-zoeken">Woonplaats</label><br>
+                <input type="text" id="locatie-zoeken" placeholder="Zoek je stad of dorp..." autocomplete="off"><br>
+                <ul id="suggestie-lijst"></ul>
+                
+                <div id="gekozen-locaties-container" data-input-name="woonplaats" data-max="1">
+                    <% if (data.gebruiker.woonplaats) { %>
+                        <div class="gekozen-locatie-tag" onclick="this.remove()">
+                            <div class="chipVerwijderbaar">
+                                <input type="checkbox" name="woonplaats" value="<%= data.gebruiker.woonplaats %>" checked style="display:none;">
+                                <label><%= data.gebruiker.woonplaats %></label>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
             </div>
 
         </fieldset>
@@ -50,13 +74,19 @@
             <legend>Wachtwoord wijzigen</legend>
             <p>Laat leeg als je je wachtwoord niet wilt veranderen.</p>
 
-            <label for="huidigWachtwoord">Huidig wachtwoord</label>
-            <input type="password" id="huidigWachtwoord" name="huidigWachtwoord" placeholder="Huidige wachtwoord">
-
-            <label for="nieuwWachtwoord">Nieuw wachtwoord</label>
-            <input type="password" id="nieuwWachtwoord" name="nieuwWachtwoord" placeholder="Nieuwe wachtwoord">
+            <div>
+                <label for="huidigWachtwoord">Huidig wachtwoord</label><br>
+                <input type="password" id="huidigWachtwoord" name="huidigWachtwoord" placeholder="Huidige wachtwoord" minlength="8">
+            </div>
+            <div>
+                <label for="nieuwWachtwoord">Nieuw wachtwoord</label><br>
+                <input type="password" id="nieuwWachtwoord" name="nieuwWachtwoord" placeholder="Nieuwe wachtwoord" minlength="8" pattern="^(?=.*[A-Za-z])(?=.*\d).{8,}$" title="Minimaal 8 tekens, waarvan tenminste één letter en één cijfer.">
+            </div>
         </fieldset>
 
         <button type="submit" class="button">Wijzigingen opslaan</button> <a href="/profiel" class="button2">Annuleren</a>
     </form>
 </main>
+
+<script src="/js/profielfoto-preview.js"></script>
+<script src="/js/locatie-zoeker.js"></script>

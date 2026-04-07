@@ -8,3 +8,25 @@
 .registreren h1, .registreren p{
     text-align: center;
 }
+
+#preview-wrapper {
+    width: 6em;
+    height: 6em;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0.5em 0;
+    border: 0.1em solid var(--color-surface-4);
+    background-color: var(--color-surface-2);
+}
+
+#profielfoto{
+    display: none;
+}
+
+#image-preview {
+    position: relative;
+    display: inline;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

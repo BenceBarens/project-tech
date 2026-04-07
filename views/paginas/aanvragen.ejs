@@ -1,0 +1,21 @@
+<% layout('layouts/boilerplate') %>
+
+<main class="aanvragen" id="main">
+    <section>
+        <h1>Aanvragen</h1>
+    </section>
+
+    <section>
+        <% if (data.reizen.length === 0 ) { %>
+            <p>Wanneer je een reis liked op de homepagina, komt deze hier te staan. De organisator kan je dan toevoegen aan de reis, waarna de reis op jouw profiel komt te staan.</p>
+            <p><a href="/" class="button">Vind een nieuwe reis</a></p>
+        <% } else { %>
+            <ul class="reizen-lijst">
+                <% data.reizen.forEach(function (reis) { %>
+                    <%- include('../partials/reiskaartKlein', { reis: reis }) %>
+                <% }) %>
+            </ul>
+            <p>Bekijk op <a href="/profiel">je profiel</a> alle reizen waar je al aan deelneemt.</p>
+        <% } %>
+    </section>
+</main>

@@ -1,74 +1,134 @@
 const { ObjectId } = require('mongodb')
 const { maakArray, normaliseerFilters } = require('../src/utils/array')
+const { berekenLeeftijd } = require('../src/utils/leeftijd')
 
+// reisdata uit DB. Objecten voor de reis zelf netjes maken
+function normaliseer(reizen) {
+    return reizen.map(reis => ({
+        ...reis,
+        verblijf: maakArray(reis.verblijf),
+    }))
+}
 
-//reisdata uit DB. Objecten voor de reis zelf netjes maken
-    function normaliseer (reizen) {
-            return reizen.map(reis => ({
-            ...reis,
-          /*  bestemmingen: maakArray(reis.bestemmingen), */
-          /*  activiteit: maakArray(reis.activiteit), */
-            verblijf: maakArray(reis.verblijf),
-        }))
-    } 
+//DB inconsistentie recht trekken
+function normaliseerGeslacht(waarde) {
+    if (!waarde) return null
 
-     //////////////// filtering ///////////////
-// URL/queryfilters consistent maken
-    function filter(reizen, query) {
+    const woord = String(waarde).trim().toLowerCase()
+
+    if (woord === 'man' || woord === 'mannen') return 'mannen'
+    if (woord === 'vrouw' || woord === 'vrouwen') return 'vrouwen'
+    if (woord === 'anders') return 'anders'
+
+    return woord
+
+}
+// automatische check op basis van gebruikersprofiel
+function reisPastBijGebruiker(reis, gebruiker) {
+    if (!gebruiker) return true
+
+    const gebruikerGeslacht = normaliseerGeslacht(gebruiker.geslacht)
+    const gebruikerLeeftijd = gebruiker?.geboorteDatum
+        ? berekenLeeftijd(gebruiker.geboorteDatum)
+        : null
+
+    let reisGeslacht = []
+
+    // altijd een array maken van "geslacht", want soms is het 1 string of undefined
+    if (Array.isArray(reis.geslacht)) {
+        reisGeslacht = reis.geslacht.map(normaliseerGeslacht)
+    } else if (reis.geslacht) {
+        reisGeslacht = [normaliseerGeslacht(reis.geslacht)]
+    } else {
+        reisGeslacht = []
+    }
+
+    // geslacht check
+    if (reis.geslacht?.length > 0 && gebruikerGeslacht) {
+        if (!reis.geslacht.includes(gebruikerGeslacht)) {
+            return false
+        }
+    }
+
+    // leeftijd check
+    if (gebruikerLeeftijd !== null) {
+        if (reis.minLeeftijd && gebruikerLeeftijd < Number(reis.minLeeftijd)) {
+            return false
+        }
+
+        if (reis.maxLeeftijd && gebruikerLeeftijd > Number(reis.maxLeeftijd)) {
+            return false
+        }
+    }
+
+    return true
+}
+
+// filtering
+function filter(reizen, query) {
     const filters = normaliseerFilters(query)
 
     const verblijfFilter = filters.verblijf
     const budgetFilter = filters.bedragen
+    const reisFilter = filters.reizen
 
     const reizigersMin = Number(filters.reizigersMin)
     const reizigersMax = Number(filters.reizigersMax)
-   
+
     return reizen.filter(reis => {
-
-            //verblijf (array match)
-            if (verblijfFilter.length > 0) {
-                if (!verblijfFilter.some(waarde => reis.verblijf.includes (waarde))) {
-                    return false
-                }
-            }   
-
-            // budget (exact match)
-            if (budgetFilter.length > 0) {
-                if (!budgetFilter.includes (reis.bedragen)) {
-                    return false
-                }
+        // verblijf
+        if (verblijfFilter.length > 0) {
+            if (!verblijfFilter.some(waarde => reis.verblijf.includes(waarde))) {
+                return false
             }
+        }
 
-            //// range matches ////
-
-            //reizigers min 
-            if (filters.reizigersMin) {
-                if (Number(reis.maxReizigers) < reizigersMin) {
-                    return false
-                }
+        // budget
+        if (budgetFilter.length > 0) {
+            if (!budgetFilter.includes(reis.bedragen)) {
+                return false
             }
+        }
 
-            //reizigers max 
-            if (filters.reizigersMax) {
-                if (Number(reis.minReizigers) > reizigersMax) {
-                    return false
-                }
+        // reizen
+        if (reisFilter.length > 0) {
+            if (!reisFilter.includes(reis.reizen)) {
+                return false
             }
+        }
 
-            return true
-     })
+        // reizigers min
+        if (filters.reizigersMin) {
+            if (Number(reis.maxReizigers) < reizigersMin) {
+                return false
+            }
+        }
 
-    }
-  
-////////////////// matches ophalen ///////////////////
+        // reizigers max
+        if (filters.reizigersMax) {
+            if (Number(reis.minReizigers) > reizigersMax) {
+                return false
+            }
+        }
 
-async function haalMatchesOp(db,gebruikerId,query, limiet=10) {
-const alleReizen = await db.collection('reizen').find().toArray()
+        return true
+    })
+}
 
-let reizenOmTeTonen = alleReizen
+async function haalMatchesOp(db, gebruikerId, query, limiet = 10) {
+   let queryMongo = {}
 
-if (gebruikerId) {
- const gebruiker = await db.collection('gebruikers').findOne ({
+   if (gebruikerId) {
+    queryMongo.gebruikerId = { $ne: new ObjectId(gebruikerId) }
+   }
+
+   const alleReizen = await db.collection('reizen').find(queryMongo).toArray()
+
+    let reizenOmTeTonen = alleReizen
+    let gebruiker = null
+
+    if (gebruikerId) {
+        gebruiker = await db.collection('gebruikers').findOne({
             _id: new ObjectId(gebruikerId)
         })
 
@@ -77,31 +137,34 @@ if (gebruikerId) {
 
         const verwerkteIds = [...geaccepteerde, ...afgewezen].map(id => id.toString())
 
-        reizenOmTeTonen = reizenOmTeTonen.filter(reis => 
+        reizenOmTeTonen = reizenOmTeTonen.filter(reis =>
             !verwerkteIds.includes(reis._id.toString())
+        )
+
+        // automatische profielmatch
+        reizenOmTeTonen = reizenOmTeTonen.filter(reis =>
+            reisPastBijGebruiker(reis, gebruiker)
         )
     }
 
     if (query.excludeIds) {
         const excludeIds = query.excludeIds
-             .split(',')
-             .map(id => id.trim())
-             .filter(Boolean)
-             
-        reizenOmTeTonen = reizenOmTeTonen.filter(reis => 
+            .split(',')
+            .map(id => id.trim())
+            .filter(Boolean)
+
+        reizenOmTeTonen = reizenOmTeTonen.filter(reis =>
             !excludeIds.includes(reis._id.toString())
         )
     }
 
-        const genormaliseerdeReizen = normaliseer(reizenOmTeTonen)
-        return filter(genormaliseerdeReizen, query).slice(0, limiet)
-    }
+    const genormaliseerdeReizen = normaliseer(reizenOmTeTonen)
+    return filter(genormaliseerdeReizen, query).slice(0, limiet)
+}
 
-//exporteren maakt code naar keuze zichtbaar voor index.js (encapsulation)
- module.exports = {
+module.exports = {
     maakArray,
     normaliseer,
     filter,
     haalMatchesOp
 }
-

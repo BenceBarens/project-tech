@@ -1,5 +1,11 @@
+.reizigersKaart{
+    background-color: var(--color-surface-2);
+    border-radius: 0.5em;
+}
+
 .reizigersKaart a{
     display: flex;
+    padding: 0.5em 1.5em 0.5em 0.5em;
     gap: 1em;
     text-decoration: none;
 }
@@ -14,4 +20,19 @@
 .reizigersKaart p{
     margin: 0;
     width: max-content;
+}
+
+.reizigersKaart .aanvraag{
+    padding: 0.5em;
+}
+
+.reizigersKaart .contactGegevens{
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 0.5em;
+}
+
+.reizigersKaart .contactGegevens a{
+    gap: 0.5em;
+    padding: 0.4em 1em;
 }

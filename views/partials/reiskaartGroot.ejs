@@ -16,11 +16,41 @@
             </p>
 
             <ul class="chipsInfo">
-                <li><%= data.reis.bedragen %></li>
-                <li><%= data.reis.reizen %></li>
-                <li><%= data.reis.verblijf %></li>
-                <li><%= data.reis.minLeeftijd %> tot <%= data.reis.maxLeeftijd %> jaar oud</li>
+                <% if (data.reis.bedragen) { %><li><%= data.reis.bedragen %></li><% } %>
+                <% if (data.reis.reizen) { %><li><%= data.reis.reizen %></li><% } %>
+                
+                 <% if (data.reis.verblijf) { %>
+                    <li>
+                        <% if (Array.isArray(data.reis.verblijf)) { %>
+                            <%= data.reis.verblijf.join(', ') %>
+                        <% } else { %>
+                            <%= data.reis.verblijf %>
+                        <% } %>
+                    </li>
+                <% } %>
+                
+                <% if (data.reis.minLeeftijd && data.reis.maxLeeftijd) { %>
+                    <li><%= data.reis.minLeeftijd %> tot <%= data.reis.maxLeeftijd %> jaar oud</li>
+
+                <% } else if (data.reis.minLeeftijd) { %>
+                    <li>Vanaf <%= data.reis.minLeeftijd %> jaar oud</li>
+
+                <% } else if (data.reis.maxLeeftijd) { %>
+                    <li>Tot <%= data.reis.maxLeeftijd %> jaar oud</li>
+                <% } %>
+              
+                <!-- toevoegen van , en spatie bij Array--> 
+                <% if (data.reis.geslacht) { %>
+                    <li>
+                        <% if (Array.isArray(data.reis.geslacht)) { %>
+                            <%= data.reis.geslacht.join(', ') %>
+                        <% } else { %>
+                            <%= data.reis.geslacht %>
+                        <% } %>
+                    </li>
+                <% } %>
             </ul>
+
             <p><%= data.reis.reis_samenvatting %></p>
             
             <h3>Reizigers</h3>
@@ -41,7 +71,7 @@
                         <%- include('reiziger', { 
                             data: { 
                                 gebruiker: deelnemer,
-                                status: "Aangevraagd" 
+                                status: "Deelnemer" 
                             } 
                         }) %>
                     <% }) %>

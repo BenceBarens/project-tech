@@ -1,0 +1,35 @@
+.error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1em;
+    max-width: 40%;
+    margin: auto;
+}
+
+.error svg {
+    color: var(--color-text-2);
+    width: 8em;
+    height: auto;
+    padding: 0;
+    margin-bottom: 2em;
+    animation: opEnNeer 3s ease-in-out infinite;
+}
+
+.error h1 {
+    font-size: 2em;
+}
+
+.error p {
+    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
+    max-width: 500px;
+    line-height: 1.6;
+}
+
+@keyframes opEnNeer {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-1em) rotate(3deg); }
+}

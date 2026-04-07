@@ -1,12 +1,29 @@
 <% layout('layouts/boilerplate') %>
-<div></div>
+<div>
+    <% if (data.isEigenaar) { %>
+        <a href="/reis-bewerken/<%= data.reis._id %>" class="button2" id="bewerkReis">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z"/>
+                <path d="M20.71 7.04a1.003 1.003 0 000-1.42L18.37 3.29a1.003 1.003 0 00-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.83z"/>
+            </svg>
+            Bewerken
+        </a>
+    <% } %>
+</div>
 <main id="main" class="reisDetail">
-    <img src="../uploads/coverfoto/<%= data.reis.fotoPad %>" alt="Foto van <%= data.reis.titel %>">
+    <img src="../uploads/coverfoto/<%= data.reis.fotoPad %>" alt="Foto van <%= data.reis.reisTitel %>">
     <div class="reiskaartInhoud">
         <h1><%= data.reis.reisTitel %></h1>
+        
         <ul class="chipsInfo">
-            <li>€<%= data.reis.bedragen %></li>
-            <li><%= data.reis.minLeeftijd %> tot <%= data.reis.maxLeeftijd %> jaar oud</li>
+            <li><%= data.reis.bedragen %></li>
+            <% if (data.reis.minLeeftijd && data.reis.maxLeeftijd) { %>
+                <li><%= data.reis.minLeeftijd %> tot <%= data.reis.maxLeeftijd %> jaar oud</li>
+            <% } else if (data.reis.minLeeftijd) { %>
+                <li>Vanaf <%= data.reis.minLeeftijd %> jaar oud</li>
+            <% } else if (data.reis.maxLeeftijd) { %>
+                <li>Tot <%= data.reis.maxLeeftijd %> jaar oud</li>
+            <% } %>
         </ul>
         
         <p>
@@ -18,10 +35,27 @@
             <b><time datetime="<%= data.reis.eindDatum %>">
                 <%= new Date(data.reis.eindDatum).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' }) %>
             </time></b>
-            voor een periode van <b><%= data.reis.aantalDagen %></b> dagen.
+            voor een periode van ongeveer <b><%= data.reis.aantalDagen %></b> dagen.
         </p>
         
         <p><%= data.reis.reis_samenvatting %></p>
+
+        <% if (data.isEigenaar && data.reis.aanvragenLijst && data.reis.aanvragenLijst.length > 0) { %>
+            <div id="aanvragen-sectie">
+                <h3>Binnengekomen aanvragen</h3>
+                <ul class="deelnemersLijst aanvragen-lijst-js">
+                    <% data.reis.aanvragenLijst.forEach(function(aanvrager) { %>
+                            <%- include('../partials/reiziger', { 
+                                data: { 
+                                    gebruiker: aanvrager, 
+                                    status: "Aangevraagd",
+                                    reisId: data.reis._id
+                                } 
+                            }) %>
+                    <% }) %>
+                </ul>
+            </div>
+        <% } %>
 
         <h3>Bestemming(en)</h3>
         <ul class="chipsInfo">
@@ -68,21 +102,39 @@
             <% } %>
         </ul>
 
-        <h3>Reizigers</h3>
+        <h3>Reizigers</h3> 
         <p>Capaciteit: <%= data.reis.minReizigers %> - <%= data.reis.maxReizigers %> personen</p>
-        <% if (data.reis.reizigers) { %>
-            <ul>
-                <% if (Array.isArray(data.reis.reizigers)) { %>
-                    <% data.reis.reizigers.forEach(function(reiziger) { %>
-                        <li><%= reiziger %></li>
-                    <% }) %>
-                <% } else { %>
-                    <li><%= data.reis.reizigers %></li>
-                <% } %>
-            </ul>
+        
+        <ul class="deelnemersLijst">
+            <% if (data.reis.organisator) { %>
+                <%- include('../partials/reiziger', { 
+                    data: { 
+                        gebruiker: data.reis.organisator,
+                        status: "Organisator",
+                        toonContact: data.magContactZien
+                    } 
+                }) %>
+            <% } %>
+
+            <% if (data.reis.deelnemersLijst && data.reis.deelnemersLijst.length > 0) { %>
+                <% data.reis.deelnemersLijst.forEach(function(deelnemer) { %>
+                    <%- include('../partials/reiziger', { 
+                        data: { 
+                            gebruiker: deelnemer,
+                            status: "Deelnemer" ,
+                            toonContact: data.magContactZien
+                        } 
+                    }) %>
+                <% }) %>
+            <% } %>
+        </ul>
+        <% if (!data.isEigenaar && data.reis.aanvragenLijst && data.reis.aanvragenLijst.length > 0) { %>
+            <p><%= data.reis.aanvragenLijst.length %> lopende aanvragen</p>
         <% } %>
 
         <h3>Beschrijving</h3>
-        <p style="white-space: pre-line;"><%= data.reis.reis_beschrijving %></p>
+        <p><%= data.reis.reis_beschrijving %></p>
     </div>
 </main>
+
+<% if (data.isEigenaar) { %><script src="/js/aanvragen.js"></script><% } %>

@@ -1,8 +1,12 @@
 .reiskaartGroot{
-    min-width: 100%;
-    padding: 0 1em;
     box-sizing: border-box;
     height: fit-content;
+    transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+    overflow: visible;
+}
+
+.reiskaartGroot:first-of-type{
+    margin: 1em 0;
 }
 
 .reiskaartGroot article{
@@ -40,17 +44,14 @@
     padding: 1em;
     background-color: var(--color-surface-1);
     border-radius: 1em 1em 2em 2em;
-}
-
-.home:has(#reisUitklappen:checked) section:last-of-type button{
-    display: none;
+    border: 0.1em solid var(--color-surface-3);
 }
 
 .reiskaartGroot #deelnemers{
     list-style-type: none;
     padding: 0;
     display: flex;
-    gap: 2em;
+    gap: 1em;
     max-width: 100%;
     margin-bottom: 1em;
     overflow: auto;
@@ -60,4 +61,8 @@
 
 .reiskaartGroot #deelnemers::-webkit-scrollbar{
     display: none;
+}
+
+.reiskaartGroot p:last-of-type{
+    white-space: pre-line;
 }

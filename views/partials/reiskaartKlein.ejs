@@ -15,6 +15,10 @@
                 <% } %>
 
                 <ul class="chipsInfo">
+                    <% if (reis.aanvragenLijst && reis.aanvragenLijst.length > 0) { %>
+                        <li><%= reis.aanvragenLijst.length %> nieuwe aanvragen</li>
+                    <% } %>
+                    
                     <% if (reis.aantalDagen) { %>
                         <li><%= reis.aantalDagen %> dagen</li>
                     <% } %>
@@ -29,6 +33,12 @@
 
                     <% if (reis.minLeeftijd && reis.maxLeeftijd) { %>
                         <li><%= reis.minLeeftijd %> tot <%= reis.maxLeeftijd %> jaar oud</li>
+
+                    <% } else if (reis.minLeeftijd) { %>
+                        <li>Vanaf <%= reis.minLeeftijd %> jaar oud</li>
+
+                    <% } else if (reis.maxLeeftijd) { %>
+                        <li>Tot <%= reis.maxLeeftijd %> jaar oud</li>
                     <% } %>
                 </ul>
             </div>
