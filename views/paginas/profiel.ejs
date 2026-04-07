@@ -28,10 +28,6 @@
 				<ul class="mijn-reizen-lijst">
 					<% data.gebruiker.reizen.forEach(function (reis) { %>
 							<%- include("../partials/reiskaartKlein", { reis: reis }) %>
-
-							<% if (reis.aanvragenLijst && reis.aanvragenLijst.length > 0) { %>
-								Er zijn aanvragen man
-							<% } %>
 					<% }) %>
 				</ul>
 		  	<% }

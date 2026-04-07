@@ -22,6 +22,17 @@
     width: max-content;
 }
 
-.reizigersKaart > div{
+.reizigersKaart .aanvraag{
     padding: 0.5em;
+}
+
+.reizigersKaart .contactGegevens{
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 0.5em;
+}
+
+.reizigersKaart .contactGegevens a{
+    gap: 0.5em;
+    padding: 0.4em 1em;
 }

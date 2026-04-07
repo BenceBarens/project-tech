@@ -15,6 +15,10 @@
                 <% } %>
 
                 <ul class="chipsInfo">
+                    <% if (reis.aanvragenLijst && reis.aanvragenLijst.length > 0) { %>
+                        <li><%= reis.aanvragenLijst.length %> nieuwe aanvragen</li>
+                    <% } %>
+                    
                     <% if (reis.aantalDagen) { %>
                         <li><%= reis.aantalDagen %> dagen</li>
                     <% } %>
