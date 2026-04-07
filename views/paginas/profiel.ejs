@@ -25,7 +25,7 @@
 		<h2>Mijn reizen</h2>
 		
 			<% if (data.gebruiker.reizen.length > 0) { %>
-				<ul class="mijn-reizen-lijst">
+				<ul class="reizen-lijst">
 					<% data.gebruiker.reizen.forEach(function (reis) { %>
 							<%- include("../partials/reiskaartKlein", { reis: reis }) %>
 
@@ -45,7 +45,7 @@
 	<section>
 		<h2>Deelnemende reizen</h2>
 		<% if (data.gebruiker.deelnemendeReizen && data.gebruiker.deelnemendeReizen.length > 0) { %>
-			<ul>
+			<ul class="reizen-lijst">
 				<% data.gebruiker.deelnemendeReizen.forEach(function (reis) { %>
 						<%- include("../partials/reiskaartKlein", { reis: reis }) %>
 				<% }) %>

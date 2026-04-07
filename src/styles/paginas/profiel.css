@@ -12,15 +12,21 @@
     max-width: 30em;
 }
 
-.profiel ul{
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1em;
+.profiel h1, .profiel h2{
+    display: inline;
 }
 
-.profiel h1{
-    display: inline;
+.profiel section{
+    width: fit-content;
+}
+
+.profiel .reizen-lijst {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 1em;
+    gap: 1em;
+    width: fit-content;
 }
 
 .profiel section:first-of-type{

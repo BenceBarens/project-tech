@@ -3,17 +3,13 @@
 }
 
 .aanvragen .reizen-lijst {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 2rem; 
-    
-    margin: 0 auto;
-    padding: 2rem;
-    list-style: none;
-}
-
-.aanvragen .reizen-lijst > li {
-    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 1em;
+    gap: 1em;
+    margin: 2em auto;
+    width: fit-content;
 }
 
 .aanvragen h1 {

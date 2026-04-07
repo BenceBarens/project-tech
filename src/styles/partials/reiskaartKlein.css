@@ -4,15 +4,13 @@
     margin: 0;
     padding: 0;
     display: flex;
-    width: 25em;
-    min-width: 15em;
-    height: min-content;
+    width: clamp(20em, 25em, 100%);
+    height: 100%;
 }
 
 .reiskaartKlein article{
     display: grid;
     grid-template: auto / 30% 70%;
-    height: min-content;
     width: 100%;
     box-sizing: border-box;
 }
@@ -20,17 +18,19 @@
 .reiskaartKlein div, .reiskaartKlein img{
     border: 0.1em solid var(--color-surface-3);
     box-sizing: border-box;
-    height: 100%;
 }
 
 .reiskaartKlein div{
     padding: 1em;
+    padding-bottom: 0;
     border-radius: 0.5em 1em 1em 0.5em;
+    height: min-content;
 }
 
 .reiskaartKlein img {
     object-fit: cover;
     width: 100%;
+    height: 100%;
     border-radius: 1em 0.5em 0.5em 1em;
     background-color: var(--color-surface-2);
 }
