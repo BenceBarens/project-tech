@@ -39,7 +39,7 @@
 
             <div>
                 <label for="telefoonNummer">Telefoonnummer</label><br>
-                <input type="tel" id="telefoonNummer" name="telefoonNummer" value="<%= data.gebruiker.telefoonNummer %>" placeholder="+31 6 12345678" required pattern="^(\+?\d{1,3}[- ]?)?\d{10}$">
+                <input type="tel" id="telefoonNummer" name="telefoonNummer" value="<%= data.gebruiker.telefoonNummer %>" placeholder="+31 6 12345678" required pattern="^(\+?\d{1,3}[- ]?)?\d{10}$" oninput="this.value = this.value.replace(/[^0-9+]/g, '');">
             </div>
 
             <div>
